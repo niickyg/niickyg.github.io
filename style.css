@@ -83,10 +83,8 @@ body {
   transition: color 0.3s ease, transform 0.3s ease;
   
   /* Ensure long URLs wrap correctly */
-  flex: 1;         /* Allow the link to take up available space */
-  min-width: 0;    /* Allow it to shrink below its content's natural width */
   overflow-wrap: break-word;
-  word-break: break-word;
+  word-break: break-all;
   min-width: 0;
   max-width: 100%;
 }
