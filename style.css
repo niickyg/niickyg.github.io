@@ -146,6 +146,7 @@ body {
 
   .card-body p {
     font-size: 1rem;
+    flex-wrap: wrap;
     /* flex-wrap is already applied above for all screens */
   }
   
