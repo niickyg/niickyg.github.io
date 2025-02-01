@@ -160,7 +160,7 @@ body {
   align-items: center;
   justify-content: flex-start;
   gap: 8px; /* Space between icon and text */
-  flex-wrap: nowrap; /* Prevents link from moving below icon */
+  flex-wrap: wrap; /* Allows wrapping if needed */
 }
 
 .card-body p i {
@@ -170,8 +170,8 @@ body {
 
 .card-body p a {
   flex-grow: 1; /* Allows the link to take available space */
-  white-space: nowrap; /* Keeps text in one line */
-  overflow: hidden; /* Prevents long URLs from pushing content down */
-  text-overflow: ellipsis; /* Adds '...' to long links */
+  white-space: normal; /* Allows text to wrap */
+  overflow-wrap: break-word; /* Ensures text breaks correctly */
+  word-break: break-word;
   max-width: 100%; /* Prevents overflow */
 }
