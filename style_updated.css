@@ -186,3 +186,25 @@ body {
   text-align: left; /* Ensures text stays aligned properly */
   display: inline-block; /* Ensures proper layout */
 }
+
+
+@media (max-width: 480px) { /* Adjusts layout for portrait mode */
+  .card-body p {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap; /* Prevents text from wrapping */
+    gap: 5px; /* Reduces gap for smaller screens */
+    font-size: 0.9rem; /* Slightly smaller font to fit better */
+  }
+
+  .card-body p a {
+    white-space: nowrap; /* Forces text to stay in one line */
+    overflow: hidden; /* Prevents long URLs from pushing content down */
+    text-overflow: ellipsis; /* Adds '...' to cut off long text */
+    max-width: 100%; /* Prevents it from overflowing */
+  }
+
+  .card-body p i {
+    min-width: 20px; /* Ensures icons stay small in narrow mode */
+  }
+}
