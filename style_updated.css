@@ -16,7 +16,7 @@ body {
   height: 100vh;
   overflow: hidden;
   margin: 0;
-  background: url('webwallpaper.png'); /* Subtle dark patterned background */
+  background: url('dark-pattern.png'); /* Subtle dark patterned background */
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -33,7 +33,7 @@ body {
 
 /* Business Card Styling with Dark Theme */
 .business-card {
-  background-color: rgba(30, 30, 30, 0.85);  /* Dark background with transparency */
+  background-color: rgba(30, 30, 30, 0.85);  /* Darker background with transparency */
   border-radius: 16px; /* Rounded corners */
   padding: 40px;
   width: 500px; /* Fixed width */
@@ -65,7 +65,7 @@ body {
 /* Contact Info Section with Dark Theme */
 .card-body p {
   margin: 18px 0;
-  font-size: 1.1rem; /* Slightly smaller text */
+  font-size: 1.1rem;
   color: #e0e0e0;
   line-height: 1.6;
   text-align: left;
@@ -73,46 +73,35 @@ body {
   padding-left: 24px;
   display: flex;
   align-items: center;
-  flex-wrap: wrap; /* Allow content to wrap on smaller screens */
-
-/* Apply styles to anchor tags within .card-body p */
-.card-body p a {
-  color: #00c4cc; /* Accent color for links */
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s ease, transform 0.3s ease;
-  
-  /* Ensure long URLs wrap correctly */
-  overflow-wrap: break-all;
-  word-break: break-all;
-  min-width: 0;
-  max-width: 100%;
-}
+  flex-wrap: nowrap; /* Prevents wrapping of children */
 }
 
-/* Icons for Contact Info */
+/* Fix for icon and link alignment */
 .card-body p i {
-  color: #00c4cc; /* Vibrant accent color for icons */
+  flex: 0 0 auto; /* Ensures the icon does not shrink */
+  color: #00c4cc;
   margin-right: 12px;
   font-size: 1.5rem;
 }
 
-
-/* Links Styling (applied to all links in .card-body p) */
-.card-body a {
+/* Ensure links remain inline with icons and wrap correctly */
+.card-body p a {
+  flex: 1 1 0;  /* Allows the link to grow and shrink properly */
+  min-width: 0; /* Allows it to shrink below its content's natural width */
+  overflow-wrap: break-word;
+  word-break: break-word;
   color: #00c4cc; /* Accent color for links */
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease, transform 0.3s ease;
-  word-break: break-all; /* Break long URLs if needed */
 }
 
+/* Hover effects for links */
 .card-body a:hover {
   color: #ff4081; /* Change to pink on hover */
   text-decoration: underline;
   transform: translateX(5px); /* Smooth movement effect */
 }
-
 
 /* Footer Section */
 .card-footer {
@@ -146,32 +135,11 @@ body {
 
   .card-body p {
     font-size: 1rem;
-    flex-wrap: wrap;
-    /* flex-wrap is already applied above for all screens */
+    flex-wrap: nowrap; /* Ensure no wrapping on mobile */
   }
-  
-  .copy-btn {
-    font-size: 0.9rem;
+
+  .card-body p a {
+    flex: 1 1 0;
+    word-break: break-word; /* Ensure link breaks properly within container */
   }
-}
-
-.card-body p {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 8px; /* Space between icon and text */
-  flex-wrap: wrap; /* Allows wrapping if needed */
-}
-
-.card-body p i {
-  flex-shrink: 0; /* Prevents icon from shrinking */
-  min-width: 24px; /* Keeps icon width consistent */
-}
-
-.card-body p a {
-  flex-grow: 1; /* Allows the link to take available space */
-  white-space: normal; /* Allows text to wrap */
-  overflow-wrap: break-word; /* Ensures text breaks correctly */
-  word-break: break-word;
-  max-width: 100%; /* Prevents overflow */
 }
