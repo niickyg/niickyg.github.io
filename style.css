@@ -62,7 +62,7 @@ body {
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* Contact Info Section */
+/* Contact Info Section with Dark Theme */
 .card-body p {
   margin: 18px 0;
   font-size: 1.1rem; /* Slightly smaller text */
@@ -73,6 +73,7 @@ body {
   padding-left: 24px;
   display: flex;
   align-items: center;
+  flex-wrap: wrap; /* Allow content to wrap on smaller screens */
 }
 
 /* Icons for Contact Info */
@@ -82,12 +83,14 @@ body {
   font-size: 1.5rem;
 }
 
-/* Links Styling */
+
+/* Links Styling (applied to all links in .card-body p) */
 .card-body a {
   color: #00c4cc; /* Accent color for links */
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease, transform 0.3s ease;
+  word-break: break-word; /* Break long URLs if needed */
 }
 
 .card-body a:hover {
@@ -95,6 +98,7 @@ body {
   text-decoration: underline;
   transform: translateX(5px); /* Smooth movement effect */
 }
+
 
 /* Footer Section */
 .card-footer {
@@ -128,6 +132,10 @@ body {
 
   .card-body p {
     font-size: 1rem;
+    /* flex-wrap is already applied above for all screens */
+  }
+  
+  .copy-btn {
+    font-size: 0.9rem;
   }
 }
-
