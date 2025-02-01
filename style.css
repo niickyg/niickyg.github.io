@@ -83,7 +83,7 @@ body {
   transition: color 0.3s ease, transform 0.3s ease;
   
   /* Ensure long URLs wrap correctly */
-  overflow-wrap: break-word;
+  overflow-wrap: break-all;
   word-break: break-all;
   min-width: 0;
   max-width: 100%;
