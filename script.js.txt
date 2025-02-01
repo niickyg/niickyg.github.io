@@ -1,0 +1,42 @@
+document.addEventListener("mousemove", function (e) {
+  const card = document.querySelector(".business-card");
+  const cardRect = card.getBoundingClientRect();
+  const centerX = cardRect.left + cardRect.width / 2;
+  const centerY = cardRect.top + cardRect.height / 2;
+
+  // Calculate the position of the mouse relative to the center of the card
+  const mouseX = e.clientX;
+  const mouseY = e.clientY;
+
+  // Calculate how much the mouse is offset from the center of the card
+  const offsetX = (mouseX - centerX) / (cardRect.width / 2);
+  const offsetY = (mouseY - centerY) / (cardRect.height / 2);
+
+  // Apply the 3D rotation effect
+  const rotationX = offsetY * 15;  // Adjust the multiplier for sensitivity on X-axis
+  const rotationY = offsetX * -15;  // Adjust the multiplier for sensitivity on Y-axis
+
+  // Set the transform property with rotation based on the mouse position
+  card.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const yearSpan = document.getElementById("year");
+  const currentYear = new Date().getFullYear();
+  yearSpan.textContent = currentYear;
+
+  // Add copy-to-clipboard functionality for copy buttons
+  const copyButton = document.querySelector(".copy-btn");
+  copyButton.addEventListener("click", function () {
+    const textToCopy = copyButton.getAttribute("data-copy");
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      const originalText = copyButton.textContent;
+      copyButton.textContent = "Copied!";
+      setTimeout(() => {
+        copyButton.textContent = originalText;
+      }, 2000);
+    }).catch((err) => {
+      console.error("Could not copy text: ", err);
+    });
+  });
+});

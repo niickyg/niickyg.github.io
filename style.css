@@ -1,0 +1,157 @@
+/* Reset default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* General Body Styling for Dark Theme with Patterned Background */
+body {
+  font-family: 'Inter', sans-serif; /* Clean, modern font */
+  background-color: #1a1a1a; /* Fallback dark grey background */
+  color: #e0e0e0; /* Light grey text for contrast */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  background: url('webwallpaper.png'); /* Ensure the dark pattern background is used */
+  background-size: cover; /* Cover the whole body */
+  background-position: center;
+  background-attachment: fixed; /* Keeps the pattern fixed during scrolling */
+}
+
+/* Card Wrapper: Centering the card */
+.card-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Business Card Styling with Dark Theme */
+.business-card {
+  background-color: rgba(30, 30, 30, 0.85);  /* Darker background with transparency */
+  border-radius: 16px; /* Rounded corners */
+  padding: 40px;
+  width: 500px; /* Fixed width */
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3); /* Stronger shadow for depth */
+  transition: transform 0.3s ease-in-out;
+  text-align: center;
+  transform-style: preserve-3d;
+  perspective: 1000px; /* Depth for 3D transforms */
+}
+
+/* Header Section: Name and Title */
+.card-header h1 {
+  font-family: 'Roboto Slab', serif; /* Bold, professional font for name */
+  font-size: 2.8rem; /* Adjusted size for a clean look */
+  color: #ffffff; /* Light text color for better visibility */
+  margin-bottom: 10px;
+  font-weight: 600;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5); /* Soft shadow for emphasis */
+}
+
+.card-header h2 {
+  font-family: 'Inter', sans-serif; /* Clean, modern font for subtitle */
+  font-size: 1.2rem;
+  color: #b3b3b3; /* Light grey color for subtitle */
+  font-weight: 500;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Contact Info Section with Dark Theme */
+.card-body p {
+  margin: 18px 0;
+  font-size: 1.1rem; /* Slightly smaller text */
+  color: #e0e0e0;
+  line-height: 1.6;
+  text-align: left;
+  position: relative;
+  padding-left: 24px;
+  display: flex;
+  align-items: center;
+}
+
+/* Icons for Contact Info */
+.card-body p i {
+  color: #00c4cc; /* Vibrant accent color for icons */
+  margin-right: 12px;
+  font-size: 1.5rem;
+}
+
+/* Links Styling */
+.card-body a {
+  color: #00c4cc; /* Accent color for links */
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.card-body a:hover {
+  color: #ff4081; /* Change to pink on hover */
+  text-decoration: underline;
+  transform: translateX(5px); /* Smooth movement effect */
+}
+
+/* Copy Button */
+.copy-btn {
+  background: rgba(30, 30, 30, 0.85); /* Dark gray button color */
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px; /* Rounded button corners */
+  cursor: pointer;
+  font-size: 1rem; /* Button font size */
+  transition: background 0.3s ease, transform 0.3s ease;
+  margin-left: 15px;
+}
+
+.copy-btn:hover {
+  background: #555; /* Slightly lighter gray on hover */
+  transform: translateY(-3px); /* Slight lift effect */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Enhanced shadow effect */
+}
+
+/* Footer Section */
+.card-footer {
+  margin-top: 30px;
+  font-size: 0.8rem;
+  color: #888; /* Lighter footer text */
+  border-top: 1px solid #444;
+  padding-top: 10px;
+}
+
+/* Card Body Content Lift on Hover */
+.card-body a:hover, .copy-btn:hover {
+  color: #ff4081; /* Change hover color to pink */
+  transform: translateY(-3px);
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+  .business-card {
+    width: 90%;
+    padding: 30px;
+  }
+
+  .card-header h1 {
+    font-size: 2.4rem;
+  }
+
+  .card-header h2 {
+    font-size: 1.1rem;
+  }
+
+  .card-body p {
+    font-size: 1rem;
+  }
+
+  .copy-btn {
+    font-size: 0.9rem;
+  }
+}
+
+
