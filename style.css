@@ -73,14 +73,18 @@ body {
   padding-left: 24px;
   display: flex;
   align-items: center;
-  flex-wrap: wrap; /* Allow content to wrap on smaller screens */
+  flex-wrap: nowrap; /* Keep items on one line */
+}
 
-/* Apply styles to anchor tags within .card-body p */
+/* Ensure the link can shrink and wrap without breaking the layout */
 .card-body p a {
-  color: #00c4cc; /* Accent color for links */
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s ease, transform 0.3s ease;
+  flex: 1;         /* Allow the link to take up available space */
+  min-width: 0;    /* Allow it to shrink below its content's natural width */
+  overflow-wrap: break-word;  /* Break long words/URLs */
+  word-break: break-word;       /* Ensure the URL wraps if needed */
+  /* Optionally, add a slight left margin if you want spacing between the icon and the text */
+  /* margin-left: 5px; */
+}
   
   /* Ensure long URLs wrap correctly */
   overflow-wrap: break-word;
