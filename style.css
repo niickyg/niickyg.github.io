@@ -74,6 +74,20 @@ body {
   display: flex;
   align-items: center;
   flex-wrap: wrap; /* Allow content to wrap on smaller screens */
+
+/* Apply styles to anchor tags within .card-body p */
+.card-body p a {
+  color: #00c4cc; /* Accent color for links */
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease, transform 0.3s ease;
+  
+  /* Ensure long URLs wrap correctly */
+  overflow-wrap: break-word;
+  word-break: break-all;
+  min-width: 0;
+  max-width: 100%;
+}
 }
 
 /* Icons for Contact Info */
