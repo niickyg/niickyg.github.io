@@ -104,7 +104,7 @@ body {
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease, transform 0.3s ease;
-  word-break: break-word; /* Break long URLs if needed */
+  word-break: break-all; /* Break long URLs if needed */
 }
 
 .card-body a:hover {
