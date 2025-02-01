@@ -130,6 +130,8 @@ body {
   transform: translateY(-3px);
 }
 
+/* Existing styles above remain unchanged... */
+
 /* Responsive Design for Mobile */
 @media (max-width: 768px) {
   .business-card {
@@ -149,9 +151,11 @@ body {
     font-size: 1rem;
   }
 
+  /* Adjust the copy button for mobile */
   .copy-btn {
-    font-size: 0.9rem;
+    font-size: 0.9rem;         /* Slightly smaller font size */
+    padding: 6px 14px;         /* Reduced padding */
+    margin-left: 10px;         /* Reduced margin for better spacing */
   }
 }
-
 
