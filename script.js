@@ -837,16 +837,11 @@ window.addEventListener('scroll', () => {
 // ===== 3D CARD TILT EFFECTS =====
 
 function init3DCards() {
-  const cards = document.querySelectorAll('.project-card, .skill-card, .homelab-card, .blog-card');
+  const cards = document.querySelectorAll('.skill-card, .homelab-card, .blog-card');
 
   cards.forEach(card => {
-    card.classList.add('card-3d');
-
-    // Wrap content in inner div for 3D transform
-    const content = card.innerHTML;
-    card.innerHTML = `<div class="card-3d-inner">${content}</div>`;
-
-    const inner = card.querySelector('.card-3d-inner');
+    card.style.transformStyle = 'preserve-3d';
+    card.style.transition = 'transform 0.1s ease-out';
 
     card.addEventListener('mousemove', (e) => {
       const rect = card.getBoundingClientRect();
@@ -856,16 +851,39 @@ function init3DCards() {
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
 
-      const rotateX = ((y - centerY) / centerY) * -15;
-      const rotateY = ((x - centerX) / centerX) * 15;
+      const rotateX = ((y - centerY) / centerY) * -8;
+      const rotateY = ((x - centerX) / centerX) * 8;
 
-      card.style.setProperty('--rotate-x', `${rotateX}deg`);
-      card.style.setProperty('--rotate-y', `${rotateY}deg`);
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
     });
 
     card.addEventListener('mouseleave', () => {
-      card.style.setProperty('--rotate-x', '0deg');
-      card.style.setProperty('--rotate-y', '0deg');
+      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+    });
+  });
+
+  // Bento items get simpler 3D effect
+  const bentoItems = document.querySelectorAll('.bento-item');
+  bentoItems.forEach(item => {
+    item.style.transformStyle = 'preserve-3d';
+    item.style.transition = 'transform 0.1s ease-out';
+
+    item.addEventListener('mousemove', (e) => {
+      const rect = item.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = ((y - centerY) / centerY) * -5;
+      const rotateY = ((x - centerX) / centerX) * 5;
+
+      item.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+
+    item.addEventListener('mouseleave', () => {
+      item.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
     });
   });
 }
@@ -944,17 +962,13 @@ document.querySelectorAll('.section-title').forEach(title => {
 const scrollObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      entry.target.style.opacity = '1';
-      entry.target.style.transform = 'translateY(0)';
+      entry.target.classList.add('visible');
     }
   });
 }, { threshold: 0.1 });
 
-// Observe all cards and sections
-document.querySelectorAll('.project-card, .skill-card, .homelab-card, .blog-card, section').forEach(el => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(50px)';
-  el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+// Observe all cards (not sections, they already have scroll reveal)
+document.querySelectorAll('.skill-card, .homelab-card, .blog-card, .bento-item').forEach(el => {
   scrollObserver.observe(el);
 });
 
