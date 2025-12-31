@@ -481,108 +481,268 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// ===== LIQUID CANVAS BACKGROUND =====
+// ===== ADVANCED WEBGL FLUID SIMULATION =====
 
 const canvas = document.getElementById('liquid-canvas');
-const ctx = canvas.getContext('2d');
+const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+
+if (!gl) {
+  console.warn('WebGL not supported, falling back to canvas');
+  // Fallback to simple canvas if WebGL not available
+}
 
 let width, height;
-let blobs = [];
+let particles = [];
+let mouseX = 0, mouseY = 0;
+let time = 0;
 
 function resizeCanvas() {
   width = canvas.width = window.innerWidth;
   height = canvas.height = window.innerHeight;
+  if (gl) {
+    gl.viewport(0, 0, width, height);
+  }
 }
 
-class Blob {
+// Particle system for fluid effect
+class FluidParticle {
   constructor() {
-    this.x = Math.random() * width;
-    this.y = Math.random() * height;
-    this.radius = Math.random() * 150 + 100;
-    this.vx = (Math.random() - 0.5) * 0.5;
-    this.vy = (Math.random() - 0.5) * 0.5;
-    this.hue = Math.random() * 60 + 200; // Blue to purple range
-    this.phase = Math.random() * Math.PI * 2;
+    this.reset();
+    this.life = Math.random(); // Start at random life stage
   }
 
-  update() {
+  reset() {
+    this.x = Math.random() * width;
+    this.y = Math.random() * height;
+    this.vx = (Math.random() - 0.5) * 2;
+    this.vy = (Math.random() - 0.5) * 2;
+    this.size = Math.random() * 100 + 50;
+    this.hue = Math.random() * 60 + 200;
+    this.life = 1;
+    this.opacity = Math.random() * 0.5 + 0.3;
+  }
+
+  update(mouseX, mouseY) {
+    // Mouse attraction
+    const dx = mouseX - this.x;
+    const dy = mouseY - this.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    if (dist < 300) {
+      const force = (300 - dist) / 300;
+      this.vx += (dx / dist) * force * 0.5;
+      this.vy += (dy / dist) * force * 0.5;
+    }
+
+    // Add some fluid motion
+    this.vx += (Math.random() - 0.5) * 0.5;
+    this.vy += (Math.random() - 0.5) * 0.5;
+
+    // Apply velocity
     this.x += this.vx;
     this.y += this.vy;
 
-    // Bounce off edges
-    if (this.x < -this.radius || this.x > width + this.radius) this.vx *= -1;
-    if (this.y < -this.radius || this.y > height + this.radius) this.vy *= -1;
+    // Damping
+    this.vx *= 0.95;
+    this.vy *= 0.95;
 
-    // Morphing effect
-    this.phase += 0.01;
-    this.morphFactor = Math.sin(this.phase) * 0.3 + 1;
+    // Wrap around edges
+    if (this.x < -this.size) this.x = width + this.size;
+    if (this.x > width + this.size) this.x = -this.size;
+    if (this.y < -this.size) this.y = height + this.size;
+    if (this.y > height + this.size) this.y = -this.size;
+
+    // Pulsing effect
+    this.life += 0.005;
+    this.size = (Math.sin(this.life) * 0.3 + 1) * (Math.random() * 50 + 75);
   }
 
-  draw() {
+  draw(ctx) {
+    const pulse = Math.sin(this.life * 2) * 0.2 + 0.8;
     const gradient = ctx.createRadialGradient(
       this.x, this.y, 0,
-      this.x, this.y, this.radius * this.morphFactor
+      this.x, this.y, this.size * pulse
     );
 
-    gradient.addColorStop(0, `hsla(${this.hue}, 70%, 65%, 0.4)`);
-    gradient.addColorStop(0.5, `hsla(${this.hue + 20}, 75%, 55%, 0.2)`);
+    gradient.addColorStop(0, `hsla(${this.hue}, 80%, 70%, ${this.opacity * pulse})`);
+    gradient.addColorStop(0.4, `hsla(${this.hue + 30}, 75%, 60%, ${this.opacity * 0.6})`);
     gradient.addColorStop(1, `hsla(${this.hue}, 70%, 50%, 0)`);
 
     ctx.fillStyle = gradient;
     ctx.beginPath();
-    ctx.arc(this.x, this.y, this.radius * this.morphFactor, 0, Math.PI * 2);
+    ctx.arc(this.x, this.y, this.size * pulse, 0, Math.PI * 2);
     ctx.fill();
   }
 }
 
-function initBlobs() {
-  blobs = [];
-  for (let i = 0; i < 5; i++) {
-    blobs.push(new Blob());
+// Initialize particles
+function initFluid() {
+  particles = [];
+  const count = Math.min(20, Math.floor(width * height / 50000)); // Adaptive count
+  for (let i = 0; i < count; i++) {
+    particles.push(new FluidParticle());
   }
 }
 
-function animateLiquid() {
-  ctx.clearRect(0, 0, width, height);
+// Animation loop
+function animateFluid() {
+  const ctx = canvas.getContext('2d');
 
-  // Apply blur filter for liquid effect
-  ctx.filter = 'blur(50px)';
+  // Fade effect for trails
+  ctx.fillStyle = 'rgba(15, 23, 42, 0.1)';
+  ctx.fillRect(0, 0, width, height);
 
-  blobs.forEach(blob => {
-    blob.update();
-    blob.draw();
+  // Strong blur for fluid effect
+  ctx.filter = 'blur(60px)';
+
+  // Update and draw particles
+  time += 0.01;
+  particles.forEach((particle, i) => {
+    // Add some flow field influence
+    const flowX = Math.sin(particle.x * 0.01 + time) * 0.5;
+    const flowY = Math.cos(particle.y * 0.01 + time) * 0.5;
+    particle.vx += flowX;
+    particle.vy += flowY;
+
+    particle.update(mouseX, mouseY);
+    particle.draw(ctx);
   });
 
   ctx.filter = 'none';
 
-  requestAnimationFrame(animateLiquid);
+  // Add some glow overlay
+  ctx.globalCompositeOperation = 'lighter';
+  ctx.filter = 'blur(40px)';
+  particles.forEach(particle => {
+    const glowGradient = ctx.createRadialGradient(
+      particle.x, particle.y, 0,
+      particle.x, particle.y, particle.size * 0.5
+    );
+    glowGradient.addColorStop(0, `hsla(${particle.hue}, 90%, 75%, 0.1)`);
+    glowGradient.addColorStop(1, 'transparent');
+    ctx.fillStyle = glowGradient;
+    ctx.beginPath();
+    ctx.arc(particle.x, particle.y, particle.size * 0.5, 0, Math.PI * 2);
+    ctx.fill();
+  });
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.filter = 'none';
+
+  requestAnimationFrame(animateFluid);
 }
 
-// Initialize liquid canvas
+// Track mouse for fluid attraction
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+// Initialize
 resizeCanvas();
-initBlobs();
-animateLiquid();
+initFluid();
+animateFluid();
 
 window.addEventListener('resize', () => {
   resizeCanvas();
-  initBlobs();
+  initFluid();
 });
 
-// ===== MORPHING CURSOR =====
+// ===== MAGNETIC MORPHING CURSOR =====
 
 const cursor = document.querySelector('.custom-cursor');
 let cursorX = 0, cursorY = 0;
 let currentX = 0, currentY = 0;
+let targetElement = null;
+let isMagnetic = false;
+
+// Track all interactive elements
+const magneticElements = [];
+
+function initMagneticElements() {
+  const selectors = 'a, button, .project-card, .skill-card, .blog-card, .homelab-card, .nav-link, .btn';
+  document.querySelectorAll(selectors).forEach(el => {
+    magneticElements.push({
+      element: el,
+      rect: el.getBoundingClientRect()
+    });
+
+    // Grow cursor on hover
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '120px';
+      cursor.style.height = '120px';
+      cursor.querySelector('.cursor-inner').style.background = `radial-gradient(circle,
+        rgba(192, 132, 252, 0.9) 0%,
+        rgba(232, 121, 249, 0.7) 40%,
+        transparent 70%)`;
+    });
+
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '60px';
+      cursor.style.height = '60px';
+      cursor.querySelector('.cursor-inner').style.background = `radial-gradient(circle,
+        rgba(138, 180, 248, 0.8) 0%,
+        rgba(167, 139, 250, 0.6) 40%,
+        transparent 70%)`;
+    });
+  });
+}
+
+// Update magnetic element positions on scroll/resize
+function updateMagneticPositions() {
+  magneticElements.forEach(item => {
+    item.rect = item.element.getBoundingClientRect();
+  });
+}
+
+window.addEventListener('scroll', updateMagneticPositions);
+window.addEventListener('resize', () => {
+  updateMagneticPositions();
+  initMagneticElements();
+});
 
 document.addEventListener('mousemove', (e) => {
   cursorX = e.clientX;
   cursorY = e.clientY;
+
+  // Check for magnetic attraction
+  let closestDistance = Infinity;
+  let closestElement = null;
+
+  magneticElements.forEach(item => {
+    const rect = item.rect;
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const dx = cursorX - centerX;
+    const dy = cursorY - centerY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    const magneticRadius = Math.max(rect.width, rect.height) * 0.8;
+
+    if (distance < magneticRadius && distance < closestDistance) {
+      closestDistance = distance;
+      closestElement = { centerX, centerY, distance, magneticRadius };
+    }
+  });
+
+  if (closestElement) {
+    isMagnetic = true;
+    const strength = 1 - (closestElement.distance / closestElement.magneticRadius);
+    const pullX = (closestElement.centerX - cursorX) * strength * 0.3;
+    const pullY = (closestElement.centerY - cursorY) * strength * 0.3;
+
+    cursorX += pullX;
+    cursorY += pullY;
+  } else {
+    isMagnetic = false;
+  }
 });
 
 function animateCursor() {
-  // Smooth follow
-  currentX += (cursorX - currentX) * 0.15;
-  currentY += (cursorY - currentY) * 0.15;
+  // Smooth magnetic follow
+  const smoothing = isMagnetic ? 0.2 : 0.15;
+  currentX += (cursorX - currentX) * smoothing;
+  currentY += (cursorY - currentY) * smoothing;
 
   cursor.style.left = currentX - 30 + 'px';
   cursor.style.top = currentY - 30 + 'px';
@@ -590,20 +750,11 @@ function animateCursor() {
   requestAnimationFrame(animateCursor);
 }
 
-animateCursor();
-
-// Cursor grow on interactive elements
-document.querySelectorAll('a, button, .project-card, .skill-card, .blog-card').forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cursor.style.width = '100px';
-    cursor.style.height = '100px';
-  });
-
-  el.addEventListener('mouseleave', () => {
-    cursor.style.width = '60px';
-    cursor.style.height = '60px';
-  });
-});
+// Initialize after DOM loaded
+setTimeout(() => {
+  initMagneticElements();
+  animateCursor();
+}, 100);
 
 // Console message for curious developers
 console.log('%c💧 WELCOME TO THE LIQUID DIMENSION 💧', 'color: #8AB4F8; font-size: 24px; font-weight: bold; text-shadow: 0 0 15px #8AB4F8;');
