@@ -1,116 +1,143 @@
-// Set current year in footer
-document.getElementById('year').textContent = new Date().getFullYear();
+// Console message for curious developers - MUST be at top before any DOM access
+console.log('%c💧 WELCOME TO THE LIQUID DIMENSION 💧', 'color: #8AB4F8; font-size: 24px; font-weight: bold; text-shadow: 0 0 15px #8AB4F8;');
+console.log('%c✨ Interactive Features:', 'color: #A78BFA; font-size: 16px; font-weight: bold;');
+console.log('%c  🌊 Morphing liquid blobs in background', 'color: #8AB4F8; font-size: 13px;');
+console.log('%c  ⭐ Interactive Skill Constellation Network', 'color: #60D394; font-size: 14px; font-weight: bold;');
+console.log('%c  🖱️  Custom morphing cursor that follows you', 'color: #8AB4F8; font-size: 13px;');
+console.log('%c  ✨ Mouse trail particles everywhere', 'color: #A78BFA; font-size: 13px;');
+console.log('%c  👆 Click the logo 5 times', 'color: #C084FC; font-size: 13px;');
+console.log('%c  ⌨️  Try the Konami code (↑↑↓↓←→←→BA)', 'color: #C084FC; font-size: 13px;');
+console.log('%c  💬 Type "neon" anywhere for explosion', 'color: #E879F9; font-size: 13px;');
+console.log('%c  🪟 Type "glass" to toggle glassmorphism', 'color: #E879F9; font-size: 13px;');
+console.log('%c  👋 Double-click the hero section to shake', 'color: #8AB4F8; font-size: 13px;');
+console.log('%c  🎯 Click on cards for ripple effects', 'color: #A78BFA; font-size: 13px;');
+console.log('%c  🎨 Hover over section titles for color magic', 'color: #C084FC; font-size: 13px;');
+console.log('%c  🎪 3D tilt on cards when you hover', 'color: #E879F9; font-size: 13px;');
+console.log('%c\n💎 Flowing smoothly through the digital universe', 'color: #A78BFA; font-size: 12px; font-style: italic;');
 
-// Navbar scroll effect
-window.addEventListener('scroll', () => {
-  const navbar = document.querySelector('.navbar');
-  if (window.scrollY > 50) {
-    navbar.classList.add('scrolled');
-  } else {
-    navbar.classList.remove('scrolled');
+// Wrap all DOM-dependent initialization in DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+  // Set current year in footer
+  const yearElement = document.getElementById('year');
+  if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
   }
-});
 
-// Scroll reveal animation for sections
-const revealSections = () => {
-  const sections = document.querySelectorAll('section');
-  const windowHeight = window.innerHeight;
-
-  sections.forEach(section => {
-    const sectionTop = section.getBoundingClientRect().top;
-    const revealPoint = 100;
-
-    if (sectionTop < windowHeight - revealPoint) {
-      section.classList.add('visible');
+  // Navbar scroll effect
+  window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    if (navbar && window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else if (navbar) {
+      navbar.classList.remove('scrolled');
     }
   });
-};
 
-window.addEventListener('scroll', revealSections);
-window.addEventListener('load', revealSections);
-// Also call on DOMContentLoaded to ensure it runs early
-document.addEventListener('DOMContentLoaded', revealSections);
+  // Scroll reveal animation for sections
+  const revealSections = () => {
+    const sections = document.querySelectorAll('section');
+    const windowHeight = window.innerHeight;
 
-// Mobile navigation toggle
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
+    sections.forEach(section => {
+      const sectionTop = section.getBoundingClientRect().top;
+      const revealPoint = 100;
 
-hamburger.addEventListener('click', () => {
-  navMenu.classList.toggle('active');
-  hamburger.classList.toggle('active');
-});
+      if (sectionTop < windowHeight - revealPoint) {
+        section.classList.add('visible');
+      }
+    });
+  };
 
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', () => {
-    navMenu.classList.remove('active');
-    hamburger.classList.remove('active');
-  });
-});
+  window.addEventListener('scroll', revealSections);
+  window.addEventListener('load', revealSections);
+  // Call immediately since DOM is ready
+  revealSections();
 
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      const offsetTop = target.offsetTop - 70;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: 'smooth'
+  // Mobile navigation toggle
+  const hamburger = document.querySelector('.hamburger');
+  const navMenu = document.querySelector('.nav-menu');
+
+  if (hamburger && navMenu) {
+    hamburger.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        hamburger.classList.remove('active');
       });
+    });
+  }
+
+  // Smooth scrolling for navigation links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        const offsetTop = target.offsetTop - 70;
+        window.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
+  // Blog modal functionality
+  const blogModal = document.getElementById('blogModal');
+  const blogModalBody = document.getElementById('blogModalBody');
+  const blogModalClose = document.querySelector('.blog-modal-close');
+
+  // Open blog modal
+  document.querySelectorAll('.read-more').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const blogId = e.currentTarget.getAttribute('data-blog');
+      const blogContent = document.getElementById(blogId);
+
+      if (blogContent && blogModal && blogModalBody) {
+        blogModalBody.innerHTML = blogContent.innerHTML;
+        blogModal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+      }
+    });
+  });
+
+  // Close blog modal
+  if (blogModalClose) {
+    blogModalClose.addEventListener('click', () => {
+      if (blogModal) {
+        blogModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+  }
+
+  // Close modal when clicking outside
+  window.addEventListener('click', (e) => {
+    if (blogModal && e.target === blogModal) {
+      blogModal.style.display = 'none';
+      document.body.style.overflow = 'auto';
     }
   });
-});
 
-// Blog modal functionality
-const blogModal = document.getElementById('blogModal');
-const blogModalBody = document.getElementById('blogModalBody');
-const blogModalClose = document.querySelector('.blog-modal-close');
-
-// Open blog modal
-document.querySelectorAll('.read-more').forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    const blogId = e.currentTarget.getAttribute('data-blog');
-    const blogContent = document.getElementById(blogId);
-
-    if (blogContent && blogModal && blogModalBody) {
-      blogModalBody.innerHTML = blogContent.innerHTML;
-      blogModal.style.display = 'block';
-      document.body.style.overflow = 'hidden';
+  // Close modal with Escape key
+  document.addEventListener('keydown', (e) => {
+    if (blogModal && e.key === 'Escape' && blogModal.style.display === 'block') {
+      blogModal.style.display = 'none';
+      document.body.style.overflow = 'auto';
     }
   });
-});
-
-// Close blog modal
-if (blogModalClose) {
-  blogModalClose.addEventListener('click', () => {
-    blogModal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-  });
-}
-
-// Close modal when clicking outside
-window.addEventListener('click', (e) => {
-  if (e.target === blogModal) {
-    blogModal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-  }
-});
-
-// Close modal with Escape key
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && blogModal.style.display === 'block') {
-    blogModal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-  }
 });
 
 // ===== INTERACTIVE FEATURES & EASTER EGGS =====
 
 // Mouse trail effect with colorful particles
-let particles = [];
+let mouseParticles = [];
 const colors = ['#60D394', '#AAF683', '#FFD97D', '#FF9B85', '#4ECDC4', '#44A08D', '#F38181', '#95E1D3'];
 
 document.addEventListener('mousemove', (e) => {
@@ -198,15 +225,21 @@ function activateMatrixMode() {
 
 // Secret click counter on logo
 let logoClicks = 0;
-const navLogo = document.querySelector('.nav-logo');
 
-navLogo.addEventListener('click', (e) => {
-  e.preventDefault();
-  logoClicks++;
+// Wrap in DOMContentLoaded to ensure element exists
+document.addEventListener('DOMContentLoaded', () => {
+  const navLogo = document.querySelector('.nav-logo');
 
-  if (logoClicks === 5) {
-    showSecretMessage();
-    logoClicks = 0;
+  if (navLogo) {
+    navLogo.addEventListener('click', (e) => {
+      e.preventDefault();
+      logoClicks++;
+
+      if (logoClicks === 5) {
+        showSecretMessage();
+        logoClicks = 0;
+      }
+    });
   }
 });
 
@@ -257,38 +290,40 @@ function showSecretMessage() {
 }
 
 // Interactive project cards - click to trigger portal effect
-document.querySelectorAll('.project-card, .homelab-card').forEach(card => {
-  card.addEventListener('click', function(e) {
-    if (e.target.tagName === 'A' || e.target.closest('a')) return;
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.project-card, .homelab-card').forEach(card => {
+    card.addEventListener('click', function(e) {
+      if (e.target.tagName === 'A' || e.target.closest('a')) return;
 
-    const ripple = document.createElement('div');
-    const rect = this.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+      const ripple = document.createElement('div');
+      const rect = this.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
 
-    ripple.style.cssText = `
-      position: absolute;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(79, 195, 247, 0.6), rgba(126, 87, 194, 0.3), transparent);
-      width: 20px;
-      height: 20px;
-      left: ${x}px;
-      top: ${y}px;
-      transform: translate(-50%, -50%) scale(0);
-      pointer-events: none;
-      transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease-out;
-      opacity: 1;
-    `;
+      ripple.style.cssText = `
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(79, 195, 247, 0.6), rgba(126, 87, 194, 0.3), transparent);
+        width: 20px;
+        height: 20px;
+        left: ${x}px;
+        top: ${y}px;
+        transform: translate(-50%, -50%) scale(0);
+        pointer-events: none;
+        transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease-out;
+        opacity: 1;
+      `;
 
-    this.style.position = 'relative';
-    this.appendChild(ripple);
+      this.style.position = 'relative';
+      this.appendChild(ripple);
 
-    setTimeout(() => {
-      ripple.style.transform = 'translate(-50%, -50%) scale(25)';
-      ripple.style.opacity = '0';
-    }, 10);
+      setTimeout(() => {
+        ripple.style.transform = 'translate(-50%, -50%) scale(25)';
+        ripple.style.opacity = '0';
+      }, 10);
 
-    setTimeout(() => ripple.remove(), 800);
+      setTimeout(() => ripple.remove(), 800);
+    });
   });
 });
 
@@ -325,44 +360,49 @@ document.addEventListener('mousemove', (e) => {
 });
 
 // Section titles color shift on hover
-document.querySelectorAll('.section-title').forEach(title => {
-  title.addEventListener('mouseenter', function() {
-    const randomHue = Math.floor(Math.random() * 360);
-    this.style.filter = `hue-rotate(${randomHue}deg) saturate(1.3)`;
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.section-title').forEach(title => {
+    title.addEventListener('mouseenter', function() {
+      const randomHue = Math.floor(Math.random() * 360);
+      this.style.filter = `hue-rotate(${randomHue}deg) saturate(1.3)`;
+    });
+
+    title.addEventListener('mouseleave', function() {
+      this.style.filter = 'none';
+    });
   });
 
-  title.addEventListener('mouseleave', function() {
-    this.style.filter = 'none';
+  // Skill cards and homelab cards 3D tilt effect
+  document.querySelectorAll('.skill-card, .homelab-card, .blog-card').forEach(card => {
+    card.addEventListener('mousemove', function(e) {
+      const rect = this.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = ((y - centerY) / centerY) * 8;
+      const rotateY = ((x - centerX) / centerX) * 8;
+
+      this.style.transform = `perspective(1000px) rotateX(${-rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
+    });
+
+    card.addEventListener('mouseleave', function() {
+      this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
+    });
   });
-});
 
-// Skill cards and homelab cards 3D tilt effect
-document.querySelectorAll('.skill-card, .homelab-card, .blog-card').forEach(card => {
-  card.addEventListener('mousemove', function(e) {
-    const rect = this.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotateX = ((y - centerY) / centerY) * 8;
-    const rotateY = ((x - centerX) / centerX) * 8;
-
-    this.style.transform = `perspective(1000px) rotateX(${-rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
-  });
-
-  card.addEventListener('mouseleave', function() {
-    this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
-  });
-});
-
-// Double-click on hero to trigger screen shake
-document.querySelector('.hero')?.addEventListener('dblclick', () => {
-  document.body.style.animation = 'shake 0.5s';
-  setTimeout(() => {
-    document.body.style.animation = '';
-  }, 500);
+  // Double-click on hero to trigger screen shake
+  const hero = document.querySelector('.hero');
+  if (hero) {
+    hero.addEventListener('dblclick', () => {
+      document.body.style.animation = 'shake 0.5s';
+      setTimeout(() => {
+        document.body.style.animation = '';
+      }, 500);
+    });
+  }
 });
 
 // Easter egg: type "glass" anywhere on the page to toggle glassmorphism intensity
@@ -485,20 +525,15 @@ document.head.appendChild(style);
 
 // ===== ADVANCED WEBGL FLUID SIMULATION =====
 
-const canvas = document.getElementById('liquid-canvas');
-const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-
-if (!gl) {
-  console.warn('WebGL not supported, falling back to canvas');
-  // Fallback to simple canvas if WebGL not available
-}
-
+let canvas = null;
+let gl = null;
 let width, height;
-let particles = [];
-let mouseX = 0, mouseY = 0;
+let fluidParticles = [];
+let fluidMouseX = 0, fluidMouseY = 0;
 let time = 0;
 
 function resizeCanvas() {
+  if (!canvas) return;
   width = canvas.width = window.innerWidth;
   height = canvas.height = window.innerHeight;
   if (gl) {
@@ -579,15 +614,16 @@ class FluidParticle {
 
 // Initialize particles
 function initFluid() {
-  particles = [];
+  fluidParticles = [];
   const count = Math.min(20, Math.floor(width * height / 50000)); // Adaptive count
   for (let i = 0; i < count; i++) {
-    particles.push(new FluidParticle());
+    fluidParticles.push(new FluidParticle());
   }
 }
 
 // Animation loop
 function animateFluid() {
+  if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
   // Fade effect for trails
@@ -599,14 +635,14 @@ function animateFluid() {
 
   // Update and draw particles
   time += 0.01;
-  particles.forEach((particle, i) => {
+  fluidParticles.forEach((particle, i) => {
     // Add some flow field influence
     const flowX = Math.sin(particle.x * 0.01 + time) * 0.5;
     const flowY = Math.cos(particle.y * 0.01 + time) * 0.5;
     particle.vx += flowX;
     particle.vy += flowY;
 
-    particle.update(mouseX, mouseY);
+    particle.update(fluidMouseX, fluidMouseY);
     particle.draw(ctx);
   });
 
@@ -615,7 +651,7 @@ function animateFluid() {
   // Add some glow overlay
   ctx.globalCompositeOperation = 'lighter';
   ctx.filter = 'blur(40px)';
-  particles.forEach(particle => {
+  fluidParticles.forEach(particle => {
     const glowGradient = ctx.createRadialGradient(
       particle.x, particle.y, 0,
       particle.x, particle.y, particle.size * 0.5
@@ -635,18 +671,33 @@ function animateFluid() {
 
 // Track mouse for fluid attraction
 document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
+  fluidMouseX = e.clientX;
+  fluidMouseY = e.clientY;
 });
 
-// Initialize
-resizeCanvas();
-initFluid();
-animateFluid();
+// Initialize fluid simulation after DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  canvas = document.getElementById('liquid-canvas');
 
-window.addEventListener('resize', () => {
-  resizeCanvas();
-  initFluid();
+  if (canvas) {
+    gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+
+    if (!gl) {
+      console.warn('WebGL not supported, falling back to canvas');
+      // Fallback to simple canvas if WebGL not available
+    }
+
+    resizeCanvas();
+    initFluid();
+    animateFluid();
+
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      initFluid();
+    });
+  } else {
+    console.error('Liquid canvas element not found!');
+  }
 });
 
 // ===== MAGNETIC MORPHING CURSOR =====
@@ -795,55 +846,61 @@ function splitText(element) {
 }
 
 // Apply to hero title
-const heroTitle = document.querySelector('.hero-title');
-if (heroTitle) {
-  splitText(heroTitle);
+document.addEventListener('DOMContentLoaded', () => {
+  const heroTitle = document.querySelector('.hero-title');
+  if (heroTitle) {
+    splitText(heroTitle);
 
-  // Kinetic typography - follows mouse
-  let titleMouseX = 0, titleMouseY = 0;
+    // Kinetic typography - follows mouse
+    let titleMouseX = 0, titleMouseY = 0;
 
-  document.addEventListener('mousemove', (e) => {
-    titleMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-    titleMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-  });
-
-  function animateHeroText() {
-    const chars = heroTitle.querySelectorAll('.char');
-    chars.forEach((char, index) => {
-      const offsetX = titleMouseX * (10 + index * 0.5);
-      const offsetY = titleMouseY * (10 + index * 0.5);
-      const delay = index * 0.02;
-
-      char.style.transform = `translate(${offsetX}px, ${offsetY}px) rotate(${titleMouseX * 2}deg)`;
-      char.style.transitionDelay = `${delay}s`;
+    document.addEventListener('mousemove', (e) => {
+      titleMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+      titleMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
     });
 
-    requestAnimationFrame(animateHeroText);
-  }
+    function animateHeroText() {
+      const chars = heroTitle.querySelectorAll('.char');
+      chars.forEach((char, index) => {
+        const offsetX = titleMouseX * (10 + index * 0.5);
+        const offsetY = titleMouseY * (10 + index * 0.5);
+        const delay = index * 0.02;
 
-  animateHeroText();
-}
+        char.style.transform = `translate(${offsetX}px, ${offsetY}px) rotate(${titleMouseX * 2}deg)`;
+        char.style.transitionDelay = `${delay}s`;
+      });
+
+      requestAnimationFrame(animateHeroText);
+    }
+
+    animateHeroText();
+  }
+});
 
 // ===== SCROLL-VELOCITY ANIMATIONS =====
 
-let lastScrollY = window.scrollY;
+let lastScrollY = 0;
 let scrollVelocity = 0;
 
-window.addEventListener('scroll', () => {
-  const currentScrollY = window.scrollY;
-  scrollVelocity = currentScrollY - lastScrollY;
-  lastScrollY = currentScrollY;
+document.addEventListener('DOMContentLoaded', () => {
+  lastScrollY = window.scrollY;
 
-  // Apply to section titles
-  document.querySelectorAll('.section-title').forEach(title => {
-    const speed = scrollVelocity * 0.5;
-    title.style.transform = `translateX(${speed}px)`;
+  window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+    scrollVelocity = currentScrollY - lastScrollY;
+    lastScrollY = currentScrollY;
+
+    // Apply to section titles
+    document.querySelectorAll('.section-title').forEach(title => {
+      const speed = scrollVelocity * 0.5;
+      title.style.transform = `translateX(${speed}px)`;
+    });
+
+    // Slow decay
+    setTimeout(() => {
+      scrollVelocity *= 0.95;
+    }, 50);
   });
-
-  // Slow decay
-  setTimeout(() => {
-    scrollVelocity *= 0.95;
-  }, 50);
 });
 
 // ===== 3D CARD TILT EFFECTS =====
@@ -901,7 +958,9 @@ function init3DCards() {
 }
 
 // Initialize after DOM loaded
-setTimeout(init3DCards, 200);
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(init3DCards, 200);
+});
 
 // ===== PARTICLE TEXT REVEAL =====
 
@@ -919,11 +978,11 @@ function createParticleText(element) {
   canvas.style.left = '0';
   canvas.style.pointerEvents = 'none';
 
-  const particles = [];
+  const fluidParticles = [];
   const particleCount = 50;
 
   for (let i = 0; i < particleCount; i++) {
-    particles.push({
+    fluidParticles.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       vx: (Math.random() - 0.5) * 2,
@@ -936,7 +995,7 @@ function createParticleText(element) {
   function animateParticles() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    particles.forEach(p => {
+    fluidParticles.forEach(p => {
       p.x += p.vx;
       p.y += p.vy;
 
@@ -956,32 +1015,36 @@ function createParticleText(element) {
 }
 
 // Apply to section titles on scroll into view
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting && !entry.target.dataset.particlesAdded) {
-      createParticleText(entry.target);
-      entry.target.dataset.particlesAdded = 'true';
-    }
-  });
-}, { threshold: 0.5 });
+document.addEventListener('DOMContentLoaded', () => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !entry.target.dataset.particlesAdded) {
+        createParticleText(entry.target);
+        entry.target.dataset.particlesAdded = 'true';
+      }
+    });
+  }, { threshold: 0.5 });
 
-document.querySelectorAll('.section-title').forEach(title => {
-  observer.observe(title);
+  document.querySelectorAll('.section-title').forEach(title => {
+    observer.observe(title);
+  });
 });
 
 // ===== SCROLL-TRIGGERED MICRO-INTERACTIONS =====
 
-const scrollObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.1 });
+document.addEventListener('DOMContentLoaded', () => {
+  const scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
 
-// Observe all cards (sections handled by revealSections function)
-document.querySelectorAll('.skill-card, .homelab-card, .blog-card, .bento-item').forEach(el => {
-  scrollObserver.observe(el);
+  // Observe all cards (sections handled by revealSections function)
+  document.querySelectorAll('.skill-card, .homelab-card, .blog-card, .bento-item').forEach(el => {
+    scrollObserver.observe(el);
+  });
 });
 
 // ===== INTERACTIVE SKILL CONSTELLATION =====
@@ -1330,19 +1393,4 @@ window.addEventListener('load', () => {
   }, 200);
 });
 
-// Console message for curious developers
-console.log('%c💧 WELCOME TO THE LIQUID DIMENSION 💧', 'color: #8AB4F8; font-size: 24px; font-weight: bold; text-shadow: 0 0 15px #8AB4F8;');
-console.log('%c✨ Interactive Features:', 'color: #A78BFA; font-size: 16px; font-weight: bold;');
-console.log('%c  🌊 Morphing liquid blobs in background', 'color: #8AB4F8; font-size: 13px;');
-console.log('%c  ⭐ Interactive Skill Constellation Network', 'color: #60D394; font-size: 14px; font-weight: bold;');
-console.log('%c  🖱️  Custom morphing cursor that follows you', 'color: #8AB4F8; font-size: 13px;');
-console.log('%c  ✨ Mouse trail particles everywhere', 'color: #A78BFA; font-size: 13px;');
-console.log('%c  👆 Click the logo 5 times', 'color: #C084FC; font-size: 13px;');
-console.log('%c  ⌨️  Try the Konami code (↑↑↓↓←→←→BA)', 'color: #C084FC; font-size: 13px;');
-console.log('%c  💬 Type "neon" anywhere for explosion', 'color: #E879F9; font-size: 13px;');
-console.log('%c  🪟 Type "glass" to toggle glassmorphism', 'color: #E879F9; font-size: 13px;');
-console.log('%c  👋 Double-click the hero section to shake', 'color: #8AB4F8; font-size: 13px;');
-console.log('%c  🎯 Click on cards for ripple effects', 'color: #A78BFA; font-size: 13px;');
-console.log('%c  🎨 Hover over section titles for color magic', 'color: #C084FC; font-size: 13px;');
-console.log('%c  🎪 3D tilt on cards when you hover', 'color: #E879F9; font-size: 13px;');
-console.log('%c\n💎 Flowing smoothly through the digital universe', 'color: #A78BFA; font-size: 12px; font-style: italic;');
+// Console messages moved to top of file to ensure they always execute
