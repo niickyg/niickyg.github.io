@@ -475,27 +475,21 @@ body::before {
 }
 
 .nav-logo {
-  font-size: 2rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, #8AB4F8, #A78BFA, #C084FC, #E879F9);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  display: flex;
+  align-items: center;
   text-decoration: none;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  filter: drop-shadow(0 0 12px rgba(138, 180, 248, 0.4));
-  background-size: 300% 300%;
-  animation: liquidFlow 10s ease infinite;
+  transition: all 0.3s ease;
 }
 
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+.logo-image {
+  height: 45px;
+  width: auto;
+  transition: transform 0.3s ease, filter 0.3s ease;
 }
 
-.nav-logo:hover {
+.nav-logo:hover .logo-image {
   transform: scale(1.08);
-  filter: drop-shadow(0 0 12px rgba(79, 195, 247, 0.5));
+  filter: drop-shadow(0 0 12px rgba(96, 211, 148, 0.6));
 }
 
 .nav-menu {
