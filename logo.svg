@@ -1,0 +1,13 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark teal N base -->
+  <path d="M 180 150 L 260 150 L 180 300 L 180 390 L 100 390 L 100 150 Z" fill="#2d5f5d"/>
+
+  <!-- Bright green top bar -->
+  <path d="M 260 150 L 500 150 L 500 230 L 340 230 Z" fill="#60D394"/>
+
+  <!-- Bright teal bottom right -->
+  <path d="M 260 300 L 500 300 L 500 390 L 180 390 Z" fill="#4ECDC4"/>
+
+  <!-- Light accent diagonal -->
+  <path d="M 240 230 L 340 230 L 260 300 L 180 300 Z" fill="#AAF683"/>
+</svg>
