@@ -481,241 +481,142 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// ===== BRUTALIST 3D CHAOS MODE =====
+// ===== LIQUID CANVAS BACKGROUND =====
 
-let scene, camera, renderer, controls;
-let projectMeshes = [];
-let is3DMode = false;
+const canvas = document.getElementById('liquid-canvas');
+const ctx = canvas.getContext('2d');
 
-// Mode toggle functionality
-const toggleBtn = document.getElementById('toggle-btn');
-const brutalistLanding = document.getElementById('brutalist-landing');
-const threeContainer = document.getElementById('three-container');
-const sections = document.querySelectorAll('section');
-const navbar = document.querySelector('.navbar');
+let width, height;
+let blobs = [];
 
-toggleBtn.addEventListener('click', () => {
-  is3DMode = !is3DMode;
+function resizeCanvas() {
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
+}
 
-  if (is3DMode) {
-    enter3DChaos();
-  } else {
-    exit3DChaos();
+class Blob {
+  constructor() {
+    this.x = Math.random() * width;
+    this.y = Math.random() * height;
+    this.radius = Math.random() * 150 + 100;
+    this.vx = (Math.random() - 0.5) * 0.5;
+    this.vy = (Math.random() - 0.5) * 0.5;
+    this.hue = Math.random() * 60 + 200; // Blue to purple range
+    this.phase = Math.random() * Math.PI * 2;
   }
+
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+
+    // Bounce off edges
+    if (this.x < -this.radius || this.x > width + this.radius) this.vx *= -1;
+    if (this.y < -this.radius || this.y > height + this.radius) this.vy *= -1;
+
+    // Morphing effect
+    this.phase += 0.01;
+    this.morphFactor = Math.sin(this.phase) * 0.3 + 1;
+  }
+
+  draw() {
+    const gradient = ctx.createRadialGradient(
+      this.x, this.y, 0,
+      this.x, this.y, this.radius * this.morphFactor
+    );
+
+    gradient.addColorStop(0, `hsla(${this.hue}, 70%, 65%, 0.4)`);
+    gradient.addColorStop(0.5, `hsla(${this.hue + 20}, 75%, 55%, 0.2)`);
+    gradient.addColorStop(1, `hsla(${this.hue}, 70%, 50%, 0)`);
+
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius * this.morphFactor, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function initBlobs() {
+  blobs = [];
+  for (let i = 0; i < 5; i++) {
+    blobs.push(new Blob());
+  }
+}
+
+function animateLiquid() {
+  ctx.clearRect(0, 0, width, height);
+
+  // Apply blur filter for liquid effect
+  ctx.filter = 'blur(50px)';
+
+  blobs.forEach(blob => {
+    blob.update();
+    blob.draw();
+  });
+
+  ctx.filter = 'none';
+
+  requestAnimationFrame(animateLiquid);
+}
+
+// Initialize liquid canvas
+resizeCanvas();
+initBlobs();
+animateLiquid();
+
+window.addEventListener('resize', () => {
+  resizeCanvas();
+  initBlobs();
 });
 
-function enter3DChaos() {
-  // Hide 2D content
-  brutalistLanding.style.display = 'none';
-  sections.forEach(s => s.style.display = 'none');
-  navbar.style.display = 'none';
+// ===== MORPHING CURSOR =====
 
-  // Show 3D container
-  threeContainer.classList.remove('hidden');
+const cursor = document.querySelector('.custom-cursor');
+let cursorX = 0, cursorY = 0;
+let currentX = 0, currentY = 0;
 
-  // Update button
-  toggleBtn.querySelector('.mode-text').textContent = 'EXIT 3D CHAOS';
-  toggleBtn.style.background = '#0000FF';
+document.addEventListener('mousemove', (e) => {
+  cursorX = e.clientX;
+  cursorY = e.clientY;
+});
 
-  // Initialize 3D scene if not already
-  if (!scene) {
-    init3DScene();
-  }
+function animateCursor() {
+  // Smooth follow
+  currentX += (cursorX - currentX) * 0.15;
+  currentY += (cursorY - currentY) * 0.15;
 
-  animate3D();
+  cursor.style.left = currentX - 30 + 'px';
+  cursor.style.top = currentY - 30 + 'px';
+
+  requestAnimationFrame(animateCursor);
 }
 
-function exit3DChaos() {
-  // Show 2D content
-  brutalistLanding.style.display = 'block';
-  sections.forEach(s => s.style.display = 'block');
-  navbar.style.display = 'flex';
+animateCursor();
 
-  // Hide 3D container
-  threeContainer.classList.add('hidden');
-
-  // Update button
-  toggleBtn.querySelector('.mode-text').textContent = 'ENTER 3D CHAOS';
-  toggleBtn.style.background = '#FF0000';
-}
-
-function init3DScene() {
-  // Create scene
-  scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x000000);
-  scene.fog = new THREE.Fog(0x000000, 10, 50);
-
-  // Create camera
-  camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-  camera.position.z = 20;
-
-  // Create renderer
-  renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  threeContainer.appendChild(renderer.domElement);
-
-  // Add lights
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-  scene.add(ambientLight);
-
-  const pointLight1 = new THREE.PointLight(0xff0000, 1, 100);
-  pointLight1.position.set(10, 10, 10);
-  scene.add(pointLight1);
-
-  const pointLight2 = new THREE.PointLight(0x00ff00, 1, 100);
-  pointLight2.position.set(-10, -10, 10);
-  scene.add(pointLight2);
-
-  const pointLight3 = new THREE.PointLight(0x0000ff, 1, 100);
-  pointLight3.position.set(0, 10, -10);
-  scene.add(pointLight3);
-
-  // Create scattered project cards
-  createScatteredProjects();
-
-  // Add mouse controls
-  addMouseControls();
-
-  // Handle window resize
-  window.addEventListener('resize', onWindowResize, false);
-}
-
-function createScatteredProjects() {
-  const projects = [
-    { name: 'GoTo\nAutomation', color: 0xff0000, pos: [-15, 5, -5] },
-    { name: 'RDT\nTrading', color: 0x00ff00, pos: [10, -8, -10] },
-    { name: 'OANDA\nBot', color: 0x0000ff, pos: [-5, 10, -15] },
-    { name: 'Media\nServer', color: 0xff00ff, pos: [15, 0, 5] },
-    { name: 'Mountain\nWest', color: 0x00ffff, pos: [0, -10, 0] },
-    { name: 'HOMELAB', color: 0xffff00, pos: [-10, -5, -20] }
-  ];
-
-  projects.forEach(project => {
-    // Create box geometry
-    const geometry = new THREE.BoxGeometry(4, 4, 0.5);
-    const material = new THREE.MeshStandardMaterial({
-      color: project.color,
-      emissive: project.color,
-      emissiveIntensity: 0.3,
-      roughness: 0.3,
-      metalness: 0.8
-    });
-
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(...project.pos);
-
-    // Random rotation
-    mesh.rotation.x = Math.random() * Math.PI;
-    mesh.rotation.y = Math.random() * Math.PI;
-
-    // Add edges for brutalist look
-    const edges = new THREE.EdgesGeometry(geometry);
-    const line = new THREE.LineSegments(
-      edges,
-      new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 2 })
-    );
-    mesh.add(line);
-
-    // Store project data
-    mesh.userData = { name: project.name, originalColor: project.color };
-
-    scene.add(mesh);
-    projectMeshes.push(mesh);
+// Cursor grow on interactive elements
+document.querySelectorAll('a, button, .project-card, .skill-card, .blog-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width = '100px';
+    cursor.style.height = '100px';
   });
 
-  // Add connecting lines between projects
-  const lineMaterial = new THREE.LineBasicMaterial({
-    color: 0xffffff,
-    opacity: 0.1,
-    transparent: true
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width = '60px';
+    cursor.style.height = '60px';
   });
-
-  for (let i = 0; i < projectMeshes.length; i++) {
-    for (let j = i + 1; j < projectMeshes.length; j++) {
-      const points = [];
-      points.push(projectMeshes[i].position);
-      points.push(projectMeshes[j].position);
-
-      const geometry = new THREE.BufferGeometry().setFromPoints(points);
-      const line = new THREE.Line(geometry, lineMaterial);
-      scene.add(line);
-    }
-  }
-}
-
-let mouseX = 0, mouseY = 0;
-let targetX = 0, targetY = 0;
-
-function addMouseControls() {
-  document.addEventListener('mousemove', (e) => {
-    mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-    mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-  });
-
-  // Scroll to zoom
-  document.addEventListener('wheel', (e) => {
-    if (!is3DMode) return;
-    e.preventDefault();
-    camera.position.z += e.deltaY * 0.01;
-    camera.position.z = Math.max(5, Math.min(50, camera.position.z));
-  }, { passive: false });
-
-  // Click to randomize positions
-  renderer.domElement.addEventListener('click', () => {
-    projectMeshes.forEach(mesh => {
-      mesh.position.x += (Math.random() - 0.5) * 5;
-      mesh.position.y += (Math.random() - 0.5) * 5;
-      mesh.position.z += (Math.random() - 0.5) * 5;
-    });
-  });
-}
-
-function animate3D() {
-  if (!is3DMode) return;
-
-  requestAnimationFrame(animate3D);
-
-  // Smooth camera movement following mouse
-  targetX = mouseX * 10;
-  targetY = mouseY * 10;
-
-  camera.position.x += (targetX - camera.position.x) * 0.05;
-  camera.position.y += (targetY - camera.position.y) * 0.05;
-  camera.lookAt(0, 0, 0);
-
-  // Rotate all project meshes
-  projectMeshes.forEach((mesh, index) => {
-    mesh.rotation.x += 0.003 * (index + 1);
-    mesh.rotation.y += 0.005 * (index + 1);
-
-    // Gentle floating animation
-    mesh.position.y += Math.sin(Date.now() * 0.001 + index) * 0.01;
-  });
-
-  renderer.render(scene, camera);
-}
-
-function onWindowResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-}
+});
 
 // Console message for curious developers
-console.log('%c🌀 WELCOME TO THE ENHANCED MATRIX 🌀', 'color: #4FC3F7; font-size: 22px; font-weight: bold; text-shadow: 0 0 10px #4FC3F7;');
-console.log('%c✨ Easter eggs found:', 'color: #E91E63; font-size: 16px; font-weight: bold;');
-console.log('%c  🖱️  Mouse trail particles everywhere', 'color: #7E57C2; font-size: 13px;');
-console.log('%c  👆 Click the logo 5 times', 'color: #4FC3F7; font-size: 13px;');
-console.log('%c  ⌨️  Try the Konami code (↑↑↓↓←→←→BA)', 'color: #4FC3F7; font-size: 13px;');
-console.log('%c  💬 Type "neon" anywhere for explosion', 'color: #4FC3F7; font-size: 13px;');
-console.log('%c  🪟 Type "glass" to toggle glassmorphism', 'color: #4FC3F7; font-size: 13px;');
-console.log('%c  👋 Double-click the hero section to shake', 'color: #4FC3F7; font-size: 13px;');
-console.log('%c  🎯 Click on cards for ripple effects', 'color: #4FC3F7; font-size: 13px;');
-console.log('%c  🎨 Hover over section titles for color magic', 'color: #4FC3F7; font-size: 13px;');
-console.log('%c  🎪 3D tilt on cards when you hover', 'color: #4FC3F7; font-size: 13px;');
-console.log('%c\n💎 Made with love, magic, and way too much caffeine', 'color: #E91E63; font-size: 12px; font-style: italic;');
+console.log('%c💧 WELCOME TO THE LIQUID DIMENSION 💧', 'color: #8AB4F8; font-size: 24px; font-weight: bold; text-shadow: 0 0 15px #8AB4F8;');
+console.log('%c✨ Interactive Features:', 'color: #A78BFA; font-size: 16px; font-weight: bold;');
+console.log('%c  🌊 Morphing liquid blobs in background', 'color: #8AB4F8; font-size: 13px;');
+console.log('%c  🖱️  Custom morphing cursor that follows you', 'color: #8AB4F8; font-size: 13px;');
+console.log('%c  ✨ Mouse trail particles everywhere', 'color: #A78BFA; font-size: 13px;');
+console.log('%c  👆 Click the logo 5 times', 'color: #C084FC; font-size: 13px;');
+console.log('%c  ⌨️  Try the Konami code (↑↑↓↓←→←→BA)', 'color: #C084FC; font-size: 13px;');
+console.log('%c  💬 Type "neon" anywhere for explosion', 'color: #E879F9; font-size: 13px;');
+console.log('%c  🪟 Type "glass" to toggle glassmorphism', 'color: #E879F9; font-size: 13px;');
+console.log('%c  👋 Double-click the hero section to shake', 'color: #8AB4F8; font-size: 13px;');
+console.log('%c  🎯 Click on cards for ripple effects', 'color: #A78BFA; font-size: 13px;');
+console.log('%c  🎨 Hover over section titles for color magic', 'color: #C084FC; font-size: 13px;');
+console.log('%c  🎪 3D tilt on cards when you hover', 'color: #E879F9; font-size: 13px;');
+console.log('%c\n💎 Flowing smoothly through the digital universe', 'color: #A78BFA; font-size: 12px; font-style: italic;');

@@ -7,66 +7,18 @@
   <link rel="stylesheet" href="style_updated.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
-  <!-- Brutalist Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&family=Courier+Prime:wght@400;700&family=Rubik+Glitch&display=swap" rel="stylesheet">
+  <!-- Liquid Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   <!-- Three.js for 3D -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-  <!-- Mode Toggle -->
-  <div id="mode-toggle" class="mode-toggle">
-    <button id="toggle-btn" class="brutalist-btn">
-      <span class="mode-text">ENTER 3D CHAOS</span>
-    </button>
-  </div>
+  <!-- Liquid Canvas Background -->
+  <canvas id="liquid-canvas"></canvas>
 
-  <!-- 3D Canvas Container (hidden by default) -->
-  <div id="three-container" class="hidden"></div>
-
-  <!-- Brutalist Landing Page -->
-  <div id="brutalist-landing" class="brutalist-landing">
-    <!-- Chaos Background -->
-    <div class="chaos-bg">
-      <div class="chaos-text rotating">CODE</div>
-      <div class="chaos-text floating">BUILD</div>
-      <div class="chaos-text pulsing">SHIP</div>
-    </div>
-
-    <!-- Main Brutalist Hero -->
-    <div class="brutalist-hero">
-      <h1 class="brutalist-title">
-        <span class="title-line overlap-1">NICHOLAS</span>
-        <span class="title-line overlap-2">GUERRIERO</span>
-      </h1>
-      <div class="brutalist-subtitle">
-        <span class="glitch-text">DEVELOPER</span>
-        <span class="slash">/</span>
-        <span class="glitch-text">LEADER</span>
-        <span class="slash">/</span>
-        <span class="glitch-text">BUILDER</span>
-      </div>
-
-      <div class="brutalist-grid">
-        <div class="grid-item item-1">
-          <h2>PROJECTS</h2>
-          <div class="item-count">05</div>
-        </div>
-        <div class="grid-item item-2">
-          <h2>TECH</h2>
-          <div class="item-count">∞</div>
-        </div>
-        <div class="grid-item item-3">
-          <h2>CHAOS</h2>
-          <div class="item-count">100%</div>
-        </div>
-      </div>
-
-      <div class="brutalist-cta">
-        <div class="cta-line"></div>
-        <p class="cta-text">SCROLL TO BREAK REALITY</p>
-        <div class="cta-arrow">↓</div>
-      </div>
-    </div>
+  <!-- Morphing Cursor -->
+  <div id="custom-cursor" class="custom-cursor">
+    <div class="cursor-inner"></div>
   </div>
 
   <!-- Floating Geometric Shapes -->
@@ -75,7 +27,7 @@
   <div class="geometric-shape shape-3"></div>
 
   <!-- Navigation -->
-  <nav class="navbar brutalist-nav">
+  <nav class="navbar">
     <div class="nav-container">
       <a href="#home" class="nav-logo">NG</a>
       <ul class="nav-menu">
