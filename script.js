@@ -984,10 +984,310 @@ document.querySelectorAll('.skill-card, .homelab-card, .blog-card, .bento-item')
   scrollObserver.observe(el);
 });
 
+// ===== INTERACTIVE SKILL CONSTELLATION =====
+
+class SkillNode {
+  constructor(x, y, skill, color) {
+    this.x = x;
+    this.y = y;
+    this.targetX = x;
+    this.targetY = y;
+    this.skill = skill;
+    this.color = color;
+    this.radius = 40;
+    this.connections = [];
+    this.isHovered = false;
+    this.pulsePhase = Math.random() * Math.PI * 2;
+    this.orbitAngle = Math.random() * Math.PI * 2;
+    this.orbitSpeed = (Math.random() - 0.5) * 0.02;
+  }
+
+  update(mouseX, mouseY, canvas) {
+    // Gentle orbital motion
+    this.orbitAngle += this.orbitSpeed;
+    this.targetX += Math.cos(this.orbitAngle) * 0.5;
+    this.targetY += Math.sin(this.orbitAngle) * 0.5;
+
+    // Keep within bounds with soft boundaries
+    const margin = 80;
+    if (this.targetX < margin) this.targetX = margin;
+    if (this.targetX > canvas.width - margin) this.targetX = canvas.width - margin;
+    if (this.targetY < margin) this.targetY = margin;
+    if (this.targetY > canvas.height - margin) this.targetY = canvas.height - margin;
+
+    // Smooth movement
+    this.x += (this.targetX - this.x) * 0.05;
+    this.y += (this.targetY - this.y) * 0.05;
+
+    // Mouse interaction
+    const dx = mouseX - this.x;
+    const dy = mouseY - this.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance < 100) {
+      this.isHovered = true;
+      // Magnetic attraction
+      this.x += dx * 0.02;
+      this.y += dy * 0.02;
+    } else {
+      this.isHovered = false;
+    }
+
+    this.pulsePhase += 0.05;
+  }
+
+  draw(ctx) {
+    const pulse = Math.sin(this.pulsePhase) * 0.2 + 1;
+    const radius = this.isHovered ? this.radius * 1.3 : this.radius * pulse;
+
+    // Outer glow
+    const glowGradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, radius * 1.5);
+    glowGradient.addColorStop(0, `${this.color}66`);
+    glowGradient.addColorStop(0.5, `${this.color}33`);
+    glowGradient.addColorStop(1, 'transparent');
+    ctx.fillStyle = glowGradient;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, radius * 1.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Main node
+    const nodeGradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, radius);
+    nodeGradient.addColorStop(0, this.color);
+    nodeGradient.addColorStop(0.7, `${this.color}CC`);
+    nodeGradient.addColorStop(1, `${this.color}88`);
+    ctx.fillStyle = nodeGradient;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, radius, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Border
+    ctx.strokeStyle = this.isHovered ? '#ffffff' : `${this.color}DD`;
+    ctx.lineWidth = this.isHovered ? 3 : 2;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, radius, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // Skill name
+    ctx.fillStyle = '#ffffff';
+    ctx.font = this.isHovered ? 'bold 16px Inter' : 'bold 14px Inter';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(this.skill, this.x, this.y);
+
+    // Particle effect when hovered
+    if (this.isHovered) {
+      for (let i = 0; i < 3; i++) {
+        const angle = (Date.now() / 1000 + i * (Math.PI * 2 / 3)) % (Math.PI * 2);
+        const px = this.x + Math.cos(angle) * (radius + 20);
+        const py = this.y + Math.sin(angle) * (radius + 20);
+
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(px, py, 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
+  drawConnection(ctx, other, isActive) {
+    const opacity = isActive ? 0.8 : 0.2;
+    const width = isActive ? 3 : 1;
+
+    // Bezier curve for organic feel
+    const midX = (this.x + other.x) / 2;
+    const midY = (this.y + other.y) / 2;
+    const controlOffset = 50;
+    const controlX = midX + (Math.random() - 0.5) * controlOffset;
+    const controlY = midY + (Math.random() - 0.5) * controlOffset;
+
+    // Gradient line
+    const gradient = ctx.createLinearGradient(this.x, this.y, other.x, other.y);
+    gradient.addColorStop(0, `${this.color}${Math.floor(opacity * 255).toString(16).padStart(2, '0')}`);
+    gradient.addColorStop(1, `${other.color}${Math.floor(opacity * 255).toString(16).padStart(2, '0')}`);
+
+    ctx.strokeStyle = gradient;
+    ctx.lineWidth = width;
+    ctx.beginPath();
+    ctx.moveTo(this.x, this.y);
+    ctx.quadraticCurveTo(controlX, controlY, other.x, other.y);
+    ctx.stroke();
+
+    // Animated particles along connection when active
+    if (isActive) {
+      const progress = (Date.now() % 2000) / 2000;
+      const t = progress;
+      const px = (1 - t) * (1 - t) * this.x + 2 * (1 - t) * t * controlX + t * t * other.x;
+      const py = (1 - t) * (1 - t) * this.y + 2 * (1 - t) * t * controlY + t * t * other.y;
+
+      ctx.fillStyle = '#ffffff';
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = this.color;
+      ctx.beginPath();
+      ctx.arc(px, py, 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+  }
+}
+
+class SkillConstellation {
+  constructor(canvasId) {
+    this.canvas = document.getElementById(canvasId);
+    if (!this.canvas) {
+      console.error('Constellation canvas not found');
+      return;
+    }
+
+    this.ctx = this.canvas.getContext('2d');
+    this.nodes = [];
+    this.mouseX = 0;
+    this.mouseY = 0;
+    this.activeNode = null;
+
+    this.resize();
+    this.init();
+    this.setupEventListeners();
+    this.animate();
+  }
+
+  resize() {
+    const rect = this.canvas.getBoundingClientRect();
+    this.canvas.width = rect.width;
+    this.canvas.height = rect.height;
+  }
+
+  init() {
+    const skills = [
+      { name: 'Entrepreneurship', color: '#60D394', connections: ['Leadership', 'Strategy', 'Innovation'] },
+      { name: 'Leadership', color: '#4ECDC4', connections: ['Entrepreneurship', 'Strategy', 'Innovation'] },
+      { name: 'Sustainability', color: '#AAF683', connections: ['Innovation', 'Strategy'] },
+      { name: 'Innovation', color: '#FFD97D', connections: ['Entrepreneurship', 'Leadership', 'Sustainability', 'Strategy'] },
+      { name: 'Strategy', color: '#FF9B85', connections: ['Entrepreneurship', 'Leadership', 'Sustainability', 'Innovation'] }
+    ];
+
+    // Position nodes in a pentagon/circular layout
+    const centerX = this.canvas.width / 2;
+    const centerY = this.canvas.height / 2;
+    const radius = Math.min(this.canvas.width, this.canvas.height) * 0.3;
+
+    skills.forEach((skill, index) => {
+      const angle = (index / skills.length) * Math.PI * 2 - Math.PI / 2;
+      const x = centerX + Math.cos(angle) * radius;
+      const y = centerY + Math.sin(angle) * radius;
+
+      const node = new SkillNode(x, y, skill.name, skill.color);
+      node.connections = skill.connections;
+      this.nodes.push(node);
+    });
+  }
+
+  setupEventListeners() {
+    this.canvas.addEventListener('mousemove', (e) => {
+      const rect = this.canvas.getBoundingClientRect();
+      this.mouseX = e.clientX - rect.left;
+      this.mouseY = e.clientY - rect.top;
+
+      // Find active node
+      this.activeNode = null;
+      this.nodes.forEach(node => {
+        const dx = this.mouseX - node.x;
+        const dy = this.mouseY - node.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < node.radius * 1.5) {
+          this.activeNode = node;
+        }
+      });
+    });
+
+    this.canvas.addEventListener('mouseleave', () => {
+      this.activeNode = null;
+    });
+
+    window.addEventListener('resize', () => {
+      this.resize();
+      this.init();
+    });
+
+    // Sync with skill card hovers
+    document.querySelectorAll('.skill-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        const skillName = card.querySelector('h3').textContent;
+        const node = this.nodes.find(n => n.skill === skillName);
+        if (node) {
+          this.activeNode = node;
+        }
+      });
+
+      card.addEventListener('mouseleave', () => {
+        // Only clear if mouse not actually on canvas
+        if (!this.canvas.matches(':hover')) {
+          this.activeNode = null;
+        }
+      });
+    });
+  }
+
+  animate() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    // Draw connections
+    this.nodes.forEach(node => {
+      node.connections.forEach(connName => {
+        const other = this.nodes.find(n => n.skill === connName);
+        if (other) {
+          const isActive = this.activeNode === node || this.activeNode === other;
+          node.drawConnection(this.ctx, other, isActive);
+        }
+      });
+    });
+
+    // Update and draw nodes
+    this.nodes.forEach(node => {
+      node.update(this.mouseX, this.mouseY, this.canvas);
+      node.draw(this.ctx);
+    });
+
+    // Draw tooltip for active node
+    if (this.activeNode) {
+      const tooltipX = this.activeNode.x;
+      const tooltipY = this.activeNode.y - this.activeNode.radius - 60;
+
+      this.ctx.fillStyle = 'rgba(10, 25, 41, 0.95)';
+      this.ctx.strokeStyle = this.activeNode.color;
+      this.ctx.lineWidth = 2;
+      this.ctx.beginPath();
+      this.ctx.roundRect(tooltipX - 80, tooltipY - 15, 160, 40, 10);
+      this.ctx.fill();
+      this.ctx.stroke();
+
+      this.ctx.fillStyle = '#ffffff';
+      this.ctx.font = 'bold 14px Inter';
+      this.ctx.textAlign = 'center';
+      this.ctx.fillText(this.activeNode.skill, tooltipX, tooltipY + 5);
+
+      // Connection count
+      this.ctx.font = '11px Inter';
+      this.ctx.fillStyle = this.activeNode.color;
+      this.ctx.fillText(`${this.activeNode.connections.length} connections`, tooltipX, tooltipY + 20);
+    }
+
+    requestAnimationFrame(() => this.animate());
+  }
+}
+
+// Initialize constellation when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  // Wait a bit to ensure canvas is rendered
+  setTimeout(() => {
+    new SkillConstellation('skillConstellation');
+  }, 100);
+});
+
 // Console message for curious developers
 console.log('%c💧 WELCOME TO THE LIQUID DIMENSION 💧', 'color: #8AB4F8; font-size: 24px; font-weight: bold; text-shadow: 0 0 15px #8AB4F8;');
 console.log('%c✨ Interactive Features:', 'color: #A78BFA; font-size: 16px; font-weight: bold;');
 console.log('%c  🌊 Morphing liquid blobs in background', 'color: #8AB4F8; font-size: 13px;');
+console.log('%c  ⭐ Interactive Skill Constellation Network', 'color: #60D394; font-size: 14px; font-weight: bold;');
 console.log('%c  🖱️  Custom morphing cursor that follows you', 'color: #8AB4F8; font-size: 13px;');
 console.log('%c  ✨ Mouse trail particles everywhere', 'color: #A78BFA; font-size: 13px;');
 console.log('%c  👆 Click the logo 5 times', 'color: #C084FC; font-size: 13px;');

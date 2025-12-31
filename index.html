@@ -77,28 +77,37 @@
           <p>Hey there! I'm Nicholas, a passionate team lead at Ski Butlers Park City and founder of Mountain West Surface, an exterior cleaning and protection company serving Utah's mountain communities.</p>
           <p>I thrive on solving complex problems, building efficient systems, and leading talented teams to achieve amazing results. Whether it's developing AI-powered automation tools or growing a service business, I'm dedicated to creating solutions that make a real impact.</p>
         </div>
+
+        <!-- Interactive Skill Constellation -->
+        <div class="constellation-container">
+          <canvas id="skillConstellation"></canvas>
+          <div class="constellation-legend">
+            <p>Hover over skills to explore connections</p>
+          </div>
+        </div>
+
         <div class="skills-grid">
-          <div class="skill-card">
+          <div class="skill-card" data-skill="entrepreneurship" data-connections="leadership,strategy,innovation">
             <i class="fas fa-briefcase"></i>
             <h3>Entrepreneurship</h3>
             <p>Founded Mountain West Surface</p>
           </div>
-          <div class="skill-card">
+          <div class="skill-card" data-skill="leadership" data-connections="entrepreneurship,strategy,innovation">
             <i class="fas fa-users"></i>
             <h3>Leadership</h3>
             <p>Team management & mentoring</p>
           </div>
-          <div class="skill-card">
+          <div class="skill-card" data-skill="sustainability" data-connections="innovation,strategy">
             <i class="fas fa-leaf"></i>
             <h3>Sustainability</h3>
             <p>Environmental stewardship</p>
           </div>
-          <div class="skill-card">
+          <div class="skill-card" data-skill="innovation" data-connections="entrepreneurship,leadership,sustainability,strategy">
             <i class="fas fa-lightbulb"></i>
             <h3>Innovation</h3>
             <p>Creative problem solving</p>
           </div>
-          <div class="skill-card">
+          <div class="skill-card" data-skill="strategy" data-connections="entrepreneurship,leadership,sustainability,innovation">
             <i class="fas fa-chart-line"></i>
             <h3>Strategy</h3>
             <p>Planning & execution</p>
