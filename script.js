@@ -1252,11 +1252,27 @@ class SkillConstellation {
       const tooltipX = this.activeNode.x;
       const tooltipY = this.activeNode.y - this.activeNode.radius - 60;
 
+      // Draw rounded rect manually for browser compatibility
+      const x = tooltipX - 80;
+      const y = tooltipY - 15;
+      const width = 160;
+      const height = 40;
+      const radius = 10;
+
       this.ctx.fillStyle = 'rgba(10, 25, 41, 0.95)';
       this.ctx.strokeStyle = this.activeNode.color;
       this.ctx.lineWidth = 2;
       this.ctx.beginPath();
-      this.ctx.roundRect(tooltipX - 80, tooltipY - 15, 160, 40, 10);
+      this.ctx.moveTo(x + radius, y);
+      this.ctx.lineTo(x + width - radius, y);
+      this.ctx.arcTo(x + width, y, x + width, y + radius, radius);
+      this.ctx.lineTo(x + width, y + height - radius);
+      this.ctx.arcTo(x + width, y + height, x + width - radius, y + height, radius);
+      this.ctx.lineTo(x + radius, y + height);
+      this.ctx.arcTo(x, y + height, x, y + height - radius, radius);
+      this.ctx.lineTo(x, y + radius);
+      this.ctx.arcTo(x, y, x + radius, y, radius);
+      this.ctx.closePath();
       this.ctx.fill();
       this.ctx.stroke();
 
@@ -1277,10 +1293,41 @@ class SkillConstellation {
 
 // Initialize constellation when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM loaded, initializing constellation...');
+
   // Wait a bit to ensure canvas is rendered
   setTimeout(() => {
-    new SkillConstellation('skillConstellation');
+    const canvas = document.getElementById('skillConstellation');
+    if (canvas) {
+      console.log('Canvas found, creating constellation');
+      try {
+        new SkillConstellation('skillConstellation');
+        console.log('Constellation initialized successfully!');
+      } catch (error) {
+        console.error('Error initializing constellation:', error);
+      }
+    } else {
+      console.error('Canvas element #skillConstellation not found!');
+    }
   }, 100);
+});
+
+// Also try initializing after full page load as backup
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    if (!document.getElementById('skillConstellation')?.dataset?.initialized) {
+      console.log('Backup initialization...');
+      const canvas = document.getElementById('skillConstellation');
+      if (canvas && !canvas.dataset.initialized) {
+        try {
+          new SkillConstellation('skillConstellation');
+          canvas.dataset.initialized = 'true';
+        } catch (error) {
+          console.error('Backup initialization failed:', error);
+        }
+      }
+    }
+  }, 200);
 });
 
 // Console message for curious developers
