@@ -1,6 +1,34 @@
 // Set current year in footer
 document.getElementById('year').textContent = new Date().getFullYear();
 
+// Navbar scroll effect
+window.addEventListener('scroll', () => {
+  const navbar = document.querySelector('.navbar');
+  if (window.scrollY > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+
+// Scroll reveal animation for sections
+const revealSections = () => {
+  const sections = document.querySelectorAll('section');
+  const windowHeight = window.innerHeight;
+
+  sections.forEach(section => {
+    const sectionTop = section.getBoundingClientRect().top;
+    const revealPoint = 100;
+
+    if (sectionTop < windowHeight - revealPoint) {
+      section.classList.add('visible');
+    }
+  });
+};
+
+window.addEventListener('scroll', revealSections);
+window.addEventListener('load', revealSections);
+
 // Mobile navigation toggle
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
