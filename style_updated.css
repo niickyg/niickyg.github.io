@@ -95,6 +95,233 @@
   }
 }
 
+/* ===== KINETIC SPLIT-TEXT TYPOGRAPHY ===== */
+.hero-title .char {
+  display: inline-block;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.hero-title .word {
+  display: inline-block;
+  white-space: nowrap;
+  margin-right: 0.3em;
+}
+
+/* ===== SCROLL-VELOCITY EFFECTS ===== */
+.velocity-text {
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* ===== EXPERIMENTAL BENTO GRID ===== */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+  padding: 2rem 0;
+}
+
+.bento-item {
+  position: relative;
+  border-radius: 40px;
+  overflow: hidden;
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(138, 180, 248, 0.2);
+  backdrop-filter: blur(20px) saturate(180%);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bento-item:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(167, 139, 250, 0.5);
+  box-shadow: 0 20px 60px rgba(138, 180, 248, 0.3);
+  z-index: 10;
+}
+
+/* Bento grid item sizes - asymmetric */
+.bento-item.large {
+  grid-column: span 8;
+  grid-row: span 2;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bento-item.medium {
+  grid-column: span 6;
+  grid-row: span 1;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bento-item.small {
+  grid-column: span 4;
+  grid-row: span 1;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bento-item.tall {
+  grid-column: span 4;
+  grid-row: span 2;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bento-item.wide {
+  grid-column: span 12;
+  grid-row: span 1;
+  min-height: 200px;
+}
+
+/* Bento item content styling */
+.bento-item .project-image {
+  background: linear-gradient(135deg, #8AB4F8, #A78BFA, #C084FC);
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40px 40px 0 0;
+  min-height: 120px;
+}
+
+.bento-item .project-content {
+  padding: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.bento-item .project-content h3 {
+  color: #8AB4F8;
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.bento-item .project-content p {
+  color: #BFDBFE;
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+  flex: 1;
+}
+
+/* Responsive bento grid */
+@media (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .bento-item.large {
+    grid-column: span 6;
+  }
+
+  .bento-item.tall {
+    grid-column: span 6;
+    grid-row: span 1;
+  }
+
+  .bento-item.medium {
+    grid-column: span 6;
+  }
+}
+
+@media (max-width: 768px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .bento-item {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+    min-height: 300px !important;
+  }
+
+  .bento-item.wide {
+    min-height: 250px !important;
+  }
+
+  .bento-item.wide > div {
+    flex-direction: column !important;
+  }
+}
+
+/* ===== 3D CARD TRANSFORMS ===== */
+.card-3d {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-3d-inner {
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-3d:hover .card-3d-inner {
+  transform: rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg)) translateZ(20px);
+}
+
+/* ===== PARTICLE TEXT REVEAL ===== */
+.particle-text {
+  position: relative;
+  display: inline-block;
+}
+
+.particle-text canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+/* ===== ASYMMETRIC LAYOUTS ===== */
+.asymmetric-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.asymmetric-grid.reverse {
+  grid-template-columns: 0.8fr 1.2fr;
+}
+
+/* ===== MICRO-INTERACTIONS ===== */
+.hover-lift {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+}
+
+.hover-glow {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-glow::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, #8AB4F8, #A78BFA, #C084FC);
+  border-radius: inherit;
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: blur(20px);
+}
+
+.hover-glow:hover::after {
+  opacity: 0.6;
+}
+
 /* ===== ENHANCED INTERACTIVE DESIGN ===== */
 /* ===== CSS RESET ===== */
 * {

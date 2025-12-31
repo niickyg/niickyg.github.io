@@ -756,6 +756,208 @@ setTimeout(() => {
   animateCursor();
 }, 100);
 
+// ===== KINETIC SPLIT-TEXT TYPOGRAPHY =====
+
+function splitText(element) {
+  const text = element.textContent;
+  element.innerHTML = '';
+
+  const words = text.split(' ');
+  words.forEach((word, wordIndex) => {
+    const wordSpan = document.createElement('span');
+    wordSpan.className = 'word';
+
+    word.split('').forEach((char, charIndex) => {
+      const charSpan = document.createElement('span');
+      charSpan.className = 'char';
+      charSpan.textContent = char;
+      charSpan.style.setProperty('--char-index', charIndex);
+      wordSpan.appendChild(charSpan);
+    });
+
+    element.appendChild(wordSpan);
+    if (wordIndex < words.length - 1) {
+      element.appendChild(document.createTextNode(' '));
+    }
+  });
+}
+
+// Apply to hero title
+const heroTitle = document.querySelector('.hero-title');
+if (heroTitle) {
+  splitText(heroTitle);
+
+  // Kinetic typography - follows mouse
+  let titleMouseX = 0, titleMouseY = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    titleMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    titleMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  function animateHeroText() {
+    const chars = heroTitle.querySelectorAll('.char');
+    chars.forEach((char, index) => {
+      const offsetX = titleMouseX * (10 + index * 0.5);
+      const offsetY = titleMouseY * (10 + index * 0.5);
+      const delay = index * 0.02;
+
+      char.style.transform = `translate(${offsetX}px, ${offsetY}px) rotate(${titleMouseX * 2}deg)`;
+      char.style.transitionDelay = `${delay}s`;
+    });
+
+    requestAnimationFrame(animateHeroText);
+  }
+
+  animateHeroText();
+}
+
+// ===== SCROLL-VELOCITY ANIMATIONS =====
+
+let lastScrollY = window.scrollY;
+let scrollVelocity = 0;
+
+window.addEventListener('scroll', () => {
+  const currentScrollY = window.scrollY;
+  scrollVelocity = currentScrollY - lastScrollY;
+  lastScrollY = currentScrollY;
+
+  // Apply to section titles
+  document.querySelectorAll('.section-title').forEach(title => {
+    const speed = scrollVelocity * 0.5;
+    title.style.transform = `translateX(${speed}px)`;
+  });
+
+  // Slow decay
+  setTimeout(() => {
+    scrollVelocity *= 0.95;
+  }, 50);
+});
+
+// ===== 3D CARD TILT EFFECTS =====
+
+function init3DCards() {
+  const cards = document.querySelectorAll('.project-card, .skill-card, .homelab-card, .blog-card');
+
+  cards.forEach(card => {
+    card.classList.add('card-3d');
+
+    // Wrap content in inner div for 3D transform
+    const content = card.innerHTML;
+    card.innerHTML = `<div class="card-3d-inner">${content}</div>`;
+
+    const inner = card.querySelector('.card-3d-inner');
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = ((y - centerY) / centerY) * -15;
+      const rotateY = ((x - centerX) / centerX) * 15;
+
+      card.style.setProperty('--rotate-x', `${rotateX}deg`);
+      card.style.setProperty('--rotate-y', `${rotateY}deg`);
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.setProperty('--rotate-x', '0deg');
+      card.style.setProperty('--rotate-y', '0deg');
+    });
+  });
+}
+
+// Initialize after DOM loaded
+setTimeout(init3DCards, 200);
+
+// ===== PARTICLE TEXT REVEAL =====
+
+function createParticleText(element) {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  element.style.position = 'relative';
+  element.appendChild(canvas);
+
+  const rect = element.getBoundingClientRect();
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+  canvas.style.position = 'absolute';
+  canvas.style.top = '0';
+  canvas.style.left = '0';
+  canvas.style.pointerEvents = 'none';
+
+  const particles = [];
+  const particleCount = 50;
+
+  for (let i = 0; i < particleCount; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 2,
+      vy: (Math.random() - 0.5) * 2,
+      size: Math.random() * 3 + 1,
+      opacity: Math.random() * 0.5 + 0.5
+    });
+  }
+
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+      ctx.fillStyle = `rgba(138, 180, 248, ${p.opacity})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    requestAnimationFrame(animateParticles);
+  }
+
+  animateParticles();
+}
+
+// Apply to section titles on scroll into view
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !entry.target.dataset.particlesAdded) {
+      createParticleText(entry.target);
+      entry.target.dataset.particlesAdded = 'true';
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.section-title').forEach(title => {
+  observer.observe(title);
+});
+
+// ===== SCROLL-TRIGGERED MICRO-INTERACTIONS =====
+
+const scrollObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+// Observe all cards and sections
+document.querySelectorAll('.project-card, .skill-card, .homelab-card, .blog-card, section').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(50px)';
+  el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+  scrollObserver.observe(el);
+});
+
 // Console message for curious developers
 console.log('%c💧 WELCOME TO THE LIQUID DIMENSION 💧', 'color: #8AB4F8; font-size: 24px; font-weight: bold; text-shadow: 0 0 15px #8AB4F8;');
 console.log('%c✨ Interactive Features:', 'color: #A78BFA; font-size: 16px; font-weight: bold;');
