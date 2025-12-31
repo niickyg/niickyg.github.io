@@ -1,16 +1,16 @@
-<svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-  <!-- Main left vertical bar (dark) -->
-  <rect x="180" y="180" width="180" height="420" fill="#1a4d4d"/>
+<svg viewBox="0 0 420 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Left vertical bar (dark navy -> dark teal) -->
+  <rect x="0" y="0" width="85" height="400" fill="#1a4d4d"/>
 
-  <!-- Top right horizontal rectangle (bright) -->
-  <rect x="310" y="180" width="290" height="140" fill="#4ECDC4"/>
+  <!-- Large diagonal stripe (dark navy -> dark teal) -->
+  <polygon points="85,0 185,0 85,400 0,400" fill="#1a4d4d"/>
 
-  <!-- Bottom right square (bright) -->
-  <rect x="300" y="380" width="300" height="220" fill="#4ECDC4"/>
+  <!-- Top horizontal bar (bright blue -> bright teal) -->
+  <rect x="130" y="0" width="290" height="80" fill="#4ECDC4"/>
 
-  <!-- Diagonal stripe cutting through (dark) -->
-  <polygon points="360,180 600,180 360,600" fill="#1a4d4d"/>
+  <!-- Bottom right square (bright blue -> bright teal) -->
+  <rect x="185" y="220" width="235" height="180" fill="#4ECDC4"/>
 
-  <!-- Small diagonal accent in middle (light) -->
-  <polygon points="300,320 360,380 300,380" fill="#60D394"/>
+  <!-- Small triangular accent (light blue -> light green) -->
+  <polygon points="125,250 185,220 185,310" fill="#60D394"/>
 </svg>
