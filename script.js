@@ -97,3 +97,47 @@ window.addEventListener('scroll', () => {
     hero.style.transform = `translateY(${scrolled * 0.5}px)`;
   }
 });
+
+// Blog modal functionality
+const blogModal = document.getElementById('blogModal');
+const blogModalBody = document.getElementById('blogModalBody');
+const blogModalClose = document.querySelector('.blog-modal-close');
+
+// Open blog modal
+document.querySelectorAll('.read-more').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const blogId = e.currentTarget.getAttribute('data-blog');
+    const blogContent = document.getElementById(blogId);
+
+    if (blogContent && blogModal && blogModalBody) {
+      blogModalBody.innerHTML = blogContent.innerHTML;
+      blogModal.style.display = 'block';
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+  });
+});
+
+// Close blog modal
+if (blogModalClose) {
+  blogModalClose.addEventListener('click', () => {
+    blogModal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  });
+}
+
+// Close modal when clicking outside
+window.addEventListener('click', (e) => {
+  if (e.target === blogModal) {
+    blogModal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && blogModal.style.display === 'block') {
+    blogModal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+});
