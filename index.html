@@ -3,40 +3,218 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nicholas Guerriero - Digital Business Card</title>
+  <title>Nicholas Guerriero - Portfolio & Blog</title>
   <link rel="stylesheet" href="style_updated.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <!-- Google Fonts for modern, clean look -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="card-wrapper">
-    <div class="business-card">
-      <header class="card-header">
-        <h1>Nicholas Guerriero</h1>
-        <h2>Team Lead at Ski Butlers Park City</h2>
-      </header>
-
-      <section class="card-body">
-        <p class="contact-info">
-          <i class="fas fa-envelope"></i>
-          <a href="mailto:me@nickguerriero.com">me@nickguerriero.com</a>
-        </p>
-        <p>
-          <i class="fas fa-phone-alt"></i>
-          <a href="tel:+16312054499">+1 (631)-205-4499</a>
-        </p>
-        <p>
-          <i class="fab fa-linkedin"></i>
-          <a href="https://www.linkedin.com/in/nickguerriero/" target="_blank">https://www.linkedin.com/in/nickguerriero/</a>
-        </p>
-      </section>
-
-      <footer class="card-footer">
-        <p>&copy; <span id="year"></span> Nicholas Guerriero. All Rights Reserved.</p>
-      </footer>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#home" class="nav-logo">NG</a>
+      <ul class="nav-menu">
+        <li><a href="#home" class="nav-link">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#blog" class="nav-link">Blog</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
-  </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Nicholas Guerriero</h1>
+      <p class="hero-subtitle">Team Lead | Developer | Problem Solver</p>
+      <p class="hero-description">Crafting elegant solutions and leading teams to success</p>
+      <div class="hero-buttons">
+        <a href="#projects" class="btn btn-primary">View My Work</a>
+        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+      </div>
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/nickguerriero/" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://github.com/niickyg" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="mailto:me@nickguerriero.com"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+    <div class="hero-decoration"></div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about">
+    <div class="container">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <p>Hey there! I'm Nicholas, a passionate team lead at Ski Butlers Park City. I thrive on solving complex problems, building efficient systems, and leading talented teams to achieve amazing results.</p>
+          <p>With a blend of technical expertise and leadership skills, I'm dedicated to creating innovative solutions that make a real impact.</p>
+        </div>
+        <div class="skills-grid">
+          <div class="skill-card">
+            <i class="fas fa-users"></i>
+            <h3>Leadership</h3>
+            <p>Team management & mentoring</p>
+          </div>
+          <div class="skill-card">
+            <i class="fas fa-code"></i>
+            <h3>Development</h3>
+            <p>Full-stack solutions</p>
+          </div>
+          <div class="skill-card">
+            <i class="fas fa-lightbulb"></i>
+            <h3>Innovation</h3>
+            <p>Creative problem solving</p>
+          </div>
+          <div class="skill-card">
+            <i class="fas fa-chart-line"></i>
+            <h3>Strategy</h3>
+            <p>Planning & execution</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="projects">
+    <div class="container">
+      <h2 class="section-title">Featured Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-image">
+            <i class="fas fa-project-diagram"></i>
+          </div>
+          <div class="project-content">
+            <h3>Project One</h3>
+            <p>A cutting-edge solution that revolutionized team workflows and increased efficiency by 40%.</p>
+            <div class="project-tags">
+              <span class="tag">React</span>
+              <span class="tag">Node.js</span>
+              <span class="tag">MongoDB</span>
+            </div>
+            <a href="#" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-image">
+            <i class="fas fa-rocket"></i>
+          </div>
+          <div class="project-content">
+            <h3>Project Two</h3>
+            <p>An innovative platform that streamlines operations and enhances user experience.</p>
+            <div class="project-tags">
+              <span class="tag">Python</span>
+              <span class="tag">Django</span>
+              <span class="tag">PostgreSQL</span>
+            </div>
+            <a href="#" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-image">
+            <i class="fas fa-cogs"></i>
+          </div>
+          <div class="project-content">
+            <h3>Project Three</h3>
+            <p>Automated system that reduced manual work by 60% and improved accuracy significantly.</p>
+            <div class="project-tags">
+              <span class="tag">JavaScript</span>
+              <span class="tag">AWS</span>
+              <span class="tag">Docker</span>
+            </div>
+            <a href="#" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Section -->
+  <section id="blog" class="blog">
+    <div class="container">
+      <h2 class="section-title">Latest Posts</h2>
+      <div class="blog-grid">
+        <article class="blog-card">
+          <div class="blog-date">Dec 30, 2025</div>
+          <h3>Building Better Teams</h3>
+          <p>Exploring strategies for creating high-performing teams and fostering a culture of excellence...</p>
+          <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+        </article>
+
+        <article class="blog-card">
+          <div class="blog-date">Dec 20, 2025</div>
+          <h3>Modern Development Practices</h3>
+          <p>A deep dive into contemporary development methodologies and best practices...</p>
+          <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+        </article>
+
+        <article class="blog-card">
+          <div class="blog-date">Dec 10, 2025</div>
+          <h3>Leadership in Tech</h3>
+          <p>Lessons learned from leading technical teams in fast-paced environments...</p>
+          <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2 class="section-title">Let's Connect</h2>
+      <div class="contact-content">
+        <div class="contact-info">
+          <h3>Get In Touch</h3>
+          <p>I'm always interested in hearing about new projects and opportunities. Whether you have a question or just want to say hi, feel free to reach out!</p>
+          <div class="contact-details">
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <a href="mailto:me@nickguerriero.com">me@nickguerriero.com</a>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-phone"></i>
+              <a href="tel:+16312054499">+1 (631) 205-4499</a>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Park City, Utah</span>
+            </div>
+          </div>
+        </div>
+        <form class="contact-form">
+          <div class="form-group">
+            <input type="text" placeholder="Your Name" required>
+          </div>
+          <div class="form-group">
+            <input type="email" placeholder="Your Email" required>
+          </div>
+          <div class="form-group">
+            <textarea rows="5" placeholder="Your Message" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; <span id="year"></span> Nicholas Guerriero. All Rights Reserved.</p>
+    <div class="footer-social">
+      <a href="https://www.linkedin.com/in/nickguerriero/" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/niickyg" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="mailto:me@nickguerriero.com"><i class="fas fa-envelope"></i></a>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
 </body>
