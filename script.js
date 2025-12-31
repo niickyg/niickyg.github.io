@@ -481,6 +481,231 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
+// ===== BRUTALIST 3D CHAOS MODE =====
+
+let scene, camera, renderer, controls;
+let projectMeshes = [];
+let is3DMode = false;
+
+// Mode toggle functionality
+const toggleBtn = document.getElementById('toggle-btn');
+const brutalistLanding = document.getElementById('brutalist-landing');
+const threeContainer = document.getElementById('three-container');
+const sections = document.querySelectorAll('section');
+const navbar = document.querySelector('.navbar');
+
+toggleBtn.addEventListener('click', () => {
+  is3DMode = !is3DMode;
+
+  if (is3DMode) {
+    enter3DChaos();
+  } else {
+    exit3DChaos();
+  }
+});
+
+function enter3DChaos() {
+  // Hide 2D content
+  brutalistLanding.style.display = 'none';
+  sections.forEach(s => s.style.display = 'none');
+  navbar.style.display = 'none';
+
+  // Show 3D container
+  threeContainer.classList.remove('hidden');
+
+  // Update button
+  toggleBtn.querySelector('.mode-text').textContent = 'EXIT 3D CHAOS';
+  toggleBtn.style.background = '#0000FF';
+
+  // Initialize 3D scene if not already
+  if (!scene) {
+    init3DScene();
+  }
+
+  animate3D();
+}
+
+function exit3DChaos() {
+  // Show 2D content
+  brutalistLanding.style.display = 'block';
+  sections.forEach(s => s.style.display = 'block');
+  navbar.style.display = 'flex';
+
+  // Hide 3D container
+  threeContainer.classList.add('hidden');
+
+  // Update button
+  toggleBtn.querySelector('.mode-text').textContent = 'ENTER 3D CHAOS';
+  toggleBtn.style.background = '#FF0000';
+}
+
+function init3DScene() {
+  // Create scene
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x000000);
+  scene.fog = new THREE.Fog(0x000000, 10, 50);
+
+  // Create camera
+  camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+  );
+  camera.position.z = 20;
+
+  // Create renderer
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  threeContainer.appendChild(renderer.domElement);
+
+  // Add lights
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  scene.add(ambientLight);
+
+  const pointLight1 = new THREE.PointLight(0xff0000, 1, 100);
+  pointLight1.position.set(10, 10, 10);
+  scene.add(pointLight1);
+
+  const pointLight2 = new THREE.PointLight(0x00ff00, 1, 100);
+  pointLight2.position.set(-10, -10, 10);
+  scene.add(pointLight2);
+
+  const pointLight3 = new THREE.PointLight(0x0000ff, 1, 100);
+  pointLight3.position.set(0, 10, -10);
+  scene.add(pointLight3);
+
+  // Create scattered project cards
+  createScatteredProjects();
+
+  // Add mouse controls
+  addMouseControls();
+
+  // Handle window resize
+  window.addEventListener('resize', onWindowResize, false);
+}
+
+function createScatteredProjects() {
+  const projects = [
+    { name: 'GoTo\nAutomation', color: 0xff0000, pos: [-15, 5, -5] },
+    { name: 'RDT\nTrading', color: 0x00ff00, pos: [10, -8, -10] },
+    { name: 'OANDA\nBot', color: 0x0000ff, pos: [-5, 10, -15] },
+    { name: 'Media\nServer', color: 0xff00ff, pos: [15, 0, 5] },
+    { name: 'Mountain\nWest', color: 0x00ffff, pos: [0, -10, 0] },
+    { name: 'HOMELAB', color: 0xffff00, pos: [-10, -5, -20] }
+  ];
+
+  projects.forEach(project => {
+    // Create box geometry
+    const geometry = new THREE.BoxGeometry(4, 4, 0.5);
+    const material = new THREE.MeshStandardMaterial({
+      color: project.color,
+      emissive: project.color,
+      emissiveIntensity: 0.3,
+      roughness: 0.3,
+      metalness: 0.8
+    });
+
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(...project.pos);
+
+    // Random rotation
+    mesh.rotation.x = Math.random() * Math.PI;
+    mesh.rotation.y = Math.random() * Math.PI;
+
+    // Add edges for brutalist look
+    const edges = new THREE.EdgesGeometry(geometry);
+    const line = new THREE.LineSegments(
+      edges,
+      new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 2 })
+    );
+    mesh.add(line);
+
+    // Store project data
+    mesh.userData = { name: project.name, originalColor: project.color };
+
+    scene.add(mesh);
+    projectMeshes.push(mesh);
+  });
+
+  // Add connecting lines between projects
+  const lineMaterial = new THREE.LineBasicMaterial({
+    color: 0xffffff,
+    opacity: 0.1,
+    transparent: true
+  });
+
+  for (let i = 0; i < projectMeshes.length; i++) {
+    for (let j = i + 1; j < projectMeshes.length; j++) {
+      const points = [];
+      points.push(projectMeshes[i].position);
+      points.push(projectMeshes[j].position);
+
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      const line = new THREE.Line(geometry, lineMaterial);
+      scene.add(line);
+    }
+  }
+}
+
+let mouseX = 0, mouseY = 0;
+let targetX = 0, targetY = 0;
+
+function addMouseControls() {
+  document.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+    mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+  });
+
+  // Scroll to zoom
+  document.addEventListener('wheel', (e) => {
+    if (!is3DMode) return;
+    e.preventDefault();
+    camera.position.z += e.deltaY * 0.01;
+    camera.position.z = Math.max(5, Math.min(50, camera.position.z));
+  }, { passive: false });
+
+  // Click to randomize positions
+  renderer.domElement.addEventListener('click', () => {
+    projectMeshes.forEach(mesh => {
+      mesh.position.x += (Math.random() - 0.5) * 5;
+      mesh.position.y += (Math.random() - 0.5) * 5;
+      mesh.position.z += (Math.random() - 0.5) * 5;
+    });
+  });
+}
+
+function animate3D() {
+  if (!is3DMode) return;
+
+  requestAnimationFrame(animate3D);
+
+  // Smooth camera movement following mouse
+  targetX = mouseX * 10;
+  targetY = mouseY * 10;
+
+  camera.position.x += (targetX - camera.position.x) * 0.05;
+  camera.position.y += (targetY - camera.position.y) * 0.05;
+  camera.lookAt(0, 0, 0);
+
+  // Rotate all project meshes
+  projectMeshes.forEach((mesh, index) => {
+    mesh.rotation.x += 0.003 * (index + 1);
+    mesh.rotation.y += 0.005 * (index + 1);
+
+    // Gentle floating animation
+    mesh.position.y += Math.sin(Date.now() * 0.001 + index) * 0.01;
+  });
+
+  renderer.render(scene, camera);
+}
+
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
 // Console message for curious developers
 console.log('%c🌀 WELCOME TO THE ENHANCED MATRIX 🌀', 'color: #4FC3F7; font-size: 22px; font-weight: bold; text-shadow: 0 0 10px #4FC3F7;');
 console.log('%c✨ Easter eggs found:', 'color: #E91E63; font-size: 16px; font-weight: bold;');
