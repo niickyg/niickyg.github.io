@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog - Nicholas Guerriero</title>
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="stylesheet" href="style_updated.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+  <!-- Liquid Canvas Background -->
+  <canvas id="liquid-canvas" aria-hidden="true"></canvas>
+
+  <!-- Morphing Cursor -->
+  <div id="custom-cursor" class="custom-cursor" aria-hidden="true">
+    <div class="cursor-inner"></div>
+  </div>
+
+  <!-- Floating Geometric Shapes -->
+  <div class="geometric-shape shape-1" aria-hidden="true"></div>
+  <div class="geometric-shape shape-2" aria-hidden="true"></div>
+  <div class="geometric-shape shape-3" aria-hidden="true"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="logo.svg" alt="Nicholas Guerriero" class="logo-image">
+      </a>
+      <ul class="nav-menu" role="menubar">
+        <li role="none"><a href="index.html" class="nav-link" role="menuitem">Home</a></li>
+        <li role="none"><a href="about.html" class="nav-link" role="menuitem">About</a></li>
+        <li role="none"><a href="projects.html" class="nav-link" role="menuitem">Projects</a></li>
+        <li role="none"><a href="homelab.html" class="nav-link" role="menuitem">Homelab</a></li>
+        <li role="none"><a href="blog.html" class="nav-link" role="menuitem">Blog</a></li>
+        <li role="none"><a href="contact.html" class="nav-link" role="menuitem">Contact</a></li>
+        <li role="none">
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light theme" role="menuitem">
+            <i class="fas fa-moon" id="theme-icon"></i>
+          </button>
+        </li>
+      </ul>
+      <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Blog Section -->
+  <section id="blog" class="blog">
+    <div class="container">
+      <h2 class="section-title">Latest Posts</h2>
+      <div class="blog-grid">
+        <article class="blog-card">
+          <div class="blog-date">Dec 30, 2025</div>
+          <h3>Building AI-Powered Automation Systems</h3>
+          <p>How we built a production-ready call transcription system using OpenAI and FastAPI...</p>
+          <a href="#" class="read-more" data-blog="blog1">Read More <i class="fas fa-arrow-right"></i></a>
+        </article>
+
+        <article class="blog-card">
+          <div class="blog-date">Dec 20, 2025</div>
+          <h3>From Employee to Entrepreneur</h3>
+          <p>Lessons learned from starting Mountain West Surface while working full-time...</p>
+          <a href="#" class="read-more" data-blog="blog2">Read More <i class="fas fa-arrow-right"></i></a>
+        </article>
+
+        <article class="blog-card">
+          <div class="blog-date">Dec 10, 2025</div>
+          <h3>Algorithmic Trading: Reality vs Hype</h3>
+          <p>My experience building and testing automated trading systems with real money...</p>
+          <a href="#" class="read-more" data-blog="blog3">Read More <i class="fas fa-arrow-right"></i></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Modal -->
+  <div id="blogModal" class="blog-modal">
+    <div class="blog-modal-content">
+      <span class="blog-modal-close">&times;</span>
+      <div id="blogModalBody"></div>
+    </div>
+  </div>
+
+  <!-- Hidden Blog Content -->
+  <div id="blogContent" style="display: none;">
+    <div id="blog1">
+      <h2>Building AI-Powered Automation Systems</h2>
+      <div class="blog-date">December 30, 2025</div>
+      <p>When we decided to automate our call recording workflow at work, I knew traditional solutions wouldn't cut it. We needed something that could transcribe calls, analyze sentiment, extract action items, and present it all in a beautiful dashboard.</p>
+
+      <h3>The Tech Stack</h3>
+      <p>I chose React 18 for the frontend because of its excellent ecosystem and component reusability. The backend is FastAPI - it's incredibly fast, has automatic API documentation, and works seamlessly with Python's ML libraries.</p>
+
+      <p>For transcription, OpenAI's Whisper API was a no-brainer. It's accurate, fast, and handles multiple languages. We then pipe the transcripts through GPT-4 for sentiment analysis and action item extraction.</p>
+
+      <h3>Key Lessons</h3>
+      <ul>
+        <li><strong>Start with Docker:</strong> Containerizing from day one made deployment trivial</li>
+        <li><strong>Real-time matters:</strong> Users want live updates, not page refreshes</li>
+        <li><strong>API design is crucial:</strong> A well-designed REST API makes frontend dev smooth</li>
+        <li><strong>Cost management:</strong> OpenAI API calls add up - implement caching!</li>
+      </ul>
+
+      <p>The system now processes hundreds of calls daily, automatically categorizing them by sentiment and flagging urgent action items. It's saved our team countless hours of manual review.</p>
+    </div>
+
+    <div id="blog2">
+      <h2>From Employee to Entrepreneur</h2>
+      <div class="blog-date">December 20, 2025</div>
+      <p>Starting Mountain West Surface while working as a team lead at Ski Butlers was one of the most challenging decisions I've made. But it's also been one of the most rewarding.</p>
+
+      <h3>Why I Started</h3>
+      <p>Living in Utah's mountain communities, I noticed a gap in quality exterior cleaning services. Properties here face harsh winters, extreme weather, and unique maintenance challenges. I saw an opportunity to provide professional, reliable service with a tech-forward approach.</p>
+
+      <h3>Balancing Both Worlds</h3>
+      <p>The first six months were brutal. Managing a team during the day, running service calls evenings and weekends, handling customer inquiries at night. Here's what made it work:</p>
+
+      <ul>
+        <li><strong>Systems over hustle:</strong> I automated everything I could - scheduling, invoicing, customer communications</li>
+        <li><strong>Quality over quantity:</strong> Started small, focused on perfect service, let word-of-mouth grow the business</li>
+        <li><strong>Leverage existing skills:</strong> My tech background meant I could build our website, manage digital marketing, and create efficient workflows</li>
+      </ul>
+
+      <h3>Unexpected Benefits</h3>
+      <p>Running my own business made me a better team lead. I became more empathetic to challenges, better at resource allocation, and more creative with problem-solving. The skills are transferable in both directions.</p>
+
+      <p>If you're considering entrepreneurship while employed: start small, validate the market, build systems, and don't quit your day job until the numbers make sense. Your current job is your runway - use it wisely.</p>
+    </div>
+
+    <div id="blog3">
+      <h2>Algorithmic Trading: Reality vs Hype</h2>
+      <div class="blog-date">December 10, 2025</div>
+      <p>After building multiple trading bots and running them with real money, I've learned that algorithmic trading is nothing like what YouTube gurus make it seem.</p>
+
+      <h3>The Reality Check</h3>
+      <p>Most retail traders lose money. Even with sophisticated algorithms. The market is incredibly efficient, and any edge you think you've found has probably been exploited by firms with more resources, faster execution, and smarter people.</p>
+
+      <h3>What Actually Works</h3>
+      <p>After 18 months of development and testing, here's what I've learned:</p>
+
+      <ul>
+        <li><strong>Edge is everything:</strong> Without a genuine statistical edge, you're gambling. Period.</li>
+        <li><strong>Risk management > strategy:</strong> Your position sizing and stop losses matter more than your entry signals</li>
+        <li><strong>Backtesting lies:</strong> Every backtest overfits. Forward testing reveals the truth.</li>
+        <li><strong>Transaction costs kill:</strong> Slippage and fees eat profits faster than you'd expect</li>
+        <li><strong>Psychology still matters:</strong> Even with bots, watching your account swing is emotional</li>
+      </ul>
+
+      <h3>My Approach Now</h3>
+      <p>I use the RDT (Real Day Trading) methodology - focusing on relative strength vs the market. The bot scans for setups, but I execute manually. This combines algorithmic efficiency with human judgment.</p>
+
+      <p>Results: 34% win rate but 2.4:1 average win/loss ratio = profitable. Small size, tight stops, early exits. Boring but consistent.</p>
+
+      <p><strong>Bottom line:</strong> Algorithmic trading is a tool, not a money printer. Treat it like engineering - test rigorously, manage risk obsessively, and be honest about your edge.</p>
+    </div>
+  </div>
+
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; <span id="year"></span> Nicholas Guerriero. All Rights Reserved.</p>
+    <div class="footer-social">
+      <a href="https://www.linkedin.com/in/nickguerriero/" target="_blank" aria-label="LinkedIn" rel="noopener noreferrer"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+      <a href="https://github.com/niickyg" target="_blank" aria-label="GitHub" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i></a>
+      <a href="mailto:me@nickguerriero.com" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1819,6 +1819,31 @@ section.visible {
   animation-range: 0 300px;
 }
 
+/* ===== MULTI-PAGE LAYOUT ===== */
+
+/* Add top padding to pages that aren't the home page */
+.page-section {
+  padding-top: 120px;
+  min-height: 100vh;
+}
+
+.page-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #60D394 0%, #4ECDC4 50%, #AAF683 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+/* Active navigation indicator */
+.nav-link.active {
+  color: #60D394 !important;
+  background: rgba(96, 211, 148, 0.15);
+}
+
 /* ===== ACCESSIBILITY ===== */
 
 /* Visually hidden but accessible to screen readers */

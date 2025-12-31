@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nicholas Guerriero - Portfolio & Blog</title>
+  <title>About - Nicholas Guerriero</title>
   <link rel="icon" type="image/svg+xml" href="logo.svg">
   <link rel="stylesheet" href="style_updated.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
-  <!-- Liquid Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-  <!-- Three.js for 3D -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
@@ -30,12 +28,12 @@
   <!-- Navigation -->
   <nav class="navbar" role="navigation" aria-label="Main navigation">
     <div class="nav-container">
-      <a href="#home" class="nav-logo">
+      <a href="index.html" class="nav-logo">
         <img src="logo.svg" alt="Nicholas Guerriero" class="logo-image">
       </a>
       <ul class="nav-menu" role="menubar">
-        <li role="none"><a href="index.html" class="nav-link active" role="menuitem">Home</a></li>
-        <li role="none"><a href="about.html" class="nav-link" role="menuitem">About</a></li>
+        <li role="none"><a href="index.html" class="nav-link" role="menuitem">Home</a></li>
+        <li role="none"><a href="about.html" class="nav-link active" role="menuitem">About</a></li>
         <li role="none"><a href="projects.html" class="nav-link" role="menuitem">Projects</a></li>
         <li role="none"><a href="homelab.html" class="nav-link" role="menuitem">Homelab</a></li>
         <li role="none"><a href="blog.html" class="nav-link" role="menuitem">Blog</a></li>
@@ -54,29 +52,54 @@
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section id="home" class="hero">
-    <div class="hero-content">
-      <h1 class="hero-title">Nicholas Guerriero</h1>
-      <p class="hero-subtitle">Team Lead | Developer | Business Owner</p>
-      <p class="hero-description">Leading Talented Teams, Exploring Innovative Technologies, Driving Sustainability, and Scaling Ventures</p>
-      <div class="hero-buttons">
-        <a href="projects.html" class="btn btn-primary">View My Work</a>
-        <a href="contact.html" class="btn btn-secondary">Get In Touch</a>
-      </div>
-      <div class="social-links">
-        <a href="https://www.linkedin.com/in/nickguerriero/" target="_blank" aria-label="LinkedIn Profile" rel="noopener noreferrer"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
-        <a href="https://github.com/niickyg" target="_blank" aria-label="GitHub Profile" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i></a>
-        <a href="mailto:me@nickguerriero.com" aria-label="Email Nicholas"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+  <!-- About Section -->
+  <section id="about" class="about page-section">
+    <div class="container">
+      <h1 class="page-title">About Me</h1>
+      <div class="about-content">
+        <div class="about-text">
+          <p>Hey there! I'm Nicholas, a passionate team lead at Ski Butlers Park City and founder of Mountain West Surface, an exterior cleaning and protection company serving Utah's mountain communities.</p>
+          <p>I thrive on solving complex problems, building efficient systems, and leading talented teams to achieve amazing results. Whether it's developing AI-powered automation tools or growing a service business, I'm dedicated to creating solutions that make a real impact.</p>
+        </div>
+
+        <div class="skills-grid">
+          <div class="skill-card" data-skill="entrepreneurship">
+            <i class="fas fa-briefcase"></i>
+            <h3>Entrepreneurship</h3>
+            <p>Founded Mountain West Surface</p>
+          </div>
+          <div class="skill-card" data-skill="leadership">
+            <i class="fas fa-users"></i>
+            <h3>Leadership</h3>
+            <p>Team management & mentoring</p>
+          </div>
+          <div class="skill-card" data-skill="sustainability">
+            <i class="fas fa-leaf"></i>
+            <h3>Sustainability</h3>
+            <p>Environmental stewardship</p>
+          </div>
+          <div class="skill-card" data-skill="innovation">
+            <i class="fas fa-lightbulb"></i>
+            <h3>Innovation</h3>
+            <p>Creative problem solving</p>
+          </div>
+          <div class="skill-card" data-skill="strategy">
+            <i class="fas fa-chart-line"></i>
+            <h3>Strategy</h3>
+            <p>Planning & execution</p>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="hero-decoration"></div>
   </section>
+
+  <!-- Footer -->
+  <footer class="footer">
     <p>&copy; <span id="year"></span> Nicholas Guerriero. All Rights Reserved.</p>
     <div class="footer-social">
-      <a href="https://www.linkedin.com/in/nickguerriero/" target="_blank"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/niickyg" target="_blank"><i class="fab fa-github"></i></a>
-      <a href="mailto:me@nickguerriero.com"><i class="fas fa-envelope"></i></a>
+      <a href="https://www.linkedin.com/in/nickguerriero/" target="_blank" aria-label="LinkedIn" rel="noopener noreferrer"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+      <a href="https://github.com/niickyg" target="_blank" aria-label="GitHub" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i></a>
+      <a href="mailto:me@nickguerriero.com" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
     </div>
   </footer>
 
