@@ -1,150 +1,129 @@
-// Console message for curious developers - MUST be at top before any DOM access
-console.log('%c💧 WELCOME TO THE LIQUID DIMENSION 💧', 'color: #8AB4F8; font-size: 24px; font-weight: bold; text-shadow: 0 0 15px #8AB4F8;');
-console.log('%c✨ Interactive Features:', 'color: #A78BFA; font-size: 16px; font-weight: bold;');
-console.log('%c  🌊 Morphing liquid blobs in background', 'color: #8AB4F8; font-size: 13px;');
-console.log('%c  ⭐ Interactive Skill Constellation Network', 'color: #60D394; font-size: 14px; font-weight: bold;');
-console.log('%c  🖱️  Custom morphing cursor that follows you', 'color: #8AB4F8; font-size: 13px;');
-console.log('%c  ✨ Mouse trail particles everywhere', 'color: #A78BFA; font-size: 13px;');
-console.log('%c  👆 Click the logo 5 times', 'color: #C084FC; font-size: 13px;');
-console.log('%c  ⌨️  Try the Konami code (↑↑↓↓←→←→BA)', 'color: #C084FC; font-size: 13px;');
-console.log('%c  💬 Type "neon" anywhere for explosion', 'color: #E879F9; font-size: 13px;');
-console.log('%c  🪟 Type "glass" to toggle glassmorphism', 'color: #E879F9; font-size: 13px;');
-console.log('%c  👋 Double-click the hero section to shake', 'color: #8AB4F8; font-size: 13px;');
-console.log('%c  🎯 Click on cards for ripple effects', 'color: #A78BFA; font-size: 13px;');
-console.log('%c  🎨 Hover over section titles for color magic', 'color: #C084FC; font-size: 13px;');
-console.log('%c  🎪 3D tilt on cards when you hover', 'color: #E879F9; font-size: 13px;');
-console.log('%c\n💎 Flowing smoothly through the digital universe', 'color: #A78BFA; font-size: 12px; font-style: italic;');
+// Set current year in footer
+document.getElementById('year').textContent = new Date().getFullYear();
 
-// Wrap all DOM-dependent initialization in DOMContentLoaded
-document.addEventListener('DOMContentLoaded', () => {
-  // Set current year in footer
-  const yearElement = document.getElementById('year');
-  if (yearElement) {
-    yearElement.textContent = new Date().getFullYear();
+// Detect reduced motion preference for accessibility
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Navbar scroll effect
+window.addEventListener('scroll', () => {
+  const navbar = document.querySelector('.navbar');
+  if (window.scrollY > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
   }
+});
 
-  // Navbar scroll effect
-  window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (navbar && window.scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else if (navbar) {
-      navbar.classList.remove('scrolled');
+// Scroll reveal animation for sections
+const revealSections = () => {
+  const sections = document.querySelectorAll('section');
+  const windowHeight = window.innerHeight;
+
+  sections.forEach(section => {
+    const sectionTop = section.getBoundingClientRect().top;
+    const revealPoint = 100;
+
+    if (sectionTop < windowHeight - revealPoint) {
+      section.classList.add('visible');
     }
   });
+};
 
-  // Scroll reveal animation for sections
-  const revealSections = () => {
-    const sections = document.querySelectorAll('section');
-    const windowHeight = window.innerHeight;
+window.addEventListener('scroll', revealSections);
+window.addEventListener('load', revealSections);
+// Also call on DOMContentLoaded to ensure it runs early
+document.addEventListener('DOMContentLoaded', revealSections);
 
-    sections.forEach(section => {
-      const sectionTop = section.getBoundingClientRect().top;
-      const revealPoint = 100;
+// Mobile navigation toggle
+const hamburger = document.querySelector('.hamburger');
+const navMenu = document.querySelector('.nav-menu');
 
-      if (sectionTop < windowHeight - revealPoint) {
-        section.classList.add('visible');
-      }
-    });
-  };
+hamburger.addEventListener('click', () => {
+  navMenu.classList.toggle('active');
+  hamburger.classList.toggle('active');
+});
 
-  window.addEventListener('scroll', revealSections);
-  window.addEventListener('load', revealSections);
-  // Call immediately since DOM is ready
-  revealSections();
+// Close mobile menu when clicking on a link
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    navMenu.classList.remove('active');
+    hamburger.classList.remove('active');
+  });
+});
 
-  // Mobile navigation toggle
-  const hamburger = document.querySelector('.hamburger');
-  const navMenu = document.querySelector('.nav-menu');
-
-  if (hamburger && navMenu) {
-    hamburger.addEventListener('click', () => {
-      navMenu.classList.toggle('active');
-      hamburger.classList.toggle('active');
-    });
-
-    // Close mobile menu when clicking on a link
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        hamburger.classList.remove('active');
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      const offsetTop = target.offsetTop - 70;
+      window.scrollTo({
+        top: offsetTop,
+        behavior: 'smooth'
       });
-    });
-  }
-
-  // Smooth scrolling for navigation links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        const offsetTop = target.offsetTop - 70;
-        window.scrollTo({
-          top: offsetTop,
-          behavior: 'smooth'
-        });
-      }
-    });
-  });
-
-  // Blog modal functionality
-  const blogModal = document.getElementById('blogModal');
-  const blogModalBody = document.getElementById('blogModalBody');
-  const blogModalClose = document.querySelector('.blog-modal-close');
-
-  // Open blog modal
-  document.querySelectorAll('.read-more').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const blogId = e.currentTarget.getAttribute('data-blog');
-      const blogContent = document.getElementById(blogId);
-
-      if (blogContent && blogModal && blogModalBody) {
-        blogModalBody.innerHTML = blogContent.innerHTML;
-        blogModal.style.display = 'block';
-        document.body.style.overflow = 'hidden';
-      }
-    });
-  });
-
-  // Close blog modal
-  if (blogModalClose) {
-    blogModalClose.addEventListener('click', () => {
-      if (blogModal) {
-        blogModal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-      }
-    });
-  }
-
-  // Close modal when clicking outside
-  window.addEventListener('click', (e) => {
-    if (blogModal && e.target === blogModal) {
-      blogModal.style.display = 'none';
-      document.body.style.overflow = 'auto';
     }
   });
+});
 
-  // Close modal with Escape key
-  document.addEventListener('keydown', (e) => {
-    if (blogModal && e.key === 'Escape' && blogModal.style.display === 'block') {
-      blogModal.style.display = 'none';
-      document.body.style.overflow = 'auto';
+// Blog modal functionality
+const blogModal = document.getElementById('blogModal');
+const blogModalBody = document.getElementById('blogModalBody');
+const blogModalClose = document.querySelector('.blog-modal-close');
+
+// Open blog modal
+document.querySelectorAll('.read-more').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const blogId = e.currentTarget.getAttribute('data-blog');
+    const blogContent = document.getElementById(blogId);
+
+    if (blogContent && blogModal && blogModalBody) {
+      blogModalBody.innerHTML = blogContent.innerHTML;
+      blogModal.style.display = 'block';
+      document.body.style.overflow = 'hidden';
     }
   });
+});
+
+// Close blog modal
+if (blogModalClose) {
+  blogModalClose.addEventListener('click', () => {
+    blogModal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  });
+}
+
+// Close modal when clicking outside
+window.addEventListener('click', (e) => {
+  if (e.target === blogModal) {
+    blogModal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && blogModal.style.display === 'block') {
+    blogModal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
 });
 
 // ===== INTERACTIVE FEATURES & EASTER EGGS =====
 
 // Mouse trail effect with colorful particles
-let mouseParticles = [];
+let particles = [];
 const colors = ['#60D394', '#AAF683', '#FFD97D', '#FF9B85', '#4ECDC4', '#44A08D', '#F38181', '#95E1D3'];
 
-document.addEventListener('mousemove', (e) => {
-  if (Math.random() > 0.85) {
-    createParticle(e.clientX, e.clientY);
-  }
-});
+// Only enable mouse trail if reduced motion is not preferred
+if (!prefersReducedMotion) {
+  document.addEventListener('mousemove', (e) => {
+    if (Math.random() > 0.85) {
+      createParticle(e.clientX, e.clientY);
+    }
+  });
+}
 
 function createParticle(x, y) {
   const particle = document.createElement('div');
@@ -225,21 +204,15 @@ function activateMatrixMode() {
 
 // Secret click counter on logo
 let logoClicks = 0;
+const navLogo = document.querySelector('.nav-logo');
 
-// Wrap in DOMContentLoaded to ensure element exists
-document.addEventListener('DOMContentLoaded', () => {
-  const navLogo = document.querySelector('.nav-logo');
+navLogo.addEventListener('click', (e) => {
+  e.preventDefault();
+  logoClicks++;
 
-  if (navLogo) {
-    navLogo.addEventListener('click', (e) => {
-      e.preventDefault();
-      logoClicks++;
-
-      if (logoClicks === 5) {
-        showSecretMessage();
-        logoClicks = 0;
-      }
-    });
+  if (logoClicks === 5) {
+    showSecretMessage();
+    logoClicks = 0;
   }
 });
 
@@ -290,40 +263,38 @@ function showSecretMessage() {
 }
 
 // Interactive project cards - click to trigger portal effect
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.project-card, .homelab-card').forEach(card => {
-    card.addEventListener('click', function(e) {
-      if (e.target.tagName === 'A' || e.target.closest('a')) return;
+document.querySelectorAll('.project-card, .homelab-card').forEach(card => {
+  card.addEventListener('click', function(e) {
+    if (e.target.tagName === 'A' || e.target.closest('a')) return;
 
-      const ripple = document.createElement('div');
-      const rect = this.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+    const ripple = document.createElement('div');
+    const rect = this.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-      ripple.style.cssText = `
-        position: absolute;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(79, 195, 247, 0.6), rgba(126, 87, 194, 0.3), transparent);
-        width: 20px;
-        height: 20px;
-        left: ${x}px;
-        top: ${y}px;
-        transform: translate(-50%, -50%) scale(0);
-        pointer-events: none;
-        transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease-out;
-        opacity: 1;
-      `;
+    ripple.style.cssText = `
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(79, 195, 247, 0.6), rgba(126, 87, 194, 0.3), transparent);
+      width: 20px;
+      height: 20px;
+      left: ${x}px;
+      top: ${y}px;
+      transform: translate(-50%, -50%) scale(0);
+      pointer-events: none;
+      transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease-out;
+      opacity: 1;
+    `;
 
-      this.style.position = 'relative';
-      this.appendChild(ripple);
+    this.style.position = 'relative';
+    this.appendChild(ripple);
 
-      setTimeout(() => {
-        ripple.style.transform = 'translate(-50%, -50%) scale(25)';
-        ripple.style.opacity = '0';
-      }, 10);
+    setTimeout(() => {
+      ripple.style.transform = 'translate(-50%, -50%) scale(25)';
+      ripple.style.opacity = '0';
+    }, 10);
 
-      setTimeout(() => ripple.remove(), 800);
-    });
+    setTimeout(() => ripple.remove(), 800);
   });
 });
 
@@ -360,49 +331,44 @@ document.addEventListener('mousemove', (e) => {
 });
 
 // Section titles color shift on hover
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.section-title').forEach(title => {
-    title.addEventListener('mouseenter', function() {
-      const randomHue = Math.floor(Math.random() * 360);
-      this.style.filter = `hue-rotate(${randomHue}deg) saturate(1.3)`;
-    });
-
-    title.addEventListener('mouseleave', function() {
-      this.style.filter = 'none';
-    });
+document.querySelectorAll('.section-title').forEach(title => {
+  title.addEventListener('mouseenter', function() {
+    const randomHue = Math.floor(Math.random() * 360);
+    this.style.filter = `hue-rotate(${randomHue}deg) saturate(1.3)`;
   });
 
-  // Skill cards and homelab cards 3D tilt effect
-  document.querySelectorAll('.skill-card, .homelab-card, .blog-card').forEach(card => {
-    card.addEventListener('mousemove', function(e) {
-      const rect = this.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+  title.addEventListener('mouseleave', function() {
+    this.style.filter = 'none';
+  });
+});
 
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
+// Skill cards and homelab cards 3D tilt effect
+document.querySelectorAll('.skill-card, .homelab-card, .blog-card').forEach(card => {
+  card.addEventListener('mousemove', function(e) {
+    const rect = this.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-      const rotateX = ((y - centerY) / centerY) * 8;
-      const rotateY = ((x - centerX) / centerX) * 8;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
 
-      this.style.transform = `perspective(1000px) rotateX(${-rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
-    });
+    const rotateX = ((y - centerY) / centerY) * 8;
+    const rotateY = ((x - centerX) / centerX) * 8;
 
-    card.addEventListener('mouseleave', function() {
-      this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
-    });
+    this.style.transform = `perspective(1000px) rotateX(${-rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
   });
 
-  // Double-click on hero to trigger screen shake
-  const hero = document.querySelector('.hero');
-  if (hero) {
-    hero.addEventListener('dblclick', () => {
-      document.body.style.animation = 'shake 0.5s';
-      setTimeout(() => {
-        document.body.style.animation = '';
-      }, 500);
-    });
-  }
+  card.addEventListener('mouseleave', function() {
+    this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
+  });
+});
+
+// Double-click on hero to trigger screen shake
+document.querySelector('.hero')?.addEventListener('dblclick', () => {
+  document.body.style.animation = 'shake 0.5s';
+  setTimeout(() => {
+    document.body.style.animation = '';
+  }, 500);
 });
 
 // Easter egg: type "glass" anywhere on the page to toggle glassmorphism intensity
@@ -523,22 +489,18 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// ===== ADVANCED WEBGL FLUID SIMULATION =====
+// ===== ADVANCED FLUID SIMULATION =====
 
-let canvas = null;
-let gl = null;
+const canvas = document.getElementById('liquid-canvas');
+
 let width, height;
 let fluidParticles = [];
-let fluidMouseX = 0, fluidMouseY = 0;
+let mouseX = 0, mouseY = 0;
 let time = 0;
 
 function resizeCanvas() {
-  if (!canvas) return;
   width = canvas.width = window.innerWidth;
   height = canvas.height = window.innerHeight;
-  if (gl) {
-    gl.viewport(0, 0, width, height);
-  }
 }
 
 // Particle system for fluid effect
@@ -623,7 +585,6 @@ function initFluid() {
 
 // Animation loop
 function animateFluid() {
-  if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
   // Fade effect for trails
@@ -642,7 +603,7 @@ function animateFluid() {
     particle.vx += flowX;
     particle.vy += flowY;
 
-    particle.update(fluidMouseX, fluidMouseY);
+    particle.update(mouseX, mouseY);
     particle.draw(ctx);
   });
 
@@ -671,33 +632,18 @@ function animateFluid() {
 
 // Track mouse for fluid attraction
 document.addEventListener('mousemove', (e) => {
-  fluidMouseX = e.clientX;
-  fluidMouseY = e.clientY;
+  mouseX = e.clientX;
+  mouseY = e.clientY;
 });
 
-// Initialize fluid simulation after DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-  canvas = document.getElementById('liquid-canvas');
+// Initialize
+resizeCanvas();
+initFluid();
+animateFluid();
 
-  if (canvas) {
-    gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-
-    if (!gl) {
-      console.warn('WebGL not supported, falling back to canvas');
-      // Fallback to simple canvas if WebGL not available
-    }
-
-    resizeCanvas();
-    initFluid();
-    animateFluid();
-
-    window.addEventListener('resize', () => {
-      resizeCanvas();
-      initFluid();
-    });
-  } else {
-    console.error('Liquid canvas element not found!');
-  }
+window.addEventListener('resize', () => {
+  resizeCanvas();
+  initFluid();
 });
 
 // ===== MAGNETIC MORPHING CURSOR =====
@@ -846,61 +792,55 @@ function splitText(element) {
 }
 
 // Apply to hero title
-document.addEventListener('DOMContentLoaded', () => {
-  const heroTitle = document.querySelector('.hero-title');
-  if (heroTitle) {
-    splitText(heroTitle);
+const heroTitle = document.querySelector('.hero-title');
+if (heroTitle) {
+  splitText(heroTitle);
 
-    // Kinetic typography - follows mouse
-    let titleMouseX = 0, titleMouseY = 0;
+  // Kinetic typography - follows mouse
+  let titleMouseX = 0, titleMouseY = 0;
 
-    document.addEventListener('mousemove', (e) => {
-      titleMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-      titleMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  document.addEventListener('mousemove', (e) => {
+    titleMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    titleMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  function animateHeroText() {
+    const chars = heroTitle.querySelectorAll('.char');
+    chars.forEach((char, index) => {
+      const offsetX = titleMouseX * (10 + index * 0.5);
+      const offsetY = titleMouseY * (10 + index * 0.5);
+      const delay = index * 0.02;
+
+      char.style.transform = `translate(${offsetX}px, ${offsetY}px) rotate(${titleMouseX * 2}deg)`;
+      char.style.transitionDelay = `${delay}s`;
     });
 
-    function animateHeroText() {
-      const chars = heroTitle.querySelectorAll('.char');
-      chars.forEach((char, index) => {
-        const offsetX = titleMouseX * (10 + index * 0.5);
-        const offsetY = titleMouseY * (10 + index * 0.5);
-        const delay = index * 0.02;
-
-        char.style.transform = `translate(${offsetX}px, ${offsetY}px) rotate(${titleMouseX * 2}deg)`;
-        char.style.transitionDelay = `${delay}s`;
-      });
-
-      requestAnimationFrame(animateHeroText);
-    }
-
-    animateHeroText();
+    requestAnimationFrame(animateHeroText);
   }
-});
+
+  animateHeroText();
+}
 
 // ===== SCROLL-VELOCITY ANIMATIONS =====
 
-let lastScrollY = 0;
+let lastScrollY = window.scrollY;
 let scrollVelocity = 0;
 
-document.addEventListener('DOMContentLoaded', () => {
-  lastScrollY = window.scrollY;
+window.addEventListener('scroll', () => {
+  const currentScrollY = window.scrollY;
+  scrollVelocity = currentScrollY - lastScrollY;
+  lastScrollY = currentScrollY;
 
-  window.addEventListener('scroll', () => {
-    const currentScrollY = window.scrollY;
-    scrollVelocity = currentScrollY - lastScrollY;
-    lastScrollY = currentScrollY;
-
-    // Apply to section titles
-    document.querySelectorAll('.section-title').forEach(title => {
-      const speed = scrollVelocity * 0.5;
-      title.style.transform = `translateX(${speed}px)`;
-    });
-
-    // Slow decay
-    setTimeout(() => {
-      scrollVelocity *= 0.95;
-    }, 50);
+  // Apply to section titles
+  document.querySelectorAll('.section-title').forEach(title => {
+    const speed = scrollVelocity * 0.5;
+    title.style.transform = `translateX(${speed}px)`;
   });
+
+  // Slow decay
+  setTimeout(() => {
+    scrollVelocity *= 0.95;
+  }, 50);
 });
 
 // ===== 3D CARD TILT EFFECTS =====
@@ -958,9 +898,7 @@ function init3DCards() {
 }
 
 // Initialize after DOM loaded
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(init3DCards, 200);
-});
+setTimeout(init3DCards, 200);
 
 // ===== PARTICLE TEXT REVEAL =====
 
@@ -978,11 +916,11 @@ function createParticleText(element) {
   canvas.style.left = '0';
   canvas.style.pointerEvents = 'none';
 
-  const fluidParticles = [];
+  const particles = [];
   const particleCount = 50;
 
   for (let i = 0; i < particleCount; i++) {
-    fluidParticles.push({
+    particles.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       vx: (Math.random() - 0.5) * 2,
@@ -995,7 +933,7 @@ function createParticleText(element) {
   function animateParticles() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    fluidParticles.forEach(p => {
+    particles.forEach(p => {
       p.x += p.vx;
       p.y += p.vy;
 
@@ -1015,36 +953,32 @@ function createParticleText(element) {
 }
 
 // Apply to section titles on scroll into view
-document.addEventListener('DOMContentLoaded', () => {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && !entry.target.dataset.particlesAdded) {
-        createParticleText(entry.target);
-        entry.target.dataset.particlesAdded = 'true';
-      }
-    });
-  }, { threshold: 0.5 });
-
-  document.querySelectorAll('.section-title').forEach(title => {
-    observer.observe(title);
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !entry.target.dataset.particlesAdded) {
+      createParticleText(entry.target);
+      entry.target.dataset.particlesAdded = 'true';
+    }
   });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.section-title').forEach(title => {
+  observer.observe(title);
 });
 
 // ===== SCROLL-TRIGGERED MICRO-INTERACTIONS =====
 
-document.addEventListener('DOMContentLoaded', () => {
-  const scrollObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1 });
-
-  // Observe all cards (sections handled by revealSections function)
-  document.querySelectorAll('.skill-card, .homelab-card, .blog-card, .bento-item').forEach(el => {
-    scrollObserver.observe(el);
+const scrollObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
   });
+}, { threshold: 0.1 });
+
+// Observe all cards (sections handled by revealSections function)
+document.querySelectorAll('.skill-card, .homelab-card, .blog-card, .bento-item').forEach(el => {
+  scrollObserver.observe(el);
 });
 
 // ===== INTERACTIVE SKILL CONSTELLATION =====
@@ -1354,25 +1288,41 @@ class SkillConstellation {
   }
 }
 
-// Initialize constellation when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOM loaded, initializing constellation...');
-
-  // Wait a bit to ensure canvas is rendered
-  setTimeout(() => {
-    const canvas = document.getElementById('skillConstellation');
-    if (canvas) {
-      console.log('Canvas found, creating constellation');
-      try {
-        new SkillConstellation('skillConstellation');
-        console.log('Constellation initialized successfully!');
-      } catch (error) {
-        console.error('Error initializing constellation:', error);
-      }
-    } else {
-      console.error('Canvas element #skillConstellation not found!');
+// Helper function to initialize constellation after fonts are loaded
+function initConstellation() {
+  const canvas = document.getElementById('skillConstellation');
+  if (canvas && !canvas.dataset.initialized) {
+    console.log('Canvas found, creating constellation');
+    try {
+      new SkillConstellation('skillConstellation');
+      canvas.dataset.initialized = 'true';
+      console.log('Constellation initialized successfully!');
+    } catch (error) {
+      console.error('Error initializing constellation:', error);
     }
-  }, 100);
+  } else if (!canvas) {
+    console.error('Canvas element #skillConstellation not found!');
+  }
+}
+
+// Initialize constellation when DOM is ready and fonts are loaded
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM loaded, waiting for fonts...');
+
+  // Wait for fonts to load before initializing
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      console.log('Fonts loaded, initializing constellation...');
+      setTimeout(initConstellation, 100);
+    }).catch(error => {
+      console.warn('Font loading error, initializing anyway:', error);
+      setTimeout(initConstellation, 100);
+    });
+  } else {
+    // Fallback if Font Loading API not supported
+    console.log('Font Loading API not supported, initializing with delay...');
+    setTimeout(initConstellation, 500);
+  }
 });
 
 // Also try initializing after full page load as backup
@@ -1380,17 +1330,24 @@ window.addEventListener('load', () => {
   setTimeout(() => {
     if (!document.getElementById('skillConstellation')?.dataset?.initialized) {
       console.log('Backup initialization...');
-      const canvas = document.getElementById('skillConstellation');
-      if (canvas && !canvas.dataset.initialized) {
-        try {
-          new SkillConstellation('skillConstellation');
-          canvas.dataset.initialized = 'true';
-        } catch (error) {
-          console.error('Backup initialization failed:', error);
-        }
-      }
+      initConstellation();
     }
   }, 200);
 });
 
-// Console messages moved to top of file to ensure they always execute
+// Console message for curious developers
+console.log('%c💧 WELCOME TO THE LIQUID DIMENSION 💧', 'color: #8AB4F8; font-size: 24px; font-weight: bold; text-shadow: 0 0 15px #8AB4F8;');
+console.log('%c✨ Interactive Features:', 'color: #A78BFA; font-size: 16px; font-weight: bold;');
+console.log('%c  🌊 Morphing liquid blobs in background', 'color: #8AB4F8; font-size: 13px;');
+console.log('%c  ⭐ Interactive Skill Constellation Network', 'color: #60D394; font-size: 14px; font-weight: bold;');
+console.log('%c  🖱️  Custom morphing cursor that follows you', 'color: #8AB4F8; font-size: 13px;');
+console.log('%c  ✨ Mouse trail particles everywhere', 'color: #A78BFA; font-size: 13px;');
+console.log('%c  👆 Click the logo 5 times', 'color: #C084FC; font-size: 13px;');
+console.log('%c  ⌨️  Try the Konami code (↑↑↓↓←→←→BA)', 'color: #C084FC; font-size: 13px;');
+console.log('%c  💬 Type "neon" anywhere for explosion', 'color: #E879F9; font-size: 13px;');
+console.log('%c  🪟 Type "glass" to toggle glassmorphism', 'color: #E879F9; font-size: 13px;');
+console.log('%c  👋 Double-click the hero section to shake', 'color: #8AB4F8; font-size: 13px;');
+console.log('%c  🎯 Click on cards for ripple effects', 'color: #A78BFA; font-size: 13px;');
+console.log('%c  🎨 Hover over section titles for color magic', 'color: #C084FC; font-size: 13px;');
+console.log('%c  🎪 3D tilt on cards when you hover', 'color: #E879F9; font-size: 13px;');
+console.log('%c\n💎 Flowing smoothly through the digital universe', 'color: #A78BFA; font-size: 12px; font-style: italic;');

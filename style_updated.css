@@ -1650,3 +1650,49 @@ section.visible {
     grid-template-columns: 1fr;
   }
 }
+
+/* ===== ACCESSIBILITY ===== */
+
+/* Visually hidden but accessible to screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Reduced motion support for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Hide decorative animated elements */
+  .geometric-shape,
+  #liquid-canvas,
+  #custom-cursor {
+    display: none !important;
+  }
+
+  /* Disable complex animations */
+  .hero-title,
+  .particle,
+  .particle-text {
+    animation: none !important;
+  }
+
+  /* Make constellation static */
+  #skillConstellation {
+    opacity: 0.3;
+  }
+}
