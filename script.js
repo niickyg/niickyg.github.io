@@ -1066,165 +1066,301 @@ document.querySelectorAll('.skill-card, .homelab-card, .blog-card, .bento-item')
   scrollObserver.observe(el);
 });
 
-// ===== INTERACTIVE SKILL CONSTELLATION =====
+// ===== INTERACTIVE SKILL ECOSYSTEM TERRARIUM =====
 
-class SkillNode {
-  constructor(x, y, skill, color) {
+// Spore particles for organic effects
+class Spore {
+  constructor(x, y, color) {
     this.x = x;
     this.y = y;
-    this.targetX = x;
-    this.targetY = y;
-    this.skill = skill;
+    this.vx = (Math.random() - 0.5) * 2;
+    this.vy = Math.random() * -2 - 1;
+    this.size = Math.random() * 3 + 1;
     this.color = color;
-    this.radius = 40;
-    this.connections = [];
-    this.isHovered = false;
-    this.pulsePhase = Math.random() * Math.PI * 2;
-    this.orbitAngle = Math.random() * Math.PI * 2;
-    this.orbitSpeed = (Math.random() - 0.5) * 0.02;
+    this.life = 1;
+    this.decay = 0.01 + Math.random() * 0.02;
   }
 
-  update(mouseX, mouseY, canvas) {
-    // Gentle orbital motion
-    this.orbitAngle += this.orbitSpeed;
-    this.targetX += Math.cos(this.orbitAngle) * 0.5;
-    this.targetY += Math.sin(this.orbitAngle) * 0.5;
-
-    // Keep within bounds with soft boundaries
-    const margin = 80;
-    if (this.targetX < margin) this.targetX = margin;
-    if (this.targetX > canvas.width - margin) this.targetX = canvas.width - margin;
-    if (this.targetY < margin) this.targetY = margin;
-    if (this.targetY > canvas.height - margin) this.targetY = canvas.height - margin;
-
-    // Smooth movement
-    this.x += (this.targetX - this.x) * 0.05;
-    this.y += (this.targetY - this.y) * 0.05;
-
-    // Mouse interaction
-    const dx = mouseX - this.x;
-    const dy = mouseY - this.y;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-
-    if (distance < 100) {
-      this.isHovered = true;
-      // Magnetic attraction
-      this.x += dx * 0.02;
-      this.y += dy * 0.02;
-    } else {
-      this.isHovered = false;
-    }
-
-    this.pulsePhase += 0.05;
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.vy += 0.05; // gravity
+    this.life -= this.decay;
   }
 
   draw(ctx) {
-    const pulse = Math.sin(this.pulsePhase) * 0.2 + 1;
-    const radius = this.isHovered ? this.radius * 1.3 : this.radius * pulse;
-
-    // Outer glow
-    const glowGradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, radius * 1.5);
-    glowGradient.addColorStop(0, `${this.color}66`);
-    glowGradient.addColorStop(0.5, `${this.color}33`);
-    glowGradient.addColorStop(1, 'transparent');
-    ctx.fillStyle = glowGradient;
+    ctx.globalAlpha = this.life * 0.6;
+    ctx.fillStyle = this.color;
     ctx.beginPath();
-    ctx.arc(this.x, this.y, radius * 1.5, 0, Math.PI * 2);
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+}
 
-    // Main node
-    const nodeGradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, radius);
-    nodeGradient.addColorStop(0, this.color);
-    nodeGradient.addColorStop(0.7, `${this.color}CC`);
-    nodeGradient.addColorStop(1, `${this.color}88`);
-    ctx.fillStyle = nodeGradient;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, radius, 0, Math.PI * 2);
-    ctx.fill();
+// Plant class - each skill becomes a unique plant
+class Plant {
+  constructor(x, y, skill, color, type) {
+    this.baseX = x;
+    this.baseY = y;
+    this.skill = skill;
+    this.color = color;
+    this.type = type; // 'tree', 'flower', 'succulent', 'fern', 'moss'
+    this.isHovered = false;
+    this.growthPhase = 0;
+    this.maxGrowth = 1;
+    this.swayPhase = Math.random() * Math.PI * 2;
+    this.swaySpeed = 0.02 + Math.random() * 0.01;
+    this.swayAmount = 2 + Math.random() * 3;
+  }
 
-    // Border
-    ctx.strokeStyle = this.isHovered ? '#ffffff' : `${this.color}DD`;
-    ctx.lineWidth = this.isHovered ? 3 : 2;
+  update(mouseX, mouseY, spores) {
+    // Gentle swaying motion
+    this.swayPhase += this.swaySpeed;
+
+    // Check if mouse is hovering
+    const dx = mouseX - this.baseX;
+    const dy = mouseY - this.baseY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    const wasHovered = this.isHovered;
+    this.isHovered = distance < 60;
+
+    // Grow when hovered
+    if (this.isHovered) {
+      this.maxGrowth = Math.min(1.3, this.maxGrowth + 0.02);
+
+      // Release spores occasionally
+      if (Math.random() < 0.1) {
+        const sporeX = this.baseX + (Math.random() - 0.5) * 40;
+        const sporeY = this.baseY - 50 - Math.random() * 30;
+        spores.push(new Spore(sporeX, sporeY, this.color));
+      }
+    } else {
+      this.maxGrowth = Math.max(1, this.maxGrowth - 0.01);
+    }
+
+    // Smooth growth animation
+    this.growthPhase += (this.maxGrowth - this.growthPhase) * 0.1;
+  }
+
+  draw(ctx) {
+    const sway = Math.sin(this.swayPhase) * this.swayAmount;
+
+    ctx.save();
+    ctx.translate(this.baseX, this.baseY);
+
+    switch(this.type) {
+      case 'tree':
+        this.drawTree(ctx, sway);
+        break;
+      case 'flower':
+        this.drawFlower(ctx, sway);
+        break;
+      case 'succulent':
+        this.drawSucculent(ctx, sway);
+        break;
+      case 'fern':
+        this.drawFern(ctx, sway);
+        break;
+      case 'moss':
+        this.drawMoss(ctx, sway);
+        break;
+    }
+
+    // Draw label when hovered
+    if (this.isHovered) {
+      ctx.fillStyle = 'rgba(10, 25, 41, 0.9)';
+      ctx.strokeStyle = this.color;
+      ctx.lineWidth = 2;
+
+      const labelWidth = 120;
+      const labelHeight = 30;
+      const labelX = -labelWidth / 2;
+      const labelY = -120;
+
+      ctx.beginPath();
+      ctx.roundRect(labelX, labelY, labelWidth, labelHeight, 10);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 13px Inter';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(this.skill, 0, labelY + labelHeight / 2);
+    }
+
+    ctx.restore();
+  }
+
+  drawTree(ctx, sway) {
+    const height = 80 * this.growthPhase;
+
+    // Trunk
+    ctx.fillStyle = '#8B6F47';
+    ctx.fillRect(-4 + sway * 0.3, -height, 8, height);
+
+    // Canopy - branching effect
+    const canopySize = 35 * this.growthPhase;
+    for (let i = 0; i < 3; i++) {
+      const y = -height + i * 15;
+      const size = canopySize - i * 8;
+      const gradient = ctx.createRadialGradient(sway * 0.7, y, 0, sway * 0.7, y, size);
+      gradient.addColorStop(0, this.color);
+      gradient.addColorStop(1, `${this.color}66`);
+
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(sway * 0.7, y, size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  drawFlower(ctx, sway) {
+    const stemHeight = 70 * this.growthPhase;
+
+    // Stem
+    ctx.strokeStyle = '#7CB342';
+    ctx.lineWidth = 3;
     ctx.beginPath();
-    ctx.arc(this.x, this.y, radius, 0, Math.PI * 2);
+    ctx.moveTo(0, 0);
+    ctx.quadraticCurveTo(sway, -stemHeight / 2, sway * 1.5, -stemHeight);
     ctx.stroke();
 
-    // Skill name
-    ctx.fillStyle = '#ffffff';
-    ctx.font = this.isHovered ? 'bold 16px Inter' : 'bold 14px Inter';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(this.skill, this.x, this.y);
+    // Flower petals
+    const petalCount = 6;
+    const petalSize = 15 * this.growthPhase;
+    for (let i = 0; i < petalCount; i++) {
+      const angle = (i / petalCount) * Math.PI * 2;
+      const petalX = sway * 1.5 + Math.cos(angle) * petalSize;
+      const petalY = -stemHeight + Math.sin(angle) * petalSize;
 
-    // Particle effect when hovered
-    if (this.isHovered) {
-      for (let i = 0; i < 3; i++) {
-        const angle = (Date.now() / 1000 + i * (Math.PI * 2 / 3)) % (Math.PI * 2);
-        const px = this.x + Math.cos(angle) * (radius + 20);
-        const py = this.y + Math.sin(angle) * (radius + 20);
+      const gradient = ctx.createRadialGradient(sway * 1.5, -stemHeight, 0, petalX, petalY, petalSize);
+      gradient.addColorStop(0, this.color);
+      gradient.addColorStop(1, `${this.color}33`);
 
-        ctx.fillStyle = this.color;
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.ellipse(petalX, petalY, petalSize, petalSize * 1.5, angle, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Center
+    ctx.fillStyle = '#FFD97D';
+    ctx.beginPath();
+    ctx.arc(sway * 1.5, -stemHeight, 8, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  drawSucculent(ctx, sway) {
+    const size = 40 * this.growthPhase;
+    const layers = 5;
+
+    for (let i = layers - 1; i >= 0; i--) {
+      const layerSize = size * (1 - i * 0.15);
+      const y = -i * 8;
+
+      // Geometric succulent leaves
+      const points = 8;
+      ctx.fillStyle = this.color;
+      ctx.beginPath();
+      for (let j = 0; j < points; j++) {
+        const angle = (j / points) * Math.PI * 2;
+        const r = layerSize * (j % 2 === 0 ? 1 : 0.7);
+        const x = sway * 0.2 + Math.cos(angle) * r;
+        const py = y + Math.sin(angle) * r;
+        if (j === 0) ctx.moveTo(x, py);
+        else ctx.lineTo(x, py);
+      }
+      ctx.closePath();
+      ctx.fill();
+
+      // Border
+      ctx.strokeStyle = `${this.color}DD`;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+  }
+
+  drawFern(ctx, sway) {
+    const frondCount = 6;
+    const frondLength = 50 * this.growthPhase;
+
+    for (let i = 0; i < frondCount; i++) {
+      const angle = (i / frondCount) * Math.PI * 2 - Math.PI / 2;
+      const baseAngle = angle;
+
+      ctx.strokeStyle = this.color;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+
+      // Curved frond
+      const segments = 8;
+      for (let j = 1; j <= segments; j++) {
+        const t = j / segments;
+        const r = frondLength * t;
+        const currentAngle = baseAngle + sway * 0.05 * Math.sin(t * Math.PI);
+        const x = Math.cos(currentAngle) * r;
+        const y = Math.sin(currentAngle) * r - 10;
+        ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      // Leaflets
+      for (let j = 1; j <= segments; j++) {
+        const t = j / segments;
+        const r = frondLength * t;
+        const currentAngle = baseAngle + sway * 0.05 * Math.sin(t * Math.PI);
+        const x = Math.cos(currentAngle) * r;
+        const y = Math.sin(currentAngle) * r - 10;
+
+        const leafletSize = 8 * (1 - t);
+        ctx.fillStyle = `${this.color}AA`;
         ctx.beginPath();
-        ctx.arc(px, py, 3, 0, Math.PI * 2);
+        ctx.ellipse(x, y, leafletSize, leafletSize * 0.5, currentAngle + Math.PI / 2, 0, Math.PI * 2);
         ctx.fill();
       }
     }
   }
 
-  drawConnection(ctx, other, isActive) {
-    const opacity = isActive ? 0.8 : 0.2;
-    const width = isActive ? 3 : 1;
+  drawMoss(ctx, sway) {
+    const puffCount = 12;
+    const spread = 35 * this.growthPhase;
 
-    // Bezier curve for organic feel
-    const midX = (this.x + other.x) / 2;
-    const midY = (this.y + other.y) / 2;
-    const controlOffset = 50;
-    const controlX = midX + (Math.random() - 0.5) * controlOffset;
-    const controlY = midY + (Math.random() - 0.5) * controlOffset;
+    for (let i = 0; i < puffCount; i++) {
+      const angle = (i / puffCount) * Math.PI * 2;
+      const distance = (Math.random() * 0.5 + 0.5) * spread;
+      const x = Math.cos(angle) * distance + sway * 0.1;
+      const y = Math.sin(angle) * distance * 0.5 - 5;
+      const size = 8 + Math.random() * 6;
 
-    // Gradient line
-    const gradient = ctx.createLinearGradient(this.x, this.y, other.x, other.y);
-    gradient.addColorStop(0, `${this.color}${Math.floor(opacity * 255).toString(16).padStart(2, '0')}`);
-    gradient.addColorStop(1, `${other.color}${Math.floor(opacity * 255).toString(16).padStart(2, '0')}`);
+      const gradient = ctx.createRadialGradient(x, y, 0, x, y, size);
+      gradient.addColorStop(0, this.color);
+      gradient.addColorStop(1, `${this.color}44`);
 
-    ctx.strokeStyle = gradient;
-    ctx.lineWidth = width;
-    ctx.beginPath();
-    ctx.moveTo(this.x, this.y);
-    ctx.quadraticCurveTo(controlX, controlY, other.x, other.y);
-    ctx.stroke();
-
-    // Animated particles along connection when active
-    if (isActive) {
-      const progress = (Date.now() % 2000) / 2000;
-      const t = progress;
-      const px = (1 - t) * (1 - t) * this.x + 2 * (1 - t) * t * controlX + t * t * other.x;
-      const py = (1 - t) * (1 - t) * this.y + 2 * (1 - t) * t * controlY + t * t * other.y;
-
-      ctx.fillStyle = '#ffffff';
-      ctx.shadowBlur = 10;
-      ctx.shadowColor = this.color;
+      ctx.fillStyle = gradient;
       ctx.beginPath();
-      ctx.arc(px, py, 4, 0, Math.PI * 2);
+      ctx.arc(x, y, size * this.growthPhase, 0, Math.PI * 2);
       ctx.fill();
-      ctx.shadowBlur = 0;
     }
   }
 }
 
-class SkillConstellation {
+class SkillEcosystem {
   constructor(canvasId) {
     this.canvas = document.getElementById(canvasId);
     if (!this.canvas) {
-      console.error('Constellation canvas not found');
+      console.error('Ecosystem canvas not found');
       return;
     }
 
     this.ctx = this.canvas.getContext('2d');
-    this.nodes = [];
+    this.plants = [];
+    this.spores = [];
     this.mouseX = 0;
     this.mouseY = 0;
-    this.activeNode = null;
 
     this.resize();
     this.init();
@@ -1240,26 +1376,22 @@ class SkillConstellation {
 
   init() {
     const skills = [
-      { name: 'Entrepreneurship', color: '#60D394', connections: ['Leadership', 'Strategy', 'Innovation'] },
-      { name: 'Leadership', color: '#4ECDC4', connections: ['Entrepreneurship', 'Strategy', 'Innovation'] },
-      { name: 'Sustainability', color: '#AAF683', connections: ['Innovation', 'Strategy'] },
-      { name: 'Innovation', color: '#FFD97D', connections: ['Entrepreneurship', 'Leadership', 'Sustainability', 'Strategy'] },
-      { name: 'Strategy', color: '#FF9B85', connections: ['Entrepreneurship', 'Leadership', 'Sustainability', 'Innovation'] }
+      { name: 'Entrepreneurship', color: '#60D394', type: 'tree' },
+      { name: 'Leadership', color: '#4ECDC4', type: 'flower' },
+      { name: 'Sustainability', color: '#AAF683', type: 'moss' },
+      { name: 'Innovation', color: '#FFD97D', type: 'flower' },
+      { name: 'Strategy', color: '#FF9B85', type: 'succulent' }
     ];
 
-    // Position nodes in a pentagon/circular layout
-    const centerX = this.canvas.width / 2;
-    const centerY = this.canvas.height / 2;
-    const radius = Math.min(this.canvas.width, this.canvas.height) * 0.3;
+    // Position plants across the terrarium floor
+    const groundLevel = this.canvas.height - 80;
+    const spacing = this.canvas.width / (skills.length + 1);
 
     skills.forEach((skill, index) => {
-      const angle = (index / skills.length) * Math.PI * 2 - Math.PI / 2;
-      const x = centerX + Math.cos(angle) * radius;
-      const y = centerY + Math.sin(angle) * radius;
-
-      const node = new SkillNode(x, y, skill.name, skill.color);
-      node.connections = skill.connections;
-      this.nodes.push(node);
+      const x = spacing * (index + 1);
+      const y = groundLevel;
+      const plant = new Plant(x, y, skill.name, skill.color, skill.type);
+      this.plants.push(plant);
     });
   }
 
@@ -1268,157 +1400,88 @@ class SkillConstellation {
       const rect = this.canvas.getBoundingClientRect();
       this.mouseX = e.clientX - rect.left;
       this.mouseY = e.clientY - rect.top;
-
-      // Find active node
-      this.activeNode = null;
-      this.nodes.forEach(node => {
-        const dx = this.mouseX - node.x;
-        const dy = this.mouseY - node.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        if (distance < node.radius * 1.5) {
-          this.activeNode = node;
-        }
-      });
     });
 
     this.canvas.addEventListener('mouseleave', () => {
-      this.activeNode = null;
+      this.mouseX = -1000;
+      this.mouseY = -1000;
     });
 
     window.addEventListener('resize', () => {
       this.resize();
       this.init();
     });
-
-    // Sync with skill card hovers
-    document.querySelectorAll('.skill-card').forEach(card => {
-      card.addEventListener('mouseenter', () => {
-        const skillName = card.querySelector('h3').textContent;
-        const node = this.nodes.find(n => n.skill === skillName);
-        if (node) {
-          this.activeNode = node;
-        }
-      });
-
-      card.addEventListener('mouseleave', () => {
-        // Only clear if mouse not actually on canvas
-        if (!this.canvas.matches(':hover')) {
-          this.activeNode = null;
-        }
-      });
-    });
   }
 
   animate() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    // Clear with subtle background
+    const bgGradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
+    bgGradient.addColorStop(0, 'rgba(96, 211, 148, 0.02)');
+    bgGradient.addColorStop(1, 'rgba(78, 205, 196, 0.05)');
+    this.ctx.fillStyle = bgGradient;
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // Draw connections
-    this.nodes.forEach(node => {
-      node.connections.forEach(connName => {
-        const other = this.nodes.find(n => n.skill === connName);
-        if (other) {
-          const isActive = this.activeNode === node || this.activeNode === other;
-          node.drawConnection(this.ctx, other, isActive);
-        }
-      });
+    // Update and draw spores
+    this.spores = this.spores.filter(spore => {
+      spore.update();
+      spore.draw(this.ctx);
+      return spore.life > 0;
     });
 
-    // Update and draw nodes
-    this.nodes.forEach(node => {
-      node.update(this.mouseX, this.mouseY, this.canvas);
-      node.draw(this.ctx);
+    // Update and draw plants
+    this.plants.forEach(plant => {
+      plant.update(this.mouseX, this.mouseY, this.spores);
+      plant.draw(this.ctx);
     });
-
-    // Draw tooltip for active node
-    if (this.activeNode) {
-      const tooltipX = this.activeNode.x;
-      const tooltipY = this.activeNode.y - this.activeNode.radius - 60;
-
-      // Draw rounded rect manually for browser compatibility
-      const x = tooltipX - 80;
-      const y = tooltipY - 15;
-      const width = 160;
-      const height = 40;
-      const radius = 10;
-
-      this.ctx.fillStyle = 'rgba(10, 25, 41, 0.95)';
-      this.ctx.strokeStyle = this.activeNode.color;
-      this.ctx.lineWidth = 2;
-      this.ctx.beginPath();
-      this.ctx.moveTo(x + radius, y);
-      this.ctx.lineTo(x + width - radius, y);
-      this.ctx.arcTo(x + width, y, x + width, y + radius, radius);
-      this.ctx.lineTo(x + width, y + height - radius);
-      this.ctx.arcTo(x + width, y + height, x + width - radius, y + height, radius);
-      this.ctx.lineTo(x + radius, y + height);
-      this.ctx.arcTo(x, y + height, x, y + height - radius, radius);
-      this.ctx.lineTo(x, y + radius);
-      this.ctx.arcTo(x, y, x + radius, y, radius);
-      this.ctx.closePath();
-      this.ctx.fill();
-      this.ctx.stroke();
-
-      this.ctx.fillStyle = '#ffffff';
-      this.ctx.font = 'bold 14px Inter';
-      this.ctx.textAlign = 'center';
-      this.ctx.fillText(this.activeNode.skill, tooltipX, tooltipY + 5);
-
-      // Connection count
-      this.ctx.font = '11px Inter';
-      this.ctx.fillStyle = this.activeNode.color;
-      this.ctx.fillText(`${this.activeNode.connections.length} connections`, tooltipX, tooltipY + 20);
-    }
 
     requestAnimationFrame(() => this.animate());
   }
 }
 
-// Helper function to initialize constellation after fonts are loaded
-function initConstellation() {
-  const canvas = document.getElementById('skillConstellation');
+// Initialize ecosystem when DOM is ready and fonts are loaded
+function initEcosystem() {
+  const canvas = document.getElementById('skillEcosystem');
   if (canvas && !canvas.dataset.initialized) {
-    console.log('Canvas found, creating constellation');
+    console.log('Canvas found, creating ecosystem');
     try {
-      new SkillConstellation('skillConstellation');
+      new SkillEcosystem('skillEcosystem');
       canvas.dataset.initialized = 'true';
-      console.log('Constellation initialized successfully!');
+      console.log('Ecosystem initialized successfully!');
     } catch (error) {
-      console.error('Error initializing constellation:', error);
+      console.error('Error initializing ecosystem:', error);
     }
   } else if (!canvas) {
-    console.error('Canvas element #skillConstellation not found!');
+    console.error('Canvas element #skillEcosystem not found!');
   }
 }
 
-// Initialize constellation when DOM is ready and fonts are loaded
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM loaded, waiting for fonts...');
 
-  // Wait for fonts to load before initializing
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(() => {
-      console.log('Fonts loaded, initializing constellation...');
-      setTimeout(initConstellation, 100);
+      console.log('Fonts loaded, initializing ecosystem...');
+      setTimeout(initEcosystem, 100);
     }).catch(error => {
       console.warn('Font loading error, initializing anyway:', error);
-      setTimeout(initConstellation, 100);
+      setTimeout(initEcosystem, 100);
     });
   } else {
-    // Fallback if Font Loading API not supported
     console.log('Font Loading API not supported, initializing with delay...');
-    setTimeout(initConstellation, 500);
+    setTimeout(initEcosystem, 500);
   }
 });
 
-// Also try initializing after full page load as backup
+// Backup initialization after full page load
 window.addEventListener('load', () => {
   setTimeout(() => {
-    if (!document.getElementById('skillConstellation')?.dataset?.initialized) {
+    if (!document.getElementById('skillEcosystem')?.dataset?.initialized) {
       console.log('Backup initialization...');
-      initConstellation();
+      initEcosystem();
     }
   }, 200);
 });
+
 
 // ===== MAGNETIC BUTTON EFFECTS (2025) =====
 class MagneticButton {
