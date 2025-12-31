@@ -111,7 +111,7 @@ document.addEventListener('keydown', (e) => {
 
 // Mouse trail effect with colorful particles
 let particles = [];
-const colors = ['#4FC3F7', '#7E57C2', '#E91E63', '#00BCD4', '#9C27B0', '#FF6B6B'];
+const colors = ['#60D394', '#AAF683', '#FFD97D', '#FF9B85', '#4ECDC4', '#44A08D', '#F38181', '#95E1D3'];
 
 document.addEventListener('mousemove', (e) => {
   if (Math.random() > 0.85) {

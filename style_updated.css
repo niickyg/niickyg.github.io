@@ -8,20 +8,12 @@
   width: 100%;
   height: 100%;
   z-index: -3;
-  opacity: 0.6;
+  opacity: 0.3;
 }
 
-/* Custom Morphing Cursor */
+/* Custom Cursor - Disabled (keeping particle effect only) */
 .custom-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 60px;
-  height: 60px;
-  pointer-events: none;
-  z-index: 9999;
-  mix-blend-mode: normal;
-  transition: width 0.3s ease, height 0.3s ease;
+  display: none !important;
 }
 
 .cursor-inner {
@@ -183,7 +175,7 @@
 
 /* Bento item content styling */
 .bento-item .project-image {
-  background: linear-gradient(135deg, #8AB4F8, #A78BFA, #C084FC);
+  background: linear-gradient(135deg, #4ECDC4, #44A08D, #3CAEA3);
   padding: 2rem;
   display: flex;
   align-items: center;
@@ -313,7 +305,7 @@
   content: '';
   position: absolute;
   inset: -2px;
-  background: linear-gradient(135deg, #8AB4F8, #A78BFA, #C084FC);
+  background: linear-gradient(135deg, #60D394, #FFD97D, #FF9B85, #4ECDC4);
   border-radius: inherit;
   opacity: 0;
   z-index: -1;
@@ -322,7 +314,7 @@
 }
 
 .hover-glow:hover::after {
-  opacity: 0.6;
+  opacity: 0.4;
 }
 
 /* ===== ENHANCED INTERACTIVE DESIGN ===== */
@@ -341,12 +333,12 @@ body {
   font-family: 'Inter', 'DM Sans', sans-serif;
   line-height: 1.8;
   color: #E8F0FE;
-  background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 50%, #1F2937 100%);
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1f1f1f 100%);
   overflow-x: hidden;
   position: relative;
   --mouse-x: 50%;
   --mouse-y: 50%;
-  cursor: none;
+  cursor: default;
 }
 
 /* ===== INTERACTIVE ANIMATED BACKGROUND ===== */
@@ -721,23 +713,23 @@ body::before {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #8AB4F8, #A78BFA);
+  background: linear-gradient(135deg, #60D394, #AAF683);
   color: #fff;
-  border-color: rgba(138, 180, 248, 0.5);
-  box-shadow: 0 8px 32px rgba(138, 180, 248, 0.3);
+  border-color: rgba(96, 211, 148, 0.5);
+  box-shadow: 0 8px 32px rgba(96, 211, 148, 0.3);
 }
 
 .btn-primary:hover {
   transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 12px 48px rgba(138, 180, 248, 0.5);
-  background: linear-gradient(135deg, #A78BFA, #C084FC);
+  box-shadow: 0 12px 48px rgba(96, 211, 148, 0.5);
+  background: linear-gradient(135deg, #AAF683, #FFD97D);
 }
 
 .btn-secondary {
-  background: rgba(167, 139, 250, 0.1);
-  color: #A78BFA;
-  border-color: rgba(167, 139, 250, 0.5);
-  box-shadow: 0 8px 32px rgba(167, 139, 250, 0.2);
+  background: rgba(255, 155, 133, 0.1);
+  color: #FF9B85;
+  border-color: rgba(255, 155, 133, 0.5);
+  box-shadow: 0 8px 32px rgba(255, 155, 133, 0.2);
 }
 
 .btn-secondary:hover {
@@ -815,7 +807,7 @@ section.visible {
   font-size: 3.5rem;
   text-align: center;
   margin-bottom: 4rem;
-  background: linear-gradient(135deg, #8AB4F8, #A78BFA, #C084FC, #E879F9);
+  background: linear-gradient(135deg, #60D394, #AAF683, #FFD97D, #FF9B85);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
