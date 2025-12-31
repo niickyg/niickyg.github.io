@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Test - Liquid Reveal</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      background: #0a1929;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+    .test-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    h1 {
+      text-align: center;
+      color: #60D394;
+    }
+    .test-box {
+      width: 100%;
+      height: 400px;
+      margin: 20px 0;
+      border: 2px solid #8AB4F8;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    #status {
+      text-align: center;
+      padding: 20px;
+      background: rgba(96, 211, 148, 0.1);
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+  <div class="test-container">
+    <h1>Liquid Reveal Quick Test</h1>
+    <div id="status">Loading...</div>
+    <p style="text-align: center; margin-bottom: 20px;">Hover over the box below to see the liquid distortion effect</p>
+    <div class="test-box" id="testBox"></div>
+  </div>
+
+  <script src="liquid-image-reveal.js"></script>
+  <script>
+    window.addEventListener('load', () => {
+      const statusEl = document.getElementById('status');
+
+      if (typeof THREE === 'undefined') {
+        statusEl.innerHTML = '❌ Error: Three.js not loaded';
+        statusEl.style.background = 'rgba(255, 155, 133, 0.2)';
+        return;
+      }
+
+      if (typeof LiquidImageReveal === 'undefined') {
+        statusEl.innerHTML = '❌ Error: LiquidImageReveal not loaded';
+        statusEl.style.background = 'rgba(255, 155, 133, 0.2)';
+        return;
+      }
+
+      // Create test gradient
+      const canvas = document.createElement('canvas');
+      canvas.width = 800;
+      canvas.height = 600;
+      const ctx = canvas.getContext('2d');
+
+      const gradient = ctx.createLinearGradient(0, 0, 800, 600);
+      gradient.addColorStop(0, '#8AB4F8');
+      gradient.addColorStop(0.5, '#A78BFA');
+      gradient.addColorStop(1, '#C084FC');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, 800, 600);
+
+      const imageUrl = canvas.toDataURL();
+      const container = document.getElementById('testBox');
+
+      try {
+        new LiquidImageReveal(container, imageUrl, {
+          intensity: 0.8,
+          speed: 1.0,
+          colorGlow: true
+        });
+        statusEl.innerHTML = '✅ Success! Hover over the box to see the effect';
+        statusEl.style.background = 'rgba(96, 211, 148, 0.2)';
+      } catch (error) {
+        statusEl.innerHTML = `❌ Error: ${error.message}`;
+        statusEl.style.background = 'rgba(255, 155, 133, 0.2)';
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>

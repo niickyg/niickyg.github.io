@@ -1,51 +1,3 @@
-/* ===== THEME VARIABLES (2025) ===== */
-
-:root {
-  /* Dark theme (default) */
-  --bg-primary: #0A1929;
-  --bg-secondary: #0f2137;
-  --bg-tertiary: #1a2942;
-  --text-primary: #E8F0FE;
-  --text-secondary: #B3E5FC;
-  --text-muted: #8AB4F8;
-  --accent-1: #60D394;
-  --accent-2: #4ECDC4;
-  --accent-3: #AAF683;
-  --accent-4: #FFD97D;
-  --accent-5: #FF9B85;
-  --border-color: rgba(96, 211, 148, 0.2);
-  --shadow-color: rgba(0, 0, 0, 0.5);
-  --glass-bg: rgba(15, 23, 42, 0.7);
-  --overlay-bg: rgba(10, 25, 41, 0.95);
-
-  /* Smooth transition for theme changes */
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-[data-theme="light"] {
-  /* Light theme */
-  --bg-primary: #f5f5f7;
-  --bg-secondary: #ffffff;
-  --bg-tertiary: #e8e8ed;
-  --text-primary: #1d1d1f;
-  --text-secondary: #515154;
-  --text-muted: #86868b;
-  --accent-1: #2d8b5f;
-  --accent-2: #3CAEA3;
-  --accent-3: #7ab800;
-  --accent-4: #f5a623;
-  --accent-5: #e94b3c;
-  --border-color: rgba(45, 139, 95, 0.2);
-  --shadow-color: rgba(0, 0, 0, 0.1);
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --overlay-bg: rgba(245, 245, 247, 0.95);
-}
-
-/* Smooth theme transition for all themed elements */
-* {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
 /* ===== LIQUID ORGANIC DESIGN ===== */
 
 /* Liquid Canvas Background */
@@ -59,42 +11,188 @@
   opacity: 0.3;
 }
 
-/* Custom Cursor - Disabled (keeping particle effect only) */
-.custom-cursor {
-  display: none !important;
+/* ===== MAGNETIC MORPHING BLOB CURSOR WITH GOOEY EFFECT ===== */
+
+/* Hide default cursor */
+body * {
+  cursor: none !important;
 }
 
-.cursor-inner {
+/* Cursor container with gooey filter */
+.cursor-container {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle,
-    rgba(138, 180, 248, 1) 0%,
-    rgba(167, 139, 250, 0.9) 40%,
-    rgba(192, 132, 252, 0.6) 60%,
-    transparent 80%);
-  border-radius: 50%;
-  border: 2px solid rgba(138, 180, 248, 0.8);
-  filter: blur(8px);
-  box-shadow: 0 0 40px rgba(138, 180, 248, 0.9), 0 0 80px rgba(167, 139, 250, 0.6);
-  animation: morphCursor 4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 10000;
+  filter: url(#gooey-cursor);
 }
 
-@keyframes morphCursor {
+/* Main cursor blob */
+.custom-cursor {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  pointer-events: none;
+  z-index: 10001;
+  transform-origin: center;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Individual blob elements for morphing effect */
+.cursor-blob {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 30% 30%,
+    rgba(138, 180, 248, 0.95) 0%,
+    rgba(167, 139, 250, 0.85) 40%,
+    rgba(192, 132, 252, 0.75) 70%,
+    rgba(232, 121, 249, 0.5) 100%);
+  border-radius: 50%;
+  transform-origin: center;
+  animation: blobMorph 6s ease-in-out infinite;
+  box-shadow:
+    0 0 20px rgba(138, 180, 248, 0.6),
+    0 0 40px rgba(167, 139, 250, 0.4),
+    inset 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+/* Secondary blobs for layered morphing */
+.cursor-blob.blob-2 {
+  animation: blobMorph 6s ease-in-out infinite;
+  animation-delay: -2s;
+  opacity: 0.8;
+  transform: scale(0.85);
+}
+
+.cursor-blob.blob-3 {
+  animation: blobMorph 6s ease-in-out infinite;
+  animation-delay: -4s;
+  opacity: 0.6;
+  transform: scale(0.7);
+}
+
+/* Blob morphing animation */
+@keyframes blobMorph {
   0%, 100% {
-    border-radius: 50% 40% 60% 50% / 50% 60% 40% 50%;
-    transform: scale(1) rotate(0deg);
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    transform: rotate(0deg) scale(1);
   }
-  25% {
-    border-radius: 40% 60% 50% 60% / 60% 50% 60% 40%;
-    transform: scale(1.1) rotate(90deg);
+  20% {
+    border-radius: 40% 60% 50% 60% / 50% 60% 40% 60%;
+    transform: rotate(72deg) scale(1.1);
+  }
+  40% {
+    border-radius: 70% 30% 60% 40% / 40% 70% 30% 60%;
+    transform: rotate(144deg) scale(0.95);
+  }
+  60% {
+    border-radius: 30% 70% 40% 60% / 60% 40% 70% 30%;
+    transform: rotate(216deg) scale(1.05);
+  }
+  80% {
+    border-radius: 50% 50% 70% 30% / 30% 50% 50% 70%;
+    transform: rotate(288deg) scale(0.9);
+  }
+}
+
+/* Trail effect container */
+#cursor-trail {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.cursor-drip {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(138, 180, 248, 0.8) 0%,
+    rgba(167, 139, 250, 0.6) 50%,
+    transparent 100%);
+  pointer-events: none;
+  animation: dripFall 1.5s ease-in forwards;
+  box-shadow: 0 0 10px rgba(138, 180, 248, 0.5);
+}
+
+@keyframes dripFall {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100px) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* Cursor states - hover interactive elements */
+.custom-cursor.hover-active {
+  width: 100px !important;
+  height: 100px !important;
+}
+
+.custom-cursor.hover-active .cursor-blob {
+  background: radial-gradient(circle at 30% 30%,
+    rgba(192, 132, 252, 0.95) 0%,
+    rgba(232, 121, 249, 0.85) 40%,
+    rgba(96, 211, 148, 0.75) 70%,
+    rgba(255, 215, 125, 0.5) 100%);
+  box-shadow:
+    0 0 30px rgba(192, 132, 252, 0.8),
+    0 0 60px rgba(232, 121, 249, 0.6),
+    inset 0 0 30px rgba(255, 255, 255, 0.3);
+  animation: blobMorphFast 2s ease-in-out infinite;
+}
+
+@keyframes blobMorphFast {
+  0%, 100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    transform: rotate(0deg) scale(1);
+  }
+  33% {
+    border-radius: 40% 60% 50% 60% / 50% 60% 40% 60%;
+    transform: rotate(120deg) scale(1.15);
+  }
+  66% {
+    border-radius: 70% 30% 60% 40% / 40% 70% 30% 60%;
+    transform: rotate(240deg) scale(0.9);
+  }
+}
+
+/* Click state */
+.custom-cursor.click-active {
+  animation: cursorPulse 0.3s ease-out;
+}
+
+@keyframes cursorPulse {
+  0% {
+    transform: scale(1);
   }
   50% {
-    border-radius: 60% 50% 40% 50% / 40% 50% 60% 50%;
-    transform: scale(0.9) rotate(180deg);
+    transform: scale(1.3);
   }
-  75% {
-    border-radius: 50% 60% 50% 40% / 50% 40% 50% 60%;
-    transform: scale(1.05) rotate(270deg);
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Responsive - disable on mobile/touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .cursor-container,
+  .custom-cursor,
+  #cursor-trail {
+    display: none !important;
+  }
+
+  body * {
+    cursor: auto !important;
   }
 }
 
@@ -363,8 +461,8 @@ html {
 body {
   font-family: 'Inter', 'DM Sans', sans-serif;
   line-height: 1.8;
-  color: var(--text-primary);
-  background: var(--bg-primary);
+  color: #E8F0FE;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1f1f1f 100%);
   overflow-x: hidden;
   position: relative;
   --mouse-x: 50%;
@@ -579,38 +677,6 @@ body::before {
 
 .nav-link:hover::after {
   width: 60%;
-}
-
-/* Theme Toggle Button */
-.theme-toggle {
-  background: rgba(96, 211, 148, 0.15);
-  border: 1px solid rgba(96, 211, 148, 0.3);
-  color: var(--accent-1);
-  padding: 0.6rem;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  transition: all 0.3s ease;
-  font-size: 1.1rem;
-}
-
-.theme-toggle:hover {
-  background: rgba(96, 211, 148, 0.25);
-  border-color: var(--accent-1);
-  transform: rotate(20deg) scale(1.1);
-  box-shadow: 0 0 20px rgba(96, 211, 148, 0.4);
-}
-
-.theme-toggle i {
-  transition: transform 0.3s ease;
-}
-
-.theme-toggle:active i {
-  transform: rotate(360deg);
 }
 
 /* ===== HAMBURGER MENU ===== */
@@ -913,6 +979,54 @@ section.visible {
   margin-bottom: 1.5rem;
   line-height: 1.9;
   font-weight: 300;
+}
+
+/* ===== SKILL CONSTELLATION ===== */
+.constellation-container {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(96, 211, 148, 0.3);
+  border-radius: 30px;
+  overflow: hidden;
+  margin: 3rem 0;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+#skillConstellation {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.constellation-legend {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10, 25, 41, 0.9);
+  border: 1px solid rgba(96, 211, 148, 0.5);
+  border-radius: 20px;
+  padding: 0.8rem 2rem;
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+
+.constellation-legend p {
+  color: #60D394;
+  font-size: 0.95rem;
+  margin: 0;
+  font-weight: 500;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+  .constellation-container {
+    height: 400px;
+  }
 }
 
 .skills-grid {
@@ -1680,187 +1794,5 @@ section.visible {
 
   .contact-content {
     grid-template-columns: 1fr;
-  }
-}
-
-/* ===== VIEW TRANSITIONS API (2025) ===== */
-
-/* Define view transition names for section headers */
-.section-title {
-  view-transition-name: section-heading;
-}
-
-/* Customize the view transition animations */
-::view-transition-old(section-heading) {
-  animation: fade-slide-out 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-::view-transition-new(section-heading) {
-  animation: fade-slide-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes fade-slide-out {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-}
-
-@keyframes fade-slide-in {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Smooth transitions for entire document */
-::view-transition-old(root) {
-  animation: fade-out-scale 0.3s ease-out;
-}
-
-::view-transition-new(root) {
-  animation: fade-in-scale 0.3s ease-in;
-}
-
-@keyframes fade-out-scale {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(0.98);
-  }
-}
-
-@keyframes fade-in-scale {
-  from {
-    opacity: 0;
-    transform: scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* ===== CSS SCROLL-DRIVEN ANIMATIONS (2025) ===== */
-
-/* Smooth reveal animation for sections */
-@keyframes reveal-up {
-  from {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Apply reveal animation to sections using scroll timeline */
-.skill-card,
-.homelab-card,
-.bento-item,
-.project-card {
-  animation: reveal-up linear both;
-  animation-timeline: view();
-  animation-range: entry 0% entry 100%;
-}
-
-/* Parallax effect for geometric shapes */
-@keyframes parallax-float {
-  from { transform: translateY(0) rotate(0deg); }
-  to { transform: translateY(-100px) rotate(45deg); }
-}
-
-.geometric-shape {
-  animation: parallax-float linear both;
-  animation-timeline: scroll();
-  animation-range: 0 500px;
-}
-
-/* Hero title scale on scroll */
-@keyframes hero-scale {
-  from {
-    transform: scale(1);
-    opacity: 1;
-  }
-  to {
-    transform: scale(0.85);
-    opacity: 0.4;
-  }
-}
-
-.hero-title {
-  animation: hero-scale linear both;
-  animation-timeline: scroll();
-  animation-range: 0 400px;
-}
-
-/* Smooth fade for hero subtitle */
-@keyframes fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-.hero-subtitle,
-.hero-description {
-  animation: fade-out linear both;
-  animation-timeline: scroll();
-  animation-range: 0 300px;
-}
-
-/* ===== ACCESSIBILITY ===== */
-
-/* Visually hidden but accessible to screen readers */
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-/* Reduced motion support for accessibility */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-
-  /* Hide decorative animated elements */
-  .geometric-shape,
-  #liquid-canvas,
-  #custom-cursor {
-    display: none !important;
-  }
-
-  /* Disable complex animations */
-  .hero-title,
-  .particle,
-  .particle-text {
-    animation: none !important;
-  }
-
-  /* Make constellation static */
-  #skillConstellation {
-    opacity: 0.3;
   }
 }

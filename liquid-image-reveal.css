@@ -1,0 +1,238 @@
+/* ===== LIQUID DISTORTION IMAGE REVEAL STYLES ===== */
+
+.liquid-reveal-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.liquid-reveal-container canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.liquid-reveal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.liquid-reveal-fallback {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced project image containers for liquid reveal */
+.bento-item .project-image {
+  position: relative;
+  min-height: 200px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.bento-item.large .project-image {
+  min-height: 250px;
+}
+
+.bento-item.tall .project-image {
+  min-height: 220px;
+}
+
+.bento-item.medium .project-image {
+  min-height: 180px;
+}
+
+.bento-item.wide .project-image {
+  min-height: 120px;
+}
+
+/* Smooth transitions for overlay icons */
+.liquid-reveal-overlay i {
+  font-size: 4rem;
+  color: #fff;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bento-item:hover .liquid-reveal-overlay i {
+  transform: scale(1.1);
+}
+
+/* Loading state */
+.liquid-reveal-container.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(138, 180, 248, 0.2);
+  border-top-color: #8AB4F8;
+  border-radius: 50%;
+  animation: liquidSpin 0.8s linear infinite;
+}
+
+@keyframes liquidSpin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Enhanced glow effects for hovered items */
+.bento-item:hover .liquid-reveal-container {
+  box-shadow:
+    0 0 30px rgba(138, 180, 248, 0.4),
+    inset 0 0 30px rgba(138, 180, 248, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .bento-item .project-image {
+    min-height: 180px;
+  }
+
+  .liquid-reveal-overlay i {
+    font-size: 3rem;
+  }
+}
+
+/* Performance optimizations */
+.liquid-reveal-container,
+.liquid-reveal-overlay {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Accessibility - ensure content remains visible for screen readers */
+.liquid-reveal-overlay[aria-hidden="true"] {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+}
+
+/* Focus states for keyboard navigation */
+.bento-item:focus-within .liquid-reveal-container {
+  outline: 2px solid #8AB4F8;
+  outline-offset: 4px;
+}
+
+/* Custom cursor hint */
+.bento-item .project-image::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  background: rgba(138, 180, 248, 0.2);
+  border: 2px solid rgba(138, 180, 248, 0.4);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.bento-item:hover .project-image::before {
+  opacity: 1;
+  animation: pulseHint 2s ease-in-out infinite;
+}
+
+@keyframes pulseHint {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* WebGL canvas styling */
+.liquid-reveal-container canvas {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Prevent layout shift during load */
+.liquid-reveal-container:empty {
+  background: linear-gradient(135deg, rgba(138, 180, 248, 0.1), rgba(167, 139, 250, 0.1));
+}
+
+/* Enhanced interaction feedback */
+.bento-item .project-image {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bento-item:hover .project-image {
+  transform: scale(1.01);
+}
+
+/* Color palette extraction indicator */
+.liquid-reveal-container[data-colors-extracted="true"]::after {
+  content: '';
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 8px;
+  height: 8px;
+  background: #60D394;
+  border-radius: 50%;
+  opacity: 0;
+  animation: fadeInOut 2s ease-in-out;
+  z-index: 10;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.8; }
+}
+
+/* Organic shape backgrounds */
+.liquid-reveal-container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(
+    circle,
+    rgba(138, 180, 248, 0.05) 0%,
+    transparent 70%
+  );
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+
+.bento-item:hover .liquid-reveal-container::before {
+  opacity: 1;
+  animation: organicPulse 4s ease-in-out infinite;
+}
+
+@keyframes organicPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}

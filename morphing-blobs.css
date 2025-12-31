@@ -1,0 +1,391 @@
+/* ===== SCROLL-DRIVEN MORPHING BLOB TRANSITIONS ===== */
+
+/* Blob divider container */
+.blob-divider {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: -50px 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Ensure proper stacking with sections */
+section {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(180deg,
+    rgba(26, 26, 26, 0) 0%,
+    rgba(26, 26, 26, 0.7) 10%,
+    rgba(26, 26, 26, 0.95) 30%,
+    rgba(26, 26, 26, 0.95) 70%,
+    rgba(26, 26, 26, 0.7) 90%,
+    rgba(26, 26, 26, 0) 100%
+  );
+}
+
+/* SVG blob styling */
+.morph-blob-svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.9;
+  mix-blend-mode: screen;
+  filter: blur(1px);
+  will-change: transform;
+  transition: transform 0.1s ease-out;
+}
+
+/* Alternate blend modes for variety */
+.blob-divider:nth-child(4n+1) .morph-blob-svg {
+  mix-blend-mode: screen;
+}
+
+.blob-divider:nth-child(4n+2) .morph-blob-svg {
+  mix-blend-mode: overlay;
+  opacity: 0.7;
+}
+
+.blob-divider:nth-child(4n+3) .morph-blob-svg {
+  mix-blend-mode: soft-light;
+  opacity: 0.8;
+}
+
+.blob-divider:nth-child(4n) .morph-blob-svg {
+  mix-blend-mode: color-dodge;
+  opacity: 0.6;
+}
+
+/* Enhanced glow effect on scroll */
+.blob-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  background: radial-gradient(
+    circle,
+    rgba(96, 211, 148, 0.1) 0%,
+    rgba(78, 205, 196, 0.05) 40%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  animation: pulseGlow 8s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.6;
+  }
+}
+
+/* Scroll velocity visual feedback */
+.blob-divider.fast-scroll::before {
+  opacity: 0.8;
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+/* Shimmer overlay for dramatic effect */
+.blob-divider::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  animation: shimmer 10s linear infinite;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+}
+
+/* Particle effects container (for enhanced visual richness) */
+.blob-divider-particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+/* Individual blob particles */
+.blob-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(96, 211, 148, 0.4), transparent);
+  animation: floatParticle 20s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes floatParticle {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.4;
+  }
+  25% {
+    transform: translate(30px, -50px) scale(1.2);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-20px, -100px) scale(0.8);
+    opacity: 0.3;
+  }
+  75% {
+    transform: translate(40px, -70px) scale(1.1);
+    opacity: 0.5;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .blob-divider {
+    height: 200px;
+    margin: -30px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .blob-divider {
+    height: 150px;
+    margin: -20px 0;
+  }
+
+  .morph-blob-svg {
+    opacity: 0.7;
+  }
+
+  /* Reduce blend mode intensity on mobile */
+  .blob-divider:nth-child(4n+2) .morph-blob-svg,
+  .blob-divider:nth-child(4n+3) .morph-blob-svg,
+  .blob-divider:nth-child(4n) .morph-blob-svg {
+    mix-blend-mode: screen;
+    opacity: 0.6;
+  }
+}
+
+@media (max-width: 480px) {
+  .blob-divider {
+    height: 100px;
+    margin: -10px 0;
+  }
+
+  .blob-divider::after {
+    display: none;
+  }
+}
+
+/* Performance optimization for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .morph-blob-svg {
+    animation: none;
+    transition: none;
+  }
+
+  .blob-divider::before,
+  .blob-divider::after {
+    animation: none;
+  }
+
+  .blob-particle {
+    animation: none;
+  }
+}
+
+/* Enhanced visibility for high contrast mode */
+@media (prefers-contrast: high) {
+  .morph-blob-svg {
+    opacity: 1;
+    filter: none;
+  }
+
+  .blob-divider {
+    border-top: 2px solid rgba(96, 211, 148, 0.5);
+    border-bottom: 2px solid rgba(96, 211, 148, 0.5);
+  }
+}
+
+/* Dark mode enhancements */
+@media (prefers-color-scheme: dark) {
+  .morph-blob-svg {
+    opacity: 0.95;
+  }
+
+  .blob-divider::before {
+    opacity: 0.4;
+  }
+}
+
+/* Print styles - hide decorative elements */
+@media print {
+  .blob-divider {
+    display: none;
+  }
+}
+
+/* Loading state */
+.blob-divider.loading {
+  opacity: 0;
+  animation: fadeInBlob 1s ease-out forwards;
+}
+
+@keyframes fadeInBlob {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Scroll direction indicators */
+.blob-divider.scroll-down .morph-blob-svg {
+  animation: expandBlob 0.5s ease-out;
+}
+
+.blob-divider.scroll-up .morph-blob-svg {
+  animation: contractBlob 0.5s ease-out;
+}
+
+@keyframes expandBlob {
+  from {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes contractBlob {
+  from {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Intersection observer animation states */
+.blob-divider.in-view {
+  animation: blobPulse 3s ease-in-out infinite;
+}
+
+@keyframes blobPulse {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.1);
+  }
+}
+
+/* Focus and hover states for accessibility */
+.blob-divider:focus-within {
+  outline: 2px solid rgba(96, 211, 148, 0.5);
+  outline-offset: 4px;
+}
+
+/* GPU acceleration hints */
+.morph-blob-svg,
+.blob-divider::before,
+.blob-divider::after {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize rendering */
+.blob-divider {
+  contain: layout style paint;
+  content-visibility: auto;
+}
+
+/* Advanced gradient overlays for depth */
+.blob-divider-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(26, 26, 26, 0.8) 0%,
+    transparent 30%,
+    transparent 70%,
+    rgba(26, 26, 26, 0.8) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Color theme variations */
+.blob-divider.theme-teal {
+  --blob-color-1: #4ECDC4;
+  --blob-color-2: #44A08D;
+  --blob-color-3: #3CAEA3;
+}
+
+.blob-divider.theme-green {
+  --blob-color-1: #60D394;
+  --blob-color-2: #AAF683;
+  --blob-color-3: #6BCF7F;
+}
+
+.blob-divider.theme-coral {
+  --blob-color-1: #FF9B85;
+  --blob-color-2: #FFD97D;
+  --blob-color-3: #F38181;
+}
+
+/* Ensure smooth transitions between sections */
+section + .blob-divider {
+  margin-top: -100px;
+}
+
+.blob-divider + section {
+  margin-top: -100px;
+}
+
+/* High-performance mode (for older devices) */
+@media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .morph-blob-svg {
+    will-change: auto;
+  }
+}

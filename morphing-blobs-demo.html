@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Morphing Blobs Demo - Interactive Preview</title>
+  <link rel="stylesheet" href="morphing-blobs.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1f1f1f 100%);
+      color: #E8F0FE;
+      line-height: 1.6;
+    }
+
+    .demo-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(20px);
+      padding: 1rem 2rem;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(96, 211, 148, 0.2);
+    }
+
+    .demo-header h1 {
+      font-size: 1.5rem;
+      color: #60D394;
+      margin-bottom: 0.5rem;
+    }
+
+    .demo-header p {
+      font-size: 0.9rem;
+      color: #B3E5FC;
+      opacity: 0.8;
+    }
+
+    section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      position: relative;
+      background: linear-gradient(180deg,
+        rgba(26, 26, 26, 0) 0%,
+        rgba(26, 26, 26, 0.7) 10%,
+        rgba(26, 26, 26, 0.95) 30%,
+        rgba(26, 26, 26, 0.95) 70%,
+        rgba(26, 26, 26, 0.7) 90%,
+        rgba(26, 26, 26, 0) 100%
+      );
+    }
+
+    .content {
+      max-width: 800px;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #60D394, #AAF683, #FFD97D);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 800;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #B3E5FC;
+      margin-bottom: 2rem;
+      line-height: 1.8;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .feature-card {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(96, 211, 148, 0.3);
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(96, 211, 148, 0.6);
+      box-shadow: 0 10px 30px rgba(96, 211, 148, 0.2);
+    }
+
+    .feature-card h3 {
+      color: #4ECDC4;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card p {
+      color: #BFDBFE;
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    .scroll-indicator {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.9);
+      padding: 1rem 2rem;
+      border-radius: 30px;
+      border: 2px solid rgba(96, 211, 148, 0.5);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-10px); }
+    }
+
+    .scroll-indicator p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #60D394;
+      font-weight: 600;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2.5rem;
+      color: #60D394;
+      font-weight: 800;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 1rem;
+      color: #B3E5FC;
+      opacity: 0.8;
+    }
+
+    code {
+      background: rgba(15, 23, 42, 0.8);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      color: #FFD97D;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 768px) {
+      h2 {
+        font-size: 2rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-header">
+    <h1>🎨 Morphing Blobs Demo</h1>
+    <p>Scroll to see the organic blob transitions between sections - Notice how they respond to your scroll speed!</p>
+  </div>
+
+  <section id="section1">
+    <div class="content">
+      <h2>Welcome to the Liquid Dimension</h2>
+      <p>This demo showcases scroll-driven morphing blob transitions that create seamless section dividers with organic, flowing animations.</p>
+
+      <div class="features">
+        <div class="feature-card">
+          <h3>🌊 Organic Morphing</h3>
+          <p>Smooth Catmull-Rom splines create natural, flowing shapes</p>
+        </div>
+        <div class="feature-card">
+          <h3>⚡ Scroll-Reactive</h3>
+          <p>Responds to scroll velocity and direction</p>
+        </div>
+        <div class="feature-card">
+          <h3>🎨 Color Gradients</h3>
+          <p>Beautiful gradients using teal, green, and coral</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="section2">
+    <div class="content">
+      <h2>Scroll Velocity Detection</h2>
+      <p>The blobs react to how fast you scroll. Try scrolling quickly vs slowly and watch the dramatic difference in their behavior!</p>
+
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-value">60</span>
+          <span class="stat-label">FPS Animation</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">8-12</span>
+          <span class="stat-label">Control Points</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">∞</span>
+          <span class="stat-label">Unique Morphs</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="section3">
+    <div class="content">
+      <h2>Blend Mode Magic</h2>
+      <p>Each blob uses different CSS blend modes (<code>screen</code>, <code>overlay</code>, <code>soft-light</code>, <code>color-dodge</code>) to create rich, layered visual effects.</p>
+
+      <div class="features">
+        <div class="feature-card">
+          <h3>Screen</h3>
+          <p>Brightens overlapping areas for a glowing effect</p>
+        </div>
+        <div class="feature-card">
+          <h3>Overlay</h3>
+          <p>Creates rich color mixing and depth</p>
+        </div>
+        <div class="feature-card">
+          <h3>Soft-light</h3>
+          <p>Subtle glow that enhances without overpowering</p>
+        </div>
+        <div class="feature-card">
+          <h3>Color-dodge</h3>
+          <p>Dramatic highlights and vivid colors</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="section4">
+    <div class="content">
+      <h2>Performance Optimized</h2>
+      <p>Built with performance in mind using requestAnimationFrame, GPU acceleration, and throttled scroll events for smooth 60fps animations.</p>
+
+      <div class="features">
+        <div class="feature-card">
+          <h3>🚀 GPU Accelerated</h3>
+          <p>Hardware-accelerated CSS transforms</p>
+        </div>
+        <div class="feature-card">
+          <h3>📱 Mobile Ready</h3>
+          <p>Responsive design for all screen sizes</p>
+        </div>
+        <div class="feature-card">
+          <h3>♿ Accessible</h3>
+          <p>Respects reduced motion preferences</p>
+        </div>
+        <div class="feature-card">
+          <h3>🌐 Cross-browser</h3>
+          <p>Works on all modern browsers</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="section5">
+    <div class="content">
+      <h2>Color Palette Integration</h2>
+      <p>Each blob divider uses carefully chosen color schemes that match the site's liquid theme: teal, green, and coral gradients.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-value" style="color: #4ECDC4;">Teal</span>
+          <span class="stat-label">#4ECDC4</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" style="color: #60D394;">Green</span>
+          <span class="stat-label">#60D394</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" style="color: #FF9B85;">Coral</span>
+          <span class="stat-label">#FF9B85</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="section6">
+    <div class="content">
+      <h2>End of Demo</h2>
+      <p>Scroll back up to see the blobs in action again! Notice how the morphing never repeats exactly - each animation is unique thanks to procedural generation.</p>
+
+      <div class="features">
+        <div class="feature-card">
+          <h3>✨ Features</h3>
+          <p>Check MORPHING_BLOBS_README.md for complete documentation</p>
+        </div>
+        <div class="feature-card">
+          <h3>🛠️ Customize</h3>
+          <p>Easy to modify colors, speeds, and sizes</p>
+        </div>
+        <div class="feature-card">
+          <h3>📦 Modular</h3>
+          <p>Standalone system that integrates anywhere</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="scroll-indicator">
+    <p>⬇️ Scroll to explore ⬇️</p>
+  </div>
+
+  <script src="morphing-blobs.js"></script>
+  <script>
+    // Hide scroll indicator after first scroll
+    let hasScrolled = false;
+    window.addEventListener('scroll', () => {
+      if (!hasScrolled) {
+        document.querySelector('.scroll-indicator').style.opacity = '0';
+        setTimeout(() => {
+          document.querySelector('.scroll-indicator').style.display = 'none';
+        }, 300);
+        hasScrolled = true;
+      }
+    });
+  </script>
+</body>
+</html>
