@@ -28,6 +28,8 @@ const revealSections = () => {
 
 window.addEventListener('scroll', revealSections);
 window.addEventListener('load', revealSections);
+// Also call on DOMContentLoaded to ensure it runs early
+document.addEventListener('DOMContentLoaded', revealSections);
 
 // Mobile navigation toggle
 const hamburger = document.querySelector('.hamburger');
@@ -967,8 +969,8 @@ const scrollObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 
-// Observe all cards and sections
-document.querySelectorAll('.skill-card, .homelab-card, .blog-card, .bento-item, section').forEach(el => {
+// Observe all cards (sections handled by revealSections function)
+document.querySelectorAll('.skill-card, .homelab-card, .blog-card, .bento-item').forEach(el => {
   scrollObserver.observe(el);
 });
 
