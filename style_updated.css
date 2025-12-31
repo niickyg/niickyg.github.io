@@ -482,8 +482,9 @@ body::before {
 }
 
 .logo-image {
-  height: 45px;
+  height: 32px;
   width: auto;
+  display: block;
   transition: transform 0.3s ease, filter 0.3s ease;
 }
 
