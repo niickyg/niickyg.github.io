@@ -51,26 +51,7 @@
 }
 
 /* Massive Flowing Text */
-.hero-title {
-  font-family: 'Inter', sans-serif !important;
-  font-size: clamp(4rem, 12vw, 10rem) !important;
-  font-weight: 800 !important;
-  letter-spacing: -0.03em !important;
-  line-height: 0.95 !important;
-  background: linear-gradient(135deg,
-    #8AB4F8 0%,
-    #A78BFA 25%,
-    #C084FC 50%,
-    #E879F9 75%,
-    #8AB4F8 100%) !important;
-  background-size: 400% 400% !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-  animation: liquidFlow 8s ease-in-out infinite, gentleFloat 6s ease-in-out infinite !important;
-  filter: drop-shadow(0 0 40px rgba(138, 180, 248, 0.3)) !important;
-  will-change: transform, background-position;
-}
+/* Removed - using hero-title rule with 3D effect at line 642 */
 
 @keyframes liquidFlow {
   0%, 100% {
