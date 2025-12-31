@@ -1178,18 +1178,713 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Console message for curious developers
-console.log('%c💧 WELCOME TO THE LIQUID DIMENSION 💧', 'color: #8AB4F8; font-size: 24px; font-weight: bold; text-shadow: 0 0 15px #8AB4F8;');
-console.log('%c✨ Interactive Features:', 'color: #A78BFA; font-size: 16px; font-weight: bold;');
-console.log('%c  🌊 Morphing liquid blobs in background', 'color: #8AB4F8; font-size: 13px;');
-console.log('%c  ⭐ Interactive Skill Constellation Network', 'color: #60D394; font-size: 14px; font-weight: bold;');
-console.log('%c  🖱️  Custom morphing cursor that follows you', 'color: #8AB4F8; font-size: 13px;');
-console.log('%c  ✨ Mouse trail particles everywhere', 'color: #A78BFA; font-size: 13px;');
-console.log('%c  👆 Click the logo 5 times', 'color: #C084FC; font-size: 13px;');
-console.log('%c  ⌨️  Try the Konami code (↑↑↓↓←→←→BA)', 'color: #C084FC; font-size: 13px;');
-console.log('%c  💬 Type "neon" anywhere for explosion', 'color: #E879F9; font-size: 13px;');
-console.log('%c  🪟 Type "glass" to toggle glassmorphism', 'color: #E879F9; font-size: 13px;');
-console.log('%c  👋 Double-click the hero section to shake', 'color: #8AB4F8; font-size: 13px;');
-console.log('%c  🎯 Click on cards for ripple effects', 'color: #A78BFA; font-size: 13px;');
-console.log('%c  🎨 Hover over section titles for color magic', 'color: #C084FC; font-size: 13px;');
-console.log('%c  🎪 3D tilt on cards when you hover', 'color: #E879F9; font-size: 13px;');
-console.log('%c\n💎 Flowing smoothly through the digital universe', 'color: #A78BFA; font-size: 12px; font-style: italic;');
+console.log('%c WELCOME TO THE LIQUID DIMENSION', 'color: #8AB4F8; font-size: 24px; font-weight: bold; text-shadow: 0 0 15px #8AB4F8;');
+console.log('%c Interactive Features:', 'color: #A78BFA; font-size: 16px; font-weight: bold;');
+console.log('%c  Morphing liquid blobs in background', 'color: #8AB4F8; font-size: 13px;');
+console.log('%c  Interactive Skill Constellation Network', 'color: #60D394; font-size: 14px; font-weight: bold;');
+console.log('%c  Custom morphing cursor that follows you', 'color: #8AB4F8; font-size: 13px;');
+console.log('%c  Mouse trail particles everywhere', 'color: #A78BFA; font-size: 13px;');
+console.log('%c  Click the logo 5 times', 'color: #C084FC; font-size: 13px;');
+console.log('%c  Try the Konami code (upupdowndownleftrightleftrightBA)', 'color: #C084FC; font-size: 13px;');
+console.log('%c  Type "neon" anywhere for explosion', 'color: #E879F9; font-size: 13px;');
+console.log('%c  Type "glass" to toggle glassmorphism', 'color: #E879F9; font-size: 13px;');
+console.log('%c  Double-click the hero section to shake', 'color: #8AB4F8; font-size: 13px;');
+console.log('%c  Click on cards for ripple effects', 'color: #A78BFA; font-size: 13px;');
+console.log('%c  Hover over section titles for color magic', 'color: #C084FC; font-size: 13px;');
+console.log('%c  3D tilt on cards when you hover', 'color: #E879F9; font-size: 13px;');
+console.log('%c  Physics-based floating tech icons', 'color: #60D394; font-size: 13px;');
+console.log('%c  Geometric clip-path project cards', 'color: #4ECDC4; font-size: 13px;');
+console.log('%c\n Flowing smoothly through the digital universe', 'color: #A78BFA; font-size: 12px; font-style: italic;');
+
+
+// ===== TESORO-INSPIRED 2025 FEATURES =====
+
+// ===== 1. GSAP CHARACTER-LEVEL TEXT ANIMATIONS =====
+class CharacterAnimator {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    // Only initialize if GSAP is available and reduced motion is not preferred
+    if (typeof gsap === 'undefined' || prefersReducedMotion) {
+      return;
+    }
+
+    // Register ScrollTrigger plugin
+    if (typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+    }
+
+    this.animateHeroTitle();
+    this.animateSectionTitles();
+  }
+
+  // Split text into characters with proper word wrapping
+  splitIntoChars(element) {
+    const text = element.textContent;
+    element.innerHTML = '';
+
+    const words = text.split(' ');
+    words.forEach((word, wordIndex) => {
+      const wordSpan = document.createElement('span');
+      wordSpan.className = 'word';
+      wordSpan.style.display = 'inline-block';
+      wordSpan.style.whiteSpace = 'nowrap';
+
+      word.split('').forEach((char, charIndex) => {
+        const charSpan = document.createElement('span');
+        charSpan.className = 'char split-char';
+        charSpan.textContent = char;
+        charSpan.style.display = 'inline-block';
+        charSpan.style.setProperty('--char-index', charIndex);
+        wordSpan.appendChild(charSpan);
+      });
+
+      element.appendChild(wordSpan);
+
+      if (wordIndex < words.length - 1) {
+        const space = document.createElement('span');
+        space.innerHTML = '&nbsp;';
+        space.style.display = 'inline-block';
+        element.appendChild(space);
+      }
+    });
+
+    return element.querySelectorAll('.char');
+  }
+
+  animateHeroTitle() {
+    const heroTitle = document.querySelector('.hero-title');
+    if (!heroTitle) return;
+
+    const chars = this.splitIntoChars(heroTitle);
+
+    // Initial animation on page load
+    gsap.fromTo(chars,
+      {
+        opacity: 0,
+        y: 50,
+        rotationX: -90,
+        transformOrigin: 'center bottom'
+      },
+      {
+        opacity: 1,
+        y: 0,
+        rotationX: 0,
+        duration: 0.8,
+        ease: 'back.out(1.7)',
+        stagger: {
+          amount: 0.8,
+          from: 'start'
+        },
+        delay: 0.3
+      }
+    );
+
+    // Add hover color wave effect
+    chars.forEach((char, index) => {
+      char.addEventListener('mouseenter', () => {
+        // Animate this char and neighbors
+        const neighbors = [
+          chars[index - 2],
+          chars[index - 1],
+          char,
+          chars[index + 1],
+          chars[index + 2]
+        ].filter(Boolean);
+
+        neighbors.forEach((neighbor, i) => {
+          const delay = Math.abs(i - 2) * 0.05;
+          gsap.to(neighbor, {
+            color: '#AAF683',
+            textShadow: '0 0 20px #AAF683',
+            duration: 0.3,
+            delay: delay,
+            ease: 'power2.out'
+          });
+
+          gsap.to(neighbor, {
+            color: '',
+            textShadow: '',
+            duration: 0.5,
+            delay: delay + 0.3,
+            ease: 'power2.out'
+          });
+        });
+      });
+    });
+  }
+
+  animateSectionTitles() {
+    const titles = document.querySelectorAll('.section-title');
+
+    titles.forEach(title => {
+      const chars = this.splitIntoChars(title);
+
+      // Create scroll-triggered animation
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.create({
+          trigger: title,
+          start: 'top 80%',
+          once: true,
+          onEnter: () => {
+            title.classList.add('in-view');
+            gsap.fromTo(chars,
+              {
+                opacity: 0,
+                y: 30,
+                rotationY: -20
+              },
+              {
+                opacity: 1,
+                y: 0,
+                rotationY: 0,
+                duration: 0.6,
+                ease: 'power3.out',
+                stagger: 0.02
+              }
+            );
+          }
+        });
+      }
+    });
+  }
+}
+
+// ===== 2. MATTER.JS PHYSICS FLOATING TECH ICONS =====
+class PhysicsIcons {
+  constructor() {
+    this.canvas = document.getElementById('physics-canvas');
+    if (!this.canvas || prefersReducedMotion || typeof Matter === 'undefined') {
+      return;
+    }
+
+    this.init();
+  }
+
+  init() {
+    const { Engine, Render, Runner, Bodies, Body, Composite, Mouse, MouseConstraint, Events } = Matter;
+
+    // Create engine
+    this.engine = Engine.create({
+      gravity: { x: 0, y: 0.3 } // Subtle downward gravity
+    });
+
+    // Create renderer
+    this.render = Render.create({
+      canvas: this.canvas,
+      engine: this.engine,
+      options: {
+        width: window.innerWidth,
+        height: window.innerHeight,
+        wireframes: false,
+        background: 'transparent',
+        pixelRatio: window.devicePixelRatio
+      }
+    });
+
+    // Tech icons as circular bodies
+    this.techIcons = [
+      { icon: 'fab fa-react', color: '#61DAFB', label: 'React' },
+      { icon: 'fab fa-node-js', color: '#339933', label: 'Node.js' },
+      { icon: 'fab fa-python', color: '#3776AB', label: 'Python' },
+      { icon: 'fab fa-docker', color: '#2496ED', label: 'Docker' },
+      { icon: 'fab fa-git-alt', color: '#F05032', label: 'Git' },
+      { icon: 'fab fa-js', color: '#F7DF1E', label: 'JavaScript' },
+      { icon: 'fas fa-database', color: '#4ECDC4', label: 'Database' },
+      { icon: 'fas fa-cloud', color: '#60D394', label: 'Cloud' },
+      { icon: 'fas fa-code', color: '#AAF683', label: 'Code' },
+      { icon: 'fas fa-terminal', color: '#FFD97D', label: 'Terminal' }
+    ];
+
+    this.bodies = [];
+    this.createBodies(Bodies, Body, Composite);
+    this.setupMouseInteraction(Mouse, MouseConstraint, Composite);
+    this.createWalls(Bodies, Composite);
+
+    // Run the engine
+    const runner = Runner.create();
+    Runner.run(runner, this.engine);
+    Render.run(this.render);
+
+    // Custom render for icons
+    Events.on(this.render, 'afterRender', () => {
+      this.drawIcons();
+    });
+
+    // Handle resize
+    window.addEventListener('resize', () => this.handleResize());
+  }
+
+  createBodies(Bodies, Body, Composite) {
+    const heroSection = document.querySelector('.hero');
+    if (!heroSection) return;
+
+    const rect = heroSection.getBoundingClientRect();
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    this.techIcons.forEach((tech, index) => {
+      const angle = (index / this.techIcons.length) * Math.PI * 2;
+      const radius = 150 + Math.random() * 100;
+      const x = centerX + Math.cos(angle) * radius;
+      const y = centerY + Math.sin(angle) * radius - 100;
+
+      const body = Bodies.circle(x, y, 30, {
+        restitution: 0.75, // Bounce
+        friction: 0.1,
+        frictionAir: 0.02,
+        render: {
+          fillStyle: 'transparent',
+          strokeStyle: tech.color,
+          lineWidth: 2
+        },
+        label: tech.label,
+        techData: tech
+      });
+
+      // Add initial random velocity
+      Body.setVelocity(body, {
+        x: (Math.random() - 0.5) * 2,
+        y: (Math.random() - 0.5) * 2
+      });
+
+      this.bodies.push(body);
+      Composite.add(this.engine.world, body);
+    });
+  }
+
+  createWalls(Bodies, Composite) {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const thickness = 50;
+
+    const walls = [
+      // Bottom
+      Bodies.rectangle(w / 2, h + thickness / 2, w, thickness, { isStatic: true, render: { visible: false } }),
+      // Top
+      Bodies.rectangle(w / 2, -thickness / 2, w, thickness, { isStatic: true, render: { visible: false } }),
+      // Left
+      Bodies.rectangle(-thickness / 2, h / 2, thickness, h, { isStatic: true, render: { visible: false } }),
+      // Right
+      Bodies.rectangle(w + thickness / 2, h / 2, thickness, h, { isStatic: true, render: { visible: false } })
+    ];
+
+    this.walls = walls;
+    Composite.add(this.engine.world, walls);
+  }
+
+  setupMouseInteraction(Mouse, MouseConstraint, Composite) {
+    const mouse = Mouse.create(this.canvas);
+    const mouseConstraint = MouseConstraint.create(this.engine, {
+      mouse: mouse,
+      constraint: {
+        stiffness: 0.1,
+        render: { visible: false }
+      }
+    });
+
+    // Enable pointer events for interaction
+    this.canvas.style.pointerEvents = 'auto';
+
+    Composite.add(this.engine.world, mouseConstraint);
+    this.render.mouse = mouse;
+  }
+
+  drawIcons() {
+    const ctx = this.render.context;
+
+    this.bodies.forEach(body => {
+      const tech = body.techData;
+      if (!tech) return;
+
+      const x = body.position.x;
+      const y = body.position.y;
+
+      // Draw glowing circle background
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(x, y, 35, 0, Math.PI * 2);
+      ctx.fillStyle = `${tech.color}20`;
+      ctx.fill();
+      ctx.strokeStyle = `${tech.color}60`;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.closePath();
+
+      // Draw outer glow
+      const gradient = ctx.createRadialGradient(x, y, 25, x, y, 50);
+      gradient.addColorStop(0, `${tech.color}30`);
+      gradient.addColorStop(1, 'transparent');
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(x, y, 50, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+    });
+  }
+
+  handleResize() {
+    this.render.canvas.width = window.innerWidth;
+    this.render.canvas.height = window.innerHeight;
+    this.render.options.width = window.innerWidth;
+    this.render.options.height = window.innerHeight;
+
+    // Update walls
+    if (this.walls) {
+      const { Composite, Bodies } = Matter;
+      this.walls.forEach(wall => Composite.remove(this.engine.world, wall));
+      this.createWalls(Bodies, Composite);
+    }
+  }
+}
+
+// ===== 3. MOMENTUM-BASED HOVER EFFECTS =====
+class MomentumHover {
+  constructor() {
+    this.cards = document.querySelectorAll('.bento-item, .project-card');
+    if (prefersReducedMotion) return;
+
+    this.mouseHistory = [];
+    this.maxHistory = 5;
+    this.init();
+  }
+
+  init() {
+    this.cards.forEach(card => {
+      card.classList.add('momentum-card');
+
+      let isActive = false;
+      let lastX = 0, lastY = 0;
+      let velocityX = 0, velocityY = 0;
+      let animationFrame = null;
+
+      card.addEventListener('mouseenter', (e) => {
+        isActive = true;
+        card.classList.add('active');
+        lastX = e.clientX;
+        lastY = e.clientY;
+        this.mouseHistory = [];
+      });
+
+      card.addEventListener('mousemove', (e) => {
+        if (!isActive) return;
+
+        // Track mouse history for velocity calculation
+        this.mouseHistory.push({
+          x: e.clientX,
+          y: e.clientY,
+          time: Date.now()
+        });
+
+        if (this.mouseHistory.length > this.maxHistory) {
+          this.mouseHistory.shift();
+        }
+
+        // Calculate velocity based on mouse history
+        if (this.mouseHistory.length >= 2) {
+          const oldest = this.mouseHistory[0];
+          const newest = this.mouseHistory[this.mouseHistory.length - 1];
+          const timeDiff = newest.time - oldest.time;
+
+          if (timeDiff > 0) {
+            velocityX = (newest.x - oldest.x) / timeDiff * 10;
+            velocityY = (newest.y - oldest.y) / timeDiff * 10;
+          }
+        }
+
+        // Clamp velocity
+        velocityX = Math.max(-30, Math.min(30, velocityX));
+        velocityY = Math.max(-30, Math.min(30, velocityY));
+
+        // Calculate rotation based on velocity
+        const rotation = velocityX * 0.5;
+
+        // Apply transforms
+        card.style.setProperty('--momentum-x', velocityX);
+        card.style.setProperty('--momentum-y', velocityY);
+        card.style.setProperty('--momentum-rotation', `${rotation}deg`);
+        card.style.setProperty('--momentum-scale', 1.02);
+
+        lastX = e.clientX;
+        lastY = e.clientY;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        isActive = false;
+        card.classList.remove('active');
+
+        // Animate back with inertia
+        const startVelX = velocityX;
+        const startVelY = velocityY;
+        const startTime = Date.now();
+        const duration = 500;
+
+        const animateInertia = () => {
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min(1, elapsed / duration);
+          const easeOut = 1 - Math.pow(1 - progress, 3);
+
+          const currentVelX = startVelX * (1 - easeOut);
+          const currentVelY = startVelY * (1 - easeOut);
+          const currentRotation = currentVelX * 0.5 * (1 - easeOut);
+
+          card.style.setProperty('--momentum-x', currentVelX);
+          card.style.setProperty('--momentum-y', currentVelY);
+          card.style.setProperty('--momentum-rotation', `${currentRotation}deg`);
+          card.style.setProperty('--momentum-scale', 1 + 0.02 * (1 - easeOut));
+
+          if (progress < 1) {
+            animationFrame = requestAnimationFrame(animateInertia);
+          } else {
+            card.style.setProperty('--momentum-x', 0);
+            card.style.setProperty('--momentum-y', 0);
+            card.style.setProperty('--momentum-rotation', '0deg');
+            card.style.setProperty('--momentum-scale', 1);
+          }
+        };
+
+        if (animationFrame) cancelAnimationFrame(animationFrame);
+        animateInertia();
+      });
+    });
+  }
+}
+
+// ===== 4. PINNED SCROLL INTERACTIONS =====
+class PinnedScroll {
+  constructor() {
+    if (prefersReducedMotion || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+      return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+    this.init();
+  }
+
+  init() {
+    this.setupHeroPinning();
+    this.setupClipPathTransitions();
+  }
+
+  setupHeroPinning() {
+    const hero = document.querySelector('.hero');
+    const heroContent = document.querySelector('.hero-content');
+
+    if (!hero || !heroContent) return;
+
+    // Create scroll-driven shrink effect for hero
+    ScrollTrigger.create({
+      trigger: hero,
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true,
+      onUpdate: (self) => {
+        const progress = self.progress;
+        const scale = 1 - (progress * 0.15);
+        const opacity = 1 - (progress * 0.6);
+
+        heroContent.style.setProperty('--shrink-scale', scale);
+        heroContent.style.setProperty('--shrink-opacity', opacity);
+        heroContent.classList.add('shrinking');
+      }
+    });
+  }
+
+  setupClipPathTransitions() {
+    const bentoItems = document.querySelectorAll('.bento-item[data-shape]');
+
+    bentoItems.forEach((item, index) => {
+      ScrollTrigger.create({
+        trigger: item,
+        start: 'top 85%',
+        end: 'bottom 15%',
+        onEnter: () => {
+          gsap.fromTo(item,
+            { scale: 0.9, opacity: 0 },
+            {
+              scale: 1,
+              opacity: 1,
+              duration: 0.8,
+              ease: 'power3.out',
+              delay: index * 0.1
+            }
+          );
+        }
+      });
+    });
+  }
+}
+
+// ===== 5. SCROLL PROGRESS INDICATOR =====
+class ScrollProgress {
+  constructor() {
+    if (prefersReducedMotion) return;
+    this.createProgressBar();
+    this.init();
+  }
+
+  createProgressBar() {
+    const progressContainer = document.createElement('div');
+    progressContainer.className = 'scroll-progress';
+
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress-bar';
+    progressBar.id = 'scroll-progress-bar';
+
+    progressContainer.appendChild(progressBar);
+    document.body.prepend(progressContainer);
+
+    this.progressBar = progressBar;
+  }
+
+  init() {
+    window.addEventListener('scroll', () => this.updateProgress(), { passive: true });
+    this.updateProgress();
+  }
+
+  updateProgress() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = (scrollTop / scrollHeight) * 100;
+
+    this.progressBar.style.width = `${progress}%`;
+  }
+}
+
+// ===== 6. SPOTLIGHT CARD EFFECT =====
+class SpotlightEffect {
+  constructor() {
+    if (prefersReducedMotion) return;
+
+    const cards = document.querySelectorAll('.bento-item, .skill-card, .homelab-card, .blog-card');
+    cards.forEach(card => {
+      card.classList.add('spotlight-card');
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        card.style.setProperty('--spotlight-x', `${x}px`);
+        card.style.setProperty('--spotlight-y', `${y}px`);
+
+        // Update the pseudo-element position
+        const spotlight = card.querySelector('.spotlight-overlay') || this.createSpotlight(card);
+        spotlight.style.left = `${x}px`;
+        spotlight.style.top = `${y}px`;
+      });
+    });
+  }
+
+  createSpotlight(card) {
+    const spotlight = document.createElement('div');
+    spotlight.className = 'spotlight-overlay';
+    spotlight.style.cssText = `
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(96, 211, 148, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 10;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease;
+    `;
+    card.style.position = 'relative';
+    card.style.overflow = 'hidden';
+    card.appendChild(spotlight);
+    return spotlight;
+  }
+}
+
+// ===== 7. STAGGER REVEAL ON SCROLL =====
+class StaggerReveal {
+  constructor() {
+    if (prefersReducedMotion || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+      return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+    this.init();
+  }
+
+  init() {
+    // Stagger reveal for bento items
+    const bentoItems = gsap.utils.toArray('.bento-item');
+    if (bentoItems.length > 0) {
+      ScrollTrigger.batch(bentoItems, {
+        onEnter: batch => {
+          gsap.fromTo(batch,
+            {
+              y: 50,
+              opacity: 0,
+              scale: 0.95
+            },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              duration: 0.8,
+              ease: 'power3.out',
+              stagger: 0.15
+            }
+          );
+        },
+        start: 'top 85%'
+      });
+    }
+
+    // Stagger reveal for skill cards
+    const skillCards = gsap.utils.toArray('.skill-card');
+    if (skillCards.length > 0) {
+      ScrollTrigger.batch(skillCards, {
+        onEnter: batch => {
+          gsap.fromTo(batch,
+            { y: 30, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.6,
+              ease: 'power2.out',
+              stagger: 0.1
+            }
+          );
+        },
+        start: 'top 85%'
+      });
+    }
+  }
+}
+
+// ===== INITIALIZE ALL TESORO-INSPIRED FEATURES =====
+document.addEventListener('DOMContentLoaded', () => {
+  // Wait for all libraries to load
+  setTimeout(() => {
+    // Initialize character animations
+    new CharacterAnimator();
+
+    // Initialize physics icons (only on index page with hero)
+    if (document.querySelector('#physics-canvas')) {
+      new PhysicsIcons();
+    }
+
+    // Initialize momentum hover effects
+    new MomentumHover();
+
+    // Initialize pinned scroll interactions
+    new PinnedScroll();
+
+    // Initialize scroll progress
+    new ScrollProgress();
+
+    // Initialize spotlight effect
+    new SpotlightEffect();
+
+    // Initialize stagger reveal
+    new StaggerReveal();
+
+    console.log('%c Tesoro-inspired 2025 features loaded!', 'color: #60D394; font-size: 14px; font-weight: bold;');
+  }, 100);
+});

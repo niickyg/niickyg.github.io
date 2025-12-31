@@ -1873,14 +1873,16 @@ section.visible {
   /* Hide decorative animated elements */
   .geometric-shape,
   #liquid-canvas,
-  #custom-cursor {
+  #custom-cursor,
+  #physics-canvas {
     display: none !important;
   }
 
   /* Disable complex animations */
   .hero-title,
   .particle,
-  .particle-text {
+  .particle-text,
+  .gradient-text {
     animation: none !important;
   }
 
@@ -1888,4 +1890,490 @@ section.visible {
   #skillConstellation {
     opacity: 0.3;
   }
+
+  /* Disable clip-path morphing */
+  .bento-item[data-shape] {
+    clip-path: none !important;
+  }
+
+  /* Disable momentum effects */
+  .momentum-card {
+    transform: none !important;
+  }
+}
+
+/* ===== TESORO-INSPIRED 2025 FEATURES ===== */
+
+/* ===== 1. MATTER.JS PHYSICS CANVAS ===== */
+#physics-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+/* ===== 2. ANIMATED GRADIENT TEXT ===== */
+.gradient-text {
+  background: linear-gradient(
+    90deg,
+    var(--accent-1) 0%,
+    var(--accent-2) 25%,
+    var(--accent-3) 50%,
+    var(--accent-2) 75%,
+    var(--accent-1) 100%
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientCycle 5s ease infinite;
+  filter: drop-shadow(0 0 30px rgba(96, 211, 148, 0.4));
+}
+
+@keyframes gradientCycle {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Enhanced gradient text glow on hover */
+.gradient-text:hover {
+  filter: drop-shadow(0 0 50px rgba(96, 211, 148, 0.6))
+          drop-shadow(0 0 80px rgba(78, 205, 196, 0.4));
+}
+
+/* ===== 3. GEOMETRIC CLIP-PATH PROJECT CARDS ===== */
+
+/* Base clip-path styling */
+.bento-item[data-shape] {
+  transition: clip-path 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.5s ease;
+  will-change: clip-path, transform;
+}
+
+/* Hexagon shape */
+.clip-hexagon {
+  clip-path: polygon(
+    5% 0%,
+    95% 0%,
+    100% 50%,
+    95% 100%,
+    5% 100%,
+    0% 50%
+  );
+  border-radius: 0;
+}
+
+.clip-hexagon:hover {
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    100% 50%,
+    100% 100%,
+    0% 100%,
+    0% 50%
+  );
+}
+
+/* Octagon shape */
+.clip-octagon {
+  clip-path: polygon(
+    15% 0%,
+    85% 0%,
+    100% 15%,
+    100% 85%,
+    85% 100%,
+    15% 100%,
+    0% 85%,
+    0% 15%
+  );
+  border-radius: 0;
+}
+
+.clip-octagon:hover {
+  clip-path: polygon(
+    5% 0%,
+    95% 0%,
+    100% 5%,
+    100% 95%,
+    95% 100%,
+    5% 100%,
+    0% 95%,
+    0% 5%
+  );
+}
+
+/* Pentagon shape */
+.clip-pentagon {
+  clip-path: polygon(
+    50% 0%,
+    100% 38%,
+    82% 100%,
+    18% 100%,
+    0% 38%
+  );
+  border-radius: 0;
+}
+
+.clip-pentagon:hover {
+  clip-path: polygon(
+    50% 5%,
+    95% 40%,
+    80% 95%,
+    20% 95%,
+    5% 40%
+  );
+}
+
+/* Diamond shape */
+.clip-diamond {
+  clip-path: polygon(
+    50% 0%,
+    100% 50%,
+    50% 100%,
+    0% 50%
+  );
+  border-radius: 0;
+}
+
+.clip-diamond:hover {
+  clip-path: polygon(
+    50% 5%,
+    95% 50%,
+    50% 95%,
+    5% 50%
+  );
+}
+
+/* Trapezoid shape */
+.clip-trapezoid {
+  clip-path: polygon(
+    10% 0%,
+    90% 0%,
+    100% 100%,
+    0% 100%
+  );
+  border-radius: 0;
+}
+
+.clip-trapezoid:hover {
+  clip-path: polygon(
+    5% 0%,
+    95% 0%,
+    100% 100%,
+    0% 100%
+  );
+}
+
+/* ===== 4. CHARACTER-LEVEL TEXT ANIMATIONS ===== */
+.split-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(50px) rotateX(-90deg);
+  transform-origin: center bottom;
+  will-change: transform, opacity;
+}
+
+.split-char.revealed {
+  opacity: 1;
+  transform: translateY(0) rotateX(0deg);
+}
+
+/* Character hover effects */
+.hero-title .char {
+  transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.hero-title .char:hover {
+  color: var(--accent-3);
+  text-shadow: 0 0 20px var(--accent-3);
+  transform: scale(1.2) translateY(-5px);
+}
+
+/* Wave animation for section titles */
+.section-title .char {
+  display: inline-block;
+  transition: color 0.02s ease, transform 0.3s ease;
+}
+
+.section-title.in-view .char {
+  animation: charWave 0.6s ease forwards;
+  animation-delay: calc(var(--char-index) * 0.02s);
+}
+
+@keyframes charWave {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) rotateY(-20deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-10px) rotateY(10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateY(0deg);
+  }
+}
+
+/* ===== 5. MOMENTUM-BASED HOVER EFFECTS ===== */
+.momentum-card {
+  --momentum-x: 0;
+  --momentum-y: 0;
+  --momentum-rotation: 0deg;
+  --momentum-scale: 1;
+  transform:
+    translateX(calc(var(--momentum-x) * 1px))
+    translateY(calc(var(--momentum-y) * 1px))
+    rotateX(calc(var(--momentum-rotation) * 0.5))
+    rotateY(calc(var(--momentum-rotation) * -0.3))
+    scale(var(--momentum-scale));
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.momentum-card.active {
+  transition: none;
+}
+
+/* ===== 6. PINNED SCROLL SECTIONS ===== */
+.pinned-section {
+  position: relative;
+  height: 300vh;
+}
+
+.pinned-content {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.pinned-item {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(100px) scale(0.8);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pinned-item.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Hero pinned scroll effect */
+.hero.pinned {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.hero-content.shrinking {
+  transform: scale(var(--shrink-scale, 1));
+  opacity: var(--shrink-opacity, 1);
+  transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+}
+
+/* ===== 7. TECH STACK FLOATING ICONS ===== */
+.floating-tech-icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(96, 211, 148, 0.3);
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+  font-size: 1.5rem;
+  color: var(--accent-1);
+  pointer-events: none;
+  z-index: 2;
+  box-shadow: 0 8px 32px rgba(96, 211, 148, 0.2);
+}
+
+.floating-tech-icon i {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* ===== 8. STAGGERED REVEAL ANIMATIONS ===== */
+.stagger-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.stagger-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== 9. SCROLL-TRIGGERED PARALLAX ===== */
+.parallax-layer {
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+.parallax-layer[data-speed="slow"] {
+  --parallax-speed: 0.3;
+}
+
+.parallax-layer[data-speed="medium"] {
+  --parallax-speed: 0.6;
+}
+
+.parallax-layer[data-speed="fast"] {
+  --parallax-speed: 1;
+}
+
+/* ===== 10. MAGNETIC PULL INDICATOR ===== */
+.magnetic-indicator {
+  position: fixed;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px dashed rgba(96, 211, 148, 0.3);
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.magnetic-indicator.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ===== 11. GLOW BORDER ANIMATION ===== */
+@property --glow-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.glow-border {
+  position: relative;
+  background: var(--bg-secondary);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.glow-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: conic-gradient(
+    from var(--glow-angle),
+    var(--accent-1),
+    var(--accent-2),
+    var(--accent-3),
+    var(--accent-2),
+    var(--accent-1)
+  );
+  border-radius: inherit;
+  z-index: -1;
+  animation: glowRotate 4s linear infinite;
+}
+
+.glow-border::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: var(--bg-secondary);
+  border-radius: inherit;
+  z-index: 0;
+}
+
+@keyframes glowRotate {
+  from { --glow-angle: 0deg; }
+  to { --glow-angle: 360deg; }
+}
+
+/* ===== 12. SCROLL PROGRESS INDICATOR ===== */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(96, 211, 148, 0.2);
+  z-index: 10000;
+  overflow: hidden;
+}
+
+.scroll-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3));
+  transition: width 0.1s linear;
+  box-shadow: 0 0 10px var(--accent-1), 0 0 20px var(--accent-2);
+}
+
+/* ===== 13. TEXT MASK REVEAL ===== */
+.text-mask-reveal {
+  position: relative;
+  overflow: hidden;
+}
+
+.text-mask-reveal::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-primary);
+  transform: translateX(-100%);
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.text-mask-reveal.revealed::after {
+  transform: translateX(100%);
+}
+
+/* ===== 14. HOVER SPOTLIGHT EFFECT ===== */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(96, 211, 148, 0.15) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+}
+
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+/* ===== 15. ELASTIC SCALE EFFECT ===== */
+.elastic-hover {
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.elastic-hover:hover {
+  transform: scale(1.05);
+}
+
+.elastic-hover:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
 }
