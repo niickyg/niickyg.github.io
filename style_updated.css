@@ -788,6 +788,24 @@ section.visible {
   transform: translateY(0);
 }
 
+/* Card scroll animations */
+.skill-card,
+.homelab-card,
+.blog-card,
+.bento-item {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.skill-card.visible,
+.homelab-card.visible,
+.blog-card.visible,
+.bento-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .section-title {
   font-size: 3.5rem;
   text-align: center;
