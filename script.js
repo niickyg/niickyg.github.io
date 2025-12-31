@@ -105,53 +105,45 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// ===== MEOW WOLF INTERACTIVE FEATURES =====
+// ===== INTERACTIVE FEATURES & EASTER EGGS =====
 
-// Random glitch effect on title
-setInterval(() => {
-  const heroTitle = document.querySelector('.hero-title');
-  if (heroTitle && Math.random() > 0.95) {
-    heroTitle.classList.add('glitch');
-    setTimeout(() => {
-      heroTitle.classList.remove('glitch');
-    }, 300);
-  }
-}, 2000);
-
-// Mouse trail effect with neon particles
+// Mouse trail effect with colorful particles
 let particles = [];
-const colors = ['#FF006E', '#00D9FF', '#39FF14', '#B026FF', '#FF6B00'];
+const colors = ['#4FC3F7', '#7E57C2', '#E91E63', '#00BCD4', '#9C27B0', '#FF6B6B'];
 
 document.addEventListener('mousemove', (e) => {
-  if (Math.random() > 0.9) {
+  if (Math.random() > 0.85) {
     createParticle(e.clientX, e.clientY);
   }
 });
 
 function createParticle(x, y) {
   const particle = document.createElement('div');
+  const size = Math.random() * 4 + 3;
+  const color = colors[Math.floor(Math.random() * colors.length)];
+
   particle.style.position = 'fixed';
   particle.style.left = x + 'px';
   particle.style.top = y + 'px';
-  particle.style.width = '5px';
-  particle.style.height = '5px';
+  particle.style.width = size + 'px';
+  particle.style.height = size + 'px';
   particle.style.borderRadius = '50%';
-  particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+  particle.style.background = color;
   particle.style.pointerEvents = 'none';
   particle.style.zIndex = '9998';
-  particle.style.boxShadow = `0 0 10px ${colors[Math.floor(Math.random() * colors.length)]}`;
-  particle.style.transition = 'all 1s ease-out';
+  particle.style.boxShadow = `0 0 ${size * 3}px ${color}`;
+  particle.style.transition = 'all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
 
   document.body.appendChild(particle);
 
   setTimeout(() => {
     particle.style.opacity = '0';
-    particle.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) scale(0)`;
+    particle.style.transform = `translate(${Math.random() * 80 - 40}px, ${Math.random() * 80 - 40}px) scale(0)`;
   }, 10);
 
   setTimeout(() => {
     particle.remove();
-  }, 1000);
+  }, 1200);
 }
 
 // Konami Code Easter Egg (↑ ↑ ↓ ↓ ← → ← → B A)
@@ -171,22 +163,28 @@ function activateMatrixMode() {
   const body = document.body;
   const originalFilter = body.style.filter;
 
-  body.style.filter = 'hue-rotate(120deg) saturate(2)';
+  body.style.filter = 'hue-rotate(90deg) saturate(1.5) brightness(1.2)';
 
-  // Create "MATRIX ACTIVATED" message
   const message = document.createElement('div');
   message.textContent = '🎮 MATRIX MODE ACTIVATED 🎮';
-  message.style.position = 'fixed';
-  message.style.top = '50%';
-  message.style.left = '50%';
-  message.style.transform = 'translate(-50%, -50%)';
-  message.style.fontSize = '3rem';
-  message.style.color = '#39FF14';
-  message.style.textShadow = '0 0 20px #39FF14';
-  message.style.zIndex = '99999';
-  message.style.fontWeight = '900';
-  message.style.animation = 'glitch 0.3s infinite';
-  message.style.pointerEvents = 'none';
+  message.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    color: #4FC3F7;
+    text-shadow: 0 0 30px #4FC3F7, 0 0 60px #7E57C2;
+    z-index: 99999;
+    font-weight: 900;
+    pointer-events: none;
+    animation: pulse 0.5s infinite alternate;
+    background: rgba(10, 25, 41, 0.9);
+    padding: 2rem 3rem;
+    border-radius: 20px;
+    border: 3px solid #4FC3F7;
+    backdrop-filter: blur(15px);
+  `;
 
   document.body.appendChild(message);
 
@@ -216,87 +214,119 @@ function showSecretMessage() {
     '🌀 Reality is optional 🌀',
     '✨ Welcome to the void ✨',
     '🔮 The matrix has you 🔮',
-    '🎨 Art is everywhere 🎨'
+    '🎨 Art is everywhere 🎨',
+    '💎 You are the chosen one 💎',
+    '🚀 To infinity and beyond 🚀',
+    '🎭 The show must go on 🎭'
   ];
 
   const message = document.createElement('div');
   message.textContent = messages[Math.floor(Math.random() * messages.length)];
-  message.style.position = 'fixed';
-  message.style.top = '20%';
-  message.style.left = '50%';
-  message.style.transform = 'translate(-50%, -50%)';
-  message.style.fontSize = '2rem';
-  message.style.color = '#FF006E';
-  message.style.textShadow = '0 0 20px #FF006E';
-  message.style.zIndex = '99999';
-  message.style.fontWeight = '900';
-  message.style.animation = 'glitch 0.3s infinite';
-  message.style.pointerEvents = 'none';
-  message.style.padding = '2rem';
-  message.style.background = 'rgba(0, 0, 0, 0.9)';
-  message.style.border = '2px solid #FF006E';
+  message.style.cssText = `
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    font-size: 2rem;
+    color: #E91E63;
+    text-shadow: 0 0 20px #E91E63, 0 0 40px #7E57C2;
+    z-index: 99999;
+    font-weight: 900;
+    pointer-events: none;
+    padding: 2rem;
+    background: rgba(10, 25, 41, 0.95);
+    border: 3px solid #E91E63;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  `;
 
   document.body.appendChild(message);
 
   setTimeout(() => {
-    message.style.transition = 'all 0.5s ease';
+    message.style.transform = 'translate(-50%, -50%) scale(1)';
+  }, 10);
+
+  setTimeout(() => {
     message.style.opacity = '0';
-    message.style.transform = 'translate(-50%, -50%) scale(0)';
-    setTimeout(() => message.remove(), 500);
-  }, 2000);
+    message.style.transform = 'translate(-50%, -50%) scale(0.5)';
+    setTimeout(() => message.remove(), 300);
+  }, 2500);
 }
 
 // Interactive project cards - click to trigger portal effect
-document.querySelectorAll('.project-card').forEach(card => {
+document.querySelectorAll('.project-card, .homelab-card').forEach(card => {
   card.addEventListener('click', function(e) {
-    // Don't trigger if clicking a link
-    if (e.target.tagName === 'A') return;
+    if (e.target.tagName === 'A' || e.target.closest('a')) return;
 
     const ripple = document.createElement('div');
-    ripple.style.position = 'absolute';
-    ripple.style.borderRadius = '50%';
-    ripple.style.background = 'radial-gradient(circle, rgba(0, 217, 255, 0.5), transparent)';
-    ripple.style.width = '20px';
-    ripple.style.height = '20px';
-    ripple.style.left = e.offsetX + 'px';
-    ripple.style.top = e.offsetY + 'px';
-    ripple.style.transform = 'translate(-50%, -50%) scale(0)';
-    ripple.style.pointerEvents = 'none';
-    ripple.style.transition = 'transform 0.6s ease-out, opacity 0.6s ease-out';
-    ripple.style.opacity = '1';
+    const rect = this.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    ripple.style.cssText = `
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(79, 195, 247, 0.6), rgba(126, 87, 194, 0.3), transparent);
+      width: 20px;
+      height: 20px;
+      left: ${x}px;
+      top: ${y}px;
+      transform: translate(-50%, -50%) scale(0);
+      pointer-events: none;
+      transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease-out;
+      opacity: 1;
+    `;
 
     this.style.position = 'relative';
     this.appendChild(ripple);
 
     setTimeout(() => {
-      ripple.style.transform = 'translate(-50%, -50%) scale(20)';
+      ripple.style.transform = 'translate(-50%, -50%) scale(25)';
       ripple.style.opacity = '0';
     }, 10);
 
-    setTimeout(() => ripple.remove(), 600);
+    setTimeout(() => ripple.remove(), 800);
   });
 });
 
-// Parallax effect on mouse move for hero section
+// Parallax effect on mouse move for hero section and floating shapes
 document.addEventListener('mousemove', (e) => {
-  const hero = document.querySelector('.hero');
-  if (!hero) return;
-
-  const mouseX = (e.clientX / window.innerWidth - 0.5) * 20;
-  const mouseY = (e.clientY / window.innerHeight - 0.5) * 20;
+  const mouseX = (e.clientX / window.innerWidth - 0.5);
+  const mouseY = (e.clientY / window.innerHeight - 0.5);
 
   const shapes = document.querySelectorAll('.geometric-shape');
   shapes.forEach((shape, index) => {
-    const speed = (index + 1) * 0.5;
-    shape.style.transform = `translate(${mouseX * speed}px, ${mouseY * speed}px)`;
+    const speed = (index + 1) * 15;
+    const x = mouseX * speed;
+    const y = mouseY * speed;
+    shape.style.transform = `translate(${x}px, ${y}px)`;
   });
+
+  // Kinetic typography - hero title responds to mouse
+  const heroTitle = document.querySelector('.hero-title');
+  if (heroTitle) {
+    const titleX = mouseX * 5;
+    const titleY = mouseY * 5;
+    heroTitle.style.transform = `translate(${titleX}px, ${titleY}px)`;
+  }
 });
 
-// Random color shift on section titles
+// Interactive background gradient that follows cursor
+document.addEventListener('mousemove', (e) => {
+  const body = document.body;
+  const x = (e.clientX / window.innerWidth) * 100;
+  const y = (e.clientY / window.innerHeight) * 100;
+
+  body.style.setProperty('--mouse-x', `${x}%`);
+  body.style.setProperty('--mouse-y', `${y}%`);
+});
+
+// Section titles color shift on hover
 document.querySelectorAll('.section-title').forEach(title => {
   title.addEventListener('mouseenter', function() {
     const randomHue = Math.floor(Math.random() * 360);
-    this.style.filter = `hue-rotate(${randomHue}deg)`;
+    this.style.filter = `hue-rotate(${randomHue}deg) saturate(1.3)`;
   });
 
   title.addEventListener('mouseleave', function() {
@@ -304,8 +334,8 @@ document.querySelectorAll('.section-title').forEach(title => {
   });
 });
 
-// Skill card 3D tilt effect
-document.querySelectorAll('.skill-card').forEach(card => {
+// Skill cards and homelab cards 3D tilt effect
+document.querySelectorAll('.skill-card, .homelab-card, .blog-card').forEach(card => {
   card.addEventListener('mousemove', function(e) {
     const rect = this.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -314,72 +344,65 @@ document.querySelectorAll('.skill-card').forEach(card => {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    const rotateX = (y - centerY) / 10;
-    const rotateY = (centerX - x) / 10;
+    const rotateX = ((y - centerY) / centerY) * 8;
+    const rotateY = ((x - centerX) / centerX) * 8;
 
-    this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+    this.style.transform = `perspective(1000px) rotateX(${-rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
   });
 
   card.addEventListener('mouseleave', function() {
-    this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+    this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
   });
 });
 
 // Double-click on hero to trigger screen shake
-document.querySelector('.hero').addEventListener('dblclick', () => {
+document.querySelector('.hero')?.addEventListener('dblclick', () => {
   document.body.style.animation = 'shake 0.5s';
   setTimeout(() => {
     document.body.style.animation = '';
   }, 500);
 });
 
-// Add shake animation
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-    20%, 40%, 60%, 80% { transform: translateX(5px); }
-  }
-`;
-document.head.appendChild(style);
-
-// Easter egg: type "neon" anywhere on the page
+// Easter egg: type "glass" anywhere on the page to toggle glassmorphism intensity
 let typedText = '';
 document.addEventListener('keypress', (e) => {
-  // Ignore if typing in input/textarea
   if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
   typedText += e.key;
-  typedText = typedText.slice(-4);
+  typedText = typedText.slice(-5);
 
   if (typedText === 'neon') {
     triggerNeonExplosion();
+    typedText = '';
+  } else if (typedText === 'glass') {
+    toggleGlassmorphism();
     typedText = '';
   }
 });
 
 function triggerNeonExplosion() {
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 60; i++) {
     setTimeout(() => {
       createParticle(
         Math.random() * window.innerWidth,
         Math.random() * window.innerHeight
       );
-    }, i * 20);
+    }, i * 15);
   }
 
   const flash = document.createElement('div');
-  flash.style.position = 'fixed';
-  flash.style.top = '0';
-  flash.style.left = '0';
-  flash.style.width = '100vw';
-  flash.style.height = '100vh';
-  flash.style.background = 'rgba(0, 217, 255, 0.5)';
-  flash.style.zIndex = '99998';
-  flash.style.pointerEvents = 'none';
-  flash.style.opacity = '1';
-  flash.style.transition = 'opacity 0.5s ease';
+  flash.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle, rgba(79, 195, 247, 0.6), rgba(126, 87, 194, 0.3));
+    z-index: 99998;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+  `;
 
   document.body.appendChild(flash);
 
@@ -389,22 +412,85 @@ function triggerNeonExplosion() {
   }, 100);
 }
 
-// Add glowing effect to buttons on hover
-document.querySelectorAll('.btn').forEach(btn => {
-  btn.addEventListener('mouseenter', function() {
-    this.style.boxShadow = `0 0 40px ${this.classList.contains('btn-primary') ? '#FF006E' : '#00D9FF'}`;
+let glassIntensity = false;
+function toggleGlassmorphism() {
+  glassIntensity = !glassIntensity;
+
+  const cards = document.querySelectorAll('.skill-card, .project-card, .homelab-card, .blog-card, .contact-form');
+  cards.forEach(card => {
+    if (glassIntensity) {
+      card.style.backdropFilter = 'blur(25px) saturate(180%)';
+      card.style.background = 'rgba(255, 255, 255, 0.08)';
+      card.style.border = '1px solid rgba(255, 255, 255, 0.18)';
+    } else {
+      card.style.backdropFilter = 'blur(10px)';
+      card.style.background = '';
+      card.style.border = '';
+    }
   });
 
-  btn.addEventListener('mouseleave', function() {
-    this.style.boxShadow = `0 0 20px ${this.classList.contains('btn-primary') ? 'rgba(255, 0, 110, 0.5)' : 'rgba(0, 217, 255, 0.3)'}`;
-  });
-});
+  const message = document.createElement('div');
+  message.textContent = glassIntensity ? '✨ ENHANCED GLASS MODE ✨' : '💎 NORMAL MODE 💎';
+  message.style.cssText = `
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    font-size: 1.2rem;
+    color: #4FC3F7;
+    text-shadow: 0 0 15px #4FC3F7;
+    z-index: 99999;
+    font-weight: 700;
+    pointer-events: none;
+    padding: 1rem 2rem;
+    background: rgba(10, 25, 41, 0.95);
+    border: 2px solid #4FC3F7;
+    border-radius: 15px;
+    backdrop-filter: blur(15px);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  `;
+
+  document.body.appendChild(message);
+
+  setTimeout(() => {
+    message.style.transform = 'translateY(0)';
+    message.style.opacity = '1';
+  }, 10);
+
+  setTimeout(() => {
+    message.style.opacity = '0';
+    message.style.transform = 'translateY(100px)';
+    setTimeout(() => message.remove(), 400);
+  }, 2000);
+}
+
+// Add shake animation
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+    20%, 40%, 60%, 80% { transform: translateX(8px); }
+  }
+
+  @keyframes pulse {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    100% { transform: translate(-50%, -50%) scale(1.05); }
+  }
+`;
+document.head.appendChild(style);
 
 // Console message for curious developers
-console.log('%c🌀 WELCOME TO THE MATRIX 🌀', 'color: #00D9FF; font-size: 20px; font-weight: bold; text-shadow: 0 0 10px #00D9FF;');
-console.log('%cEaster eggs found:', 'color: #FF006E; font-size: 14px;');
-console.log('%c- Click the logo 5 times', 'color: #39FF14;');
-console.log('%c- Try the Konami code (↑↑↓↓←→←→BA)', 'color: #39FF14;');
-console.log('%c- Type "neon" anywhere on the page', 'color: #39FF14;');
-console.log('%c- Double-click the hero section', 'color: #39FF14;');
-console.log('%c- Click on project cards', 'color: #39FF14;');
+console.log('%c🌀 WELCOME TO THE ENHANCED MATRIX 🌀', 'color: #4FC3F7; font-size: 22px; font-weight: bold; text-shadow: 0 0 10px #4FC3F7;');
+console.log('%c✨ Easter eggs found:', 'color: #E91E63; font-size: 16px; font-weight: bold;');
+console.log('%c  🖱️  Mouse trail particles everywhere', 'color: #7E57C2; font-size: 13px;');
+console.log('%c  👆 Click the logo 5 times', 'color: #4FC3F7; font-size: 13px;');
+console.log('%c  ⌨️  Try the Konami code (↑↑↓↓←→←→BA)', 'color: #4FC3F7; font-size: 13px;');
+console.log('%c  💬 Type "neon" anywhere for explosion', 'color: #4FC3F7; font-size: 13px;');
+console.log('%c  🪟 Type "glass" to toggle glassmorphism', 'color: #4FC3F7; font-size: 13px;');
+console.log('%c  👋 Double-click the hero section to shake', 'color: #4FC3F7; font-size: 13px;');
+console.log('%c  🎯 Click on cards for ripple effects', 'color: #4FC3F7; font-size: 13px;');
+console.log('%c  🎨 Hover over section titles for color magic', 'color: #4FC3F7; font-size: 13px;');
+console.log('%c  🎪 3D tilt on cards when you hover', 'color: #4FC3F7; font-size: 13px;');
+console.log('%c\n💎 Made with love, magic, and way too much caffeine', 'color: #E91E63; font-size: 12px; font-style: italic;');
