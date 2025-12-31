@@ -305,7 +305,7 @@
   content: '';
   position: absolute;
   inset: -2px;
-  background: linear-gradient(135deg, #60D394, #FFD97D, #FF9B85, #4ECDC4);
+  background: linear-gradient(135deg, #60D394, #4ECDC4);
   border-radius: inherit;
   opacity: 0;
   z-index: -1;
@@ -314,7 +314,7 @@
 }
 
 .hover-glow:hover::after {
-  opacity: 0.4;
+  opacity: 0.25;
 }
 
 /* ===== ENHANCED INTERACTIVE DESIGN ===== */
