@@ -4,6 +4,91 @@ document.getElementById('year').textContent = new Date().getFullYear();
 // Detect reduced motion preference for accessibility
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// ===== THEME MANAGER (2025) =====
+class ThemeManager {
+  constructor() {
+    this.theme = this.getInitialTheme();
+    this.toggleButton = null;
+    this.themeIcon = null;
+    this.init();
+  }
+
+  getInitialTheme() {
+    // Check localStorage first
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      return savedTheme;
+    }
+
+    // Check system preference
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return prefersDark ? 'dark' : 'light';
+  }
+
+  init() {
+    // Apply initial theme immediately to prevent flash
+    this.applyTheme();
+
+    // Wait for DOM to be ready before setting up button
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => this.setupToggle());
+    } else {
+      this.setupToggle();
+    }
+
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      // Only update if user hasn't set a manual preference
+      if (!localStorage.getItem('theme')) {
+        this.theme = e.matches ? 'dark' : 'light';
+        this.applyTheme();
+      }
+    });
+  }
+
+  setupToggle() {
+    this.toggleButton = document.getElementById('theme-toggle');
+    this.themeIcon = document.getElementById('theme-icon');
+
+    if (this.toggleButton) {
+      this.updateIcon();
+      this.toggleButton.addEventListener('click', () => this.toggle());
+    }
+  }
+
+  toggle() {
+    this.theme = this.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', this.theme);
+    this.applyTheme();
+  }
+
+  applyTheme() {
+    document.documentElement.setAttribute('data-theme', this.theme);
+    this.updateIcon();
+
+    // Update meta theme-color for mobile browsers
+    let metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (!metaTheme) {
+      metaTheme = document.createElement('meta');
+      metaTheme.name = 'theme-color';
+      document.head.appendChild(metaTheme);
+    }
+    metaTheme.content = this.theme === 'dark' ? '#0A1929' : '#f5f5f7';
+  }
+
+  updateIcon() {
+    if (this.themeIcon) {
+      // Moon icon for dark theme (click to go light)
+      // Sun icon for light theme (click to go dark)
+      const iconClass = this.theme === 'dark' ? 'fa-sun' : 'fa-moon';
+      this.themeIcon.className = `fas ${iconClass}`;
+    }
+  }
+}
+
+// Initialize theme manager
+const themeManager = new ThemeManager();
+
 // Navbar scroll effect
 window.addEventListener('scroll', () => {
   const navbar = document.querySelector('.navbar');
@@ -1333,6 +1418,117 @@ window.addEventListener('load', () => {
       initConstellation();
     }
   }, 200);
+});
+
+// ===== MAGNETIC BUTTON EFFECTS (2025) =====
+class MagneticButton {
+  constructor(element) {
+    this.element = element;
+    this.strength = 0.3; // How strongly the button pulls toward cursor
+    this.maxDistance = 50; // Maximum distance for magnetic effect
+
+    this.boundOnMouseMove = (e) => this.onMouseMove(e);
+    this.boundOnMouseLeave = () => this.onMouseLeave();
+
+    element.addEventListener('mouseenter', () => this.enable());
+    element.addEventListener('mouseleave', () => this.disable());
+  }
+
+  enable() {
+    this.element.addEventListener('mousemove', this.boundOnMouseMove);
+    this.element.style.transition = 'transform 0.2s cubic-bezier(0.4, 0, 0.2, 1)';
+  }
+
+  disable() {
+    this.element.removeEventListener('mousemove', this.boundOnMouseMove);
+    this.onMouseLeave();
+  }
+
+  onMouseMove(e) {
+    if (prefersReducedMotion) return;
+
+    const rect = this.element.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const deltaX = e.clientX - centerX;
+    const deltaY = e.clientY - centerY;
+
+    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    const maxDistance = Math.max(rect.width, rect.height);
+
+    // Calculate strength based on distance from center
+    const strength = Math.min(1, (maxDistance - distance) / maxDistance);
+
+    const translateX = deltaX * this.strength * strength;
+    const translateY = deltaY * this.strength * strength;
+
+    this.element.style.transform = `translate(${translateX}px, ${translateY}px) scale(1.05)`;
+  }
+
+  onMouseLeave() {
+    this.element.style.transform = 'translate(0, 0) scale(1)';
+  }
+}
+
+// Apply magnetic effect to buttons
+document.addEventListener('DOMContentLoaded', () => {
+  const buttons = document.querySelectorAll('.btn, .skill-card, .project-card, .homelab-card, .nav-link');
+
+  if (!prefersReducedMotion) {
+    buttons.forEach(button => {
+      new MagneticButton(button);
+    });
+  }
+});
+
+// ===== VIEW TRANSITIONS API (2025) =====
+// Smooth page-like transitions when navigating between sections
+document.addEventListener('DOMContentLoaded', () => {
+  const navLinks = document.querySelectorAll('a[href^="#"]');
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', async function(e) {
+      const targetId = this.getAttribute('href');
+      if (!targetId || targetId === '#') return;
+
+      const target = document.querySelector(targetId);
+      if (!target) return;
+
+      e.preventDefault();
+
+      // Check if View Transitions API is supported
+      if (!prefersReducedMotion && document.startViewTransition) {
+        // Use View Transitions API for smooth morphing effect
+        document.startViewTransition(async () => {
+          target.scrollIntoView({
+            behavior: 'instant',
+            block: 'start'
+          });
+
+          // Update active section
+          document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+          target.classList.add('active');
+
+          // Update active nav link
+          navLinks.forEach(l => l.classList.remove('active'));
+          this.classList.add('active');
+        });
+      } else {
+        // Fallback for unsupported browsers or reduced motion
+        target.scrollIntoView({
+          behavior: prefersReducedMotion ? 'auto' : 'smooth',
+          block: 'start'
+        });
+
+        // Update active states
+        document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+        target.classList.add('active');
+        navLinks.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      }
+    });
+  });
 });
 
 // Console message for curious developers
