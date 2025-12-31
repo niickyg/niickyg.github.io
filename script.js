@@ -651,7 +651,7 @@ window.addEventListener('resize', () => {
 
 // ===== MAGNETIC MORPHING CURSOR =====
 
-const cursor = document.querySelector('.custom-cursor');
+let cursor = null; // Will be set after DOM loads
 let cursorX = 0, cursorY = 0;
 let currentX = 0, currentY = 0;
 let targetElement = null;
@@ -741,6 +741,8 @@ document.addEventListener('mousemove', (e) => {
 });
 
 function animateCursor() {
+  if (!cursor) return; // Safety check
+
   // Smooth magnetic follow
   const smoothing = isMagnetic ? 0.2 : 0.15;
   currentX += (cursorX - currentX) * smoothing;
@@ -753,10 +755,18 @@ function animateCursor() {
 }
 
 // Initialize after DOM loaded
-setTimeout(() => {
+document.addEventListener('DOMContentLoaded', () => {
+  cursor = document.querySelector('.custom-cursor');
+
+  if (!cursor) {
+    console.error('Cursor element not found in DOM!');
+    return;
+  }
+
+  console.log('Cursor element found:', cursor);
   initMagneticElements();
   animateCursor();
-}, 100);
+});
 
 // ===== KINETIC SPLIT-TEXT TYPOGRAPHY =====
 
