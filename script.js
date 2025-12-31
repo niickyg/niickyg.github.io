@@ -967,8 +967,8 @@ const scrollObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 
-// Observe all cards (not sections, they already have scroll reveal)
-document.querySelectorAll('.skill-card, .homelab-card, .blog-card, .bento-item').forEach(el => {
+// Observe all cards and sections
+document.querySelectorAll('.skill-card, .homelab-card, .blog-card, .bento-item, section').forEach(el => {
   scrollObserver.observe(el);
 });
 
