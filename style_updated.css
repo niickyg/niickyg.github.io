@@ -621,6 +621,17 @@ body::before {
   transform: none;
 }
 
+/* Base project label style */
+.project-content .project-label {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-full);
+}
+
 /* Individual Color Schemes */
 .project-green .project-image-placeholder {
   background: var(--green-primary);
@@ -940,22 +951,9 @@ body::before {
   transform: none;
 }
 
-/* ===== PROJECT SECTIONS ===== */
+/* ===== PROJECT SECTIONS (Legacy) ===== */
 .tesoro-project-section .tesoro-row {
   margin-bottom: 0;
-}
-
-.project-label {
-  font-size: var(--font-small);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gold-primary);
-  background: var(--gold-subtle);
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius-full);
-  display: inline-block;
-  width: fit-content;
 }
 
 .project-tags-tesoro {
