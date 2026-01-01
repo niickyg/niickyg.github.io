@@ -8,27 +8,14 @@
   <link rel="stylesheet" href="style_updated.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Tesoro-inspired Typography: Space Grotesk + Outfit -->
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <!-- GSAP with ScrollTrigger and SplitText -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- GSAP with ScrollTrigger -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <!-- Matter.js for Physics -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
 </head>
 <body>
-  <!-- Liquid Canvas Background -->
+  <!-- Subtle Liquid Canvas Background -->
   <canvas id="liquid-canvas" aria-hidden="true"></canvas>
-
-  <!-- Morphing Cursor -->
-  <div id="custom-cursor" class="custom-cursor" aria-hidden="true">
-    <div class="cursor-inner"></div>
-  </div>
-
-  <!-- Floating Geometric Shapes -->
-  <div class="geometric-shape shape-1" aria-hidden="true"></div>
-  <div class="geometric-shape shape-2" aria-hidden="true"></div>
-  <div class="geometric-shape shape-3" aria-hidden="true"></div>
 
   <!-- Navigation -->
   <nav class="navbar" role="navigation" aria-label="Main navigation">
@@ -39,7 +26,7 @@
       <ul class="nav-menu" role="menubar">
         <li role="none"><a href="index.html" class="nav-link" role="menuitem">Home</a></li>
         <li role="none"><a href="about.html" class="nav-link" role="menuitem">About</a></li>
-        <li role="none"><a href="projects.html" class="nav-link" role="menuitem">Projects</a></li>
+        <li role="none"><a href="projects.html" class="nav-link active" role="menuitem">Projects</a></li>
         <li role="none"><a href="homelab.html" class="nav-link" role="menuitem">Homelab</a></li>
         <li role="none"><a href="blog.html" class="nav-link" role="menuitem">Blog</a></li>
         <li role="none"><a href="contact.html" class="nav-link" role="menuitem">Contact</a></li>
@@ -57,113 +44,157 @@
     </div>
   </nav>
 
-  <!-- Projects Section -->
-  <section id="projects" class="projects">
-    <div class="container">
-      <h2 class="section-title">Featured Projects</h2>
-      <div class="bento-grid">
-        <!-- Mountain West Surface - Featured Wide Project -->
-        <div class="bento-item wide hover-glow clip-hexagon" data-shape="hexagon">
-          <div style="display: flex; align-items: center; gap: 2rem; height: 100%; padding: 2rem;">
-            <div class="project-image" style="flex-shrink: 0; width: 120px; height: 120px; padding: 2rem;">
+  <!-- Hero Section for Projects Page -->
+  <section class="page-hero-tesoro">
+    <div class="page-hero-content">
+      <h1 class="page-mega-title">Projects</h1>
+      <p class="page-hero-subtitle">From business ventures to automation systems</p>
+    </div>
+  </section>
+
+  <!-- Project 1: Mountain West Surface - Image Left -->
+  <section class="tesoro-section tesoro-project-section">
+    <div class="tesoro-container">
+      <div class="tesoro-row">
+        <div class="tesoro-image-col">
+          <div class="geometric-image-wrapper clip-octagon-image">
+            <div class="geometric-image-placeholder geometric-image-project">
               <i class="fas fa-spray-can"></i>
             </div>
-            <div class="project-content" style="flex: 1; padding: 0;">
-              <h3>Mountain West Surface</h3>
-              <p>Licensed exterior cleaning and protection company serving Utah's mountain communities. Specializing in pressure washing, concrete sealing, and softwashing services.</p>
-              <div class="project-tags">
-                <span class="tag hover-lift">Business</span>
-                <span class="tag hover-lift">Service Industry</span>
-                <span class="tag hover-lift">Utah</span>
-              </div>
-              <a href="https://mountainwestsurface.com" target="_blank" class="project-link">Visit Website <i class="fas fa-arrow-right"></i></a>
-            </div>
           </div>
         </div>
-
-        <!-- GoTo Call Automation - Large Project -->
-        <div class="bento-item large hover-glow clip-octagon" data-shape="octagon">
-          <div class="project-image">
-            <i class="fas fa-phone-volume"></i>
+        <div class="tesoro-text-col">
+          <span class="project-label">Business Venture</span>
+          <h2 class="tesoro-heading">Mountain West Surface</h2>
+          <p class="tesoro-body">Licensed exterior cleaning and protection company serving Utah's mountain communities. Specializing in pressure washing, concrete sealing, and softwashing services.</p>
+          <div class="project-tags-tesoro">
+            <span class="tag-tesoro">Business</span>
+            <span class="tag-tesoro">Service Industry</span>
+            <span class="tag-tesoro">Utah</span>
           </div>
-          <div class="project-content">
-            <h3>GoTo Call Automation</h3>
-            <p>Production-ready AI-powered call recording transcription and analysis system with real-time dashboards, sentiment analysis, and automated action items.</p>
-            <div class="project-tags">
-              <span class="tag hover-lift">React</span>
-              <span class="tag hover-lift">FastAPI</span>
-              <span class="tag hover-lift">PostgreSQL</span>
-              <span class="tag hover-lift">OpenAI</span>
-              <span class="tag hover-lift">Docker</span>
-            </div>
-            <a href="https://github.com/niickyg/goto-automation" target="_blank" class="project-link">View on GitHub <i class="fas fa-arrow-right"></i></a>
-          </div>
+          <a href="https://mountainwestsurface.com" target="_blank" class="tesoro-link">Visit Website <i class="fas fa-arrow-right"></i></a>
         </div>
-
-        <!-- Tall Project -->
-        <div class="bento-item tall hover-glow clip-pentagon" data-shape="pentagon">
-          <div class="project-image">
-            <i class="fas fa-chart-line"></i>
-          </div>
-          <div class="project-content">
-            <h3>RDT Trading System</h3>
-            <p>Autonomous trading bot with multi-agent architecture implementing Real Relative Strength methodology. Features backtesting, risk management, and parameter optimization.</p>
-            <div class="project-tags">
-              <span class="tag hover-lift">Python</span>
-              <span class="tag hover-lift">SQLAlchemy</span>
-              <span class="tag hover-lift">Asyncio</span>
-              <span class="tag hover-lift">Docker</span>
-            </div>
-            <a href="https://github.com/niickyg/rdt-trading-system" target="_blank" class="project-link">View on GitHub <i class="fas fa-arrow-right"></i></a>
-          </div>
-        </div>
-
-        <!-- Medium Projects -->
-        <div class="bento-item medium hover-glow clip-diamond" data-shape="diamond">
-          <div class="project-image">
-            <i class="fas fa-robot"></i>
-          </div>
-          <div class="project-content">
-            <h3>OANDA Trading Bot</h3>
-            <p>Forex trading bot with technical analysis, multiple strategy engines, and statistical arbitrage.</p>
-            <div class="project-tags">
-              <span class="tag hover-lift">Python</span>
-              <span class="tag hover-lift">OANDA API</span>
-              <span class="tag hover-lift">Technical Analysis</span>
-            </div>
-            <a href="https://github.com/niickyg/oanda-trading-bot" target="_blank" class="project-link">View on GitHub <i class="fas fa-arrow-right"></i></a>
-          </div>
-        </div>
-
-        <div class="bento-item medium hover-glow clip-trapezoid" data-shape="trapezoid">
-          <div class="project-image">
-            <i class="fas fa-server"></i>
-          </div>
-          <div class="project-content">
-            <h3>Media Server Infrastructure</h3>
-            <p>Dockerized home media server with Jellyfin for streaming. Infrastructure design and container orchestration.</p>
-            <div class="project-tags">
-              <span class="tag hover-lift">Docker</span>
-              <span class="tag hover-lift">Jellyfin</span>
-              <span class="tag hover-lift">Infrastructure</span>
-              <span class="tag hover-lift">Linux</span>
-            </div>
-            <span class="project-link" style="color: #888; cursor: default;">Private Project</span>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
 
+  <!-- Project 2: GoTo Call Automation - Image Right -->
+  <section class="tesoro-section tesoro-section-alt tesoro-project-section">
+    <div class="tesoro-container">
+      <div class="tesoro-row tesoro-row-reverse">
+        <div class="tesoro-image-col">
+          <div class="geometric-image-wrapper clip-hexagon-image">
+            <div class="geometric-image-placeholder geometric-image-project">
+              <i class="fas fa-phone-volume"></i>
+            </div>
+          </div>
+        </div>
+        <div class="tesoro-text-col">
+          <span class="project-label">AI System</span>
+          <h2 class="tesoro-heading">GoTo Call Automation</h2>
+          <p class="tesoro-body">Production-ready AI-powered call recording transcription and analysis system with real-time dashboards, sentiment analysis, and automated action items.</p>
+          <div class="project-tags-tesoro">
+            <span class="tag-tesoro">React</span>
+            <span class="tag-tesoro">FastAPI</span>
+            <span class="tag-tesoro">PostgreSQL</span>
+            <span class="tag-tesoro">OpenAI</span>
+            <span class="tag-tesoro">Docker</span>
+          </div>
+          <a href="https://github.com/niickyg/goto-automation" target="_blank" class="tesoro-link">View on GitHub <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project 3: RDT Trading System - Image Left -->
+  <section class="tesoro-section tesoro-project-section">
+    <div class="tesoro-container">
+      <div class="tesoro-row">
+        <div class="tesoro-image-col">
+          <div class="geometric-image-wrapper clip-diamond-image">
+            <div class="geometric-image-placeholder geometric-image-project">
+              <i class="fas fa-chart-line"></i>
+            </div>
+          </div>
+        </div>
+        <div class="tesoro-text-col">
+          <span class="project-label">Trading Algorithm</span>
+          <h2 class="tesoro-heading">RDT Trading System</h2>
+          <p class="tesoro-body">Autonomous trading bot with multi-agent architecture implementing Real Relative Strength methodology. Features backtesting, risk management, and parameter optimization.</p>
+          <div class="project-tags-tesoro">
+            <span class="tag-tesoro">Python</span>
+            <span class="tag-tesoro">SQLAlchemy</span>
+            <span class="tag-tesoro">Asyncio</span>
+            <span class="tag-tesoro">Docker</span>
+          </div>
+          <a href="https://github.com/niickyg/rdt-trading-system" target="_blank" class="tesoro-link">View on GitHub <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project 4: OANDA Trading Bot - Image Right -->
+  <section class="tesoro-section tesoro-section-alt tesoro-project-section">
+    <div class="tesoro-container">
+      <div class="tesoro-row tesoro-row-reverse">
+        <div class="tesoro-image-col">
+          <div class="geometric-image-wrapper clip-octagon-image">
+            <div class="geometric-image-placeholder geometric-image-project">
+              <i class="fas fa-robot"></i>
+            </div>
+          </div>
+        </div>
+        <div class="tesoro-text-col">
+          <span class="project-label">Automation</span>
+          <h2 class="tesoro-heading">OANDA Trading Bot</h2>
+          <p class="tesoro-body">Forex trading bot with technical analysis, multiple strategy engines, and statistical arbitrage. Designed for automated market analysis and trade execution.</p>
+          <div class="project-tags-tesoro">
+            <span class="tag-tesoro">Python</span>
+            <span class="tag-tesoro">OANDA API</span>
+            <span class="tag-tesoro">Technical Analysis</span>
+          </div>
+          <a href="https://github.com/niickyg/oanda-trading-bot" target="_blank" class="tesoro-link">View on GitHub <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project 5: Media Server Infrastructure - Image Left -->
+  <section class="tesoro-section tesoro-project-section">
+    <div class="tesoro-container">
+      <div class="tesoro-row">
+        <div class="tesoro-image-col">
+          <div class="geometric-image-wrapper clip-hexagon-image">
+            <div class="geometric-image-placeholder geometric-image-project">
+              <i class="fas fa-server"></i>
+            </div>
+          </div>
+        </div>
+        <div class="tesoro-text-col">
+          <span class="project-label">Infrastructure</span>
+          <h2 class="tesoro-heading">Media Server Infrastructure</h2>
+          <p class="tesoro-body">Dockerized home media server with Jellyfin for streaming. Infrastructure design and container orchestration for personal media management.</p>
+          <div class="project-tags-tesoro">
+            <span class="tag-tesoro">Docker</span>
+            <span class="tag-tesoro">Jellyfin</span>
+            <span class="tag-tesoro">Infrastructure</span>
+            <span class="tag-tesoro">Linux</span>
+          </div>
+          <span class="tesoro-link tesoro-link-disabled">Private Project</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
-  <footer class="footer">
-    <p>&copy; <span id="year"></span> Nicholas Guerriero. All Rights Reserved.</p>
-    <div class="footer-social">
-      <a href="https://www.linkedin.com/in/nickguerriero/" target="_blank" aria-label="LinkedIn" rel="noopener noreferrer"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
-      <a href="https://github.com/niickyg" target="_blank" aria-label="GitHub" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i></a>
-      <a href="mailto:me@nickguerriero.com" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+  <footer class="footer-tesoro">
+    <div class="footer-tesoro-content">
+      <p class="footer-copyright">&copy; <span id="year"></span> Nicholas Guerriero</p>
+      <div class="footer-social-links">
+        <a href="https://www.linkedin.com/in/nickguerriero/" target="_blank" aria-label="LinkedIn" rel="noopener noreferrer"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+        <a href="https://github.com/niickyg" target="_blank" aria-label="GitHub" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i></a>
+        <a href="mailto:me@nickguerriero.com" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+      </div>
     </div>
   </footer>
 

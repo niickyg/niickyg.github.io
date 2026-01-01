@@ -1,82 +1,66 @@
 /* ===== TESORO-INSPIRED DESIGN SYSTEM (2025) ===== */
+/* Clean, Bold, Spacious - Geometric Focus */
 
-/* ===== THEME VARIABLES - TESORO PALETTE ===== */
+/* ===== THEME VARIABLES ===== */
 :root {
-  /* Dark theme (default) - Tesoro-inspired */
+  /* Dark theme (default) */
   --bg-primary: #1a1a1a;
   --bg-secondary: #222222;
   --bg-tertiary: #2a2a2a;
-  --bg-cream: #FDF8F3;
-  --bg-cream-dark: #F5EDE4;
+  --bg-section-alt: #151515;
 
   /* Primary Colors - Green + Purple */
   --green-primary: #00D26A;
   --green-light: #4AE88C;
   --green-dark: #00A855;
-  --green-glow: rgba(0, 210, 106, 0.5);
+  --green-glow: rgba(0, 210, 106, 0.4);
 
   --purple-primary: #7C3AED;
   --purple-light: #A78BFA;
   --purple-dark: #5B21B6;
-  --purple-glow: rgba(124, 58, 237, 0.5);
-
-  /* Accent Colors */
-  --accent-1: var(--green-primary);
-  --accent-2: var(--purple-primary);
-  --accent-3: var(--green-light);
-  --accent-4: #F59E0B;
-  --accent-5: #EF4444;
+  --purple-glow: rgba(124, 58, 237, 0.4);
 
   /* Text Colors */
   --text-primary: #FFFFFF;
   --text-secondary: #E5E5E5;
   --text-muted: #A3A3A3;
-  --text-on-cream: #1a1a1a;
 
   /* UI Colors */
-  --border-color: rgba(255, 255, 255, 0.1);
+  --border-color: rgba(255, 255, 255, 0.08);
   --border-accent: rgba(0, 210, 106, 0.3);
-  --shadow-color: rgba(0, 0, 0, 0.5);
-  --glass-bg: rgba(26, 26, 26, 0.8);
-  --overlay-bg: rgba(26, 26, 26, 0.95);
 
-  /* Spacing - Tesoro generous spacing */
+  /* Tesoro Spacing - GENEROUS */
+  --section-padding: 10rem;
   --section-gap: 8rem;
   --content-gap: 4rem;
-  --card-gap: 2rem;
 
-  /* Border radius - Modern rounded */
+  /* Typography Scale - DRAMATIC */
+  --font-mega: clamp(4rem, 12vw, 8rem);
+  --font-page-title: clamp(3.5rem, 10vw, 6rem);
+  --font-section: clamp(2.5rem, 6vw, 4rem);
+  --font-heading: clamp(2rem, 4vw, 3rem);
+  --font-body: 1.125rem;
+  --font-small: 0.875rem;
+
+  /* Border radius */
   --radius-sm: 12px;
   --radius-md: 20px;
   --radius-lg: 32px;
-  --radius-xl: 48px;
-
-  /* Smooth transition for theme changes */
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 [data-theme="light"] {
-  /* Light theme - Tesoro cream background */
   --bg-primary: #FDF8F3;
   --bg-secondary: #FFFFFF;
   --bg-tertiary: #F5EDE4;
+  --bg-section-alt: #F0E8DF;
   --text-primary: #1a1a1a;
   --text-secondary: #404040;
   --text-muted: #737373;
   --border-color: rgba(0, 0, 0, 0.08);
-  --border-accent: rgba(0, 210, 106, 0.4);
-  --glass-bg: rgba(255, 255, 255, 0.8);
-  --overlay-bg: rgba(253, 248, 243, 0.95);
-  --shadow-color: rgba(0, 0, 0, 0.08);
-}
-
-/* Smooth theme transition for all themed elements */
-* {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* ===== CSS RESET ===== */
-* {
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -93,22 +77,10 @@ body {
   color: var(--text-primary);
   background: var(--bg-primary);
   overflow-x: hidden;
-  position: relative;
-  --mouse-x: 50%;
-  --mouse-y: 50%;
-  cursor: default;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 clamp(1.5rem, 4vw, 4rem);
-}
-
-/* ===== TESORO BACKGROUND EFFECTS ===== */
-
-/* Liquid Canvas Background */
+/* ===== SUBTLE BACKGROUND ===== */
 #liquid-canvas {
   position: fixed;
   top: 0;
@@ -116,48 +88,11 @@ body {
   width: 100%;
   height: 100%;
   z-index: -3;
-  opacity: 0.25;
+  opacity: 0.15;
+  pointer-events: none;
 }
 
-/* Custom Cursor - Disabled (keeping particle effect only) */
-.custom-cursor {
-  display: none !important;
-}
-
-.cursor-inner {
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle,
-    var(--green-primary) 0%,
-    var(--purple-primary) 40%,
-    transparent 70%);
-  border-radius: 50%;
-  border: 2px solid var(--green-primary);
-  filter: blur(8px);
-  box-shadow: 0 0 40px var(--green-glow), 0 0 80px var(--purple-glow);
-  animation: morphCursor 4s ease-in-out infinite;
-}
-
-@keyframes morphCursor {
-  0%, 100% {
-    border-radius: 50% 40% 60% 50% / 50% 60% 40% 50%;
-    transform: scale(1) rotate(0deg);
-  }
-  25% {
-    border-radius: 40% 60% 50% 60% / 60% 50% 60% 40%;
-    transform: scale(1.1) rotate(90deg);
-  }
-  50% {
-    border-radius: 60% 50% 40% 50% / 40% 50% 60% 50%;
-    transform: scale(0.9) rotate(180deg);
-  }
-  75% {
-    border-radius: 50% 60% 50% 40% / 50% 40% 50% 60%;
-    transform: scale(1.05) rotate(270deg);
-  }
-}
-
-/* Interactive animated background - Tesoro style */
+/* Subtle gradient overlay */
 body::before {
   content: '';
   position: fixed;
@@ -166,114 +101,26 @@ body::before {
   width: 100%;
   height: 100%;
   background:
-    radial-gradient(ellipse at var(--mouse-x) var(--mouse-y), var(--green-glow), transparent 50%),
-    radial-gradient(ellipse at 20% 30%, var(--purple-glow), transparent 60%),
-    radial-gradient(ellipse at 80% 70%, rgba(124, 58, 237, 0.15), transparent 60%);
-  animation: liquidShift 20s ease-in-out infinite;
-  transition: background 0.5s ease;
+    radial-gradient(ellipse at 30% 20%, rgba(0, 210, 106, 0.08), transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(124, 58, 237, 0.06), transparent 50%);
   z-index: -2;
-}
-
-@keyframes liquidShift {
-  0%, 100% {
-    transform: scale(1) rotate(0deg);
-    opacity: 0.5;
-  }
-  33% {
-    transform: scale(1.08) rotate(1deg);
-    opacity: 0.7;
-  }
-  66% {
-    transform: scale(1.05) rotate(-1deg);
-    opacity: 0.6;
-  }
-}
-
-/* Floating organic liquid blobs - Tesoro colors */
-.geometric-shape {
-  position: fixed;
-  z-index: -1;
-  opacity: 0.2;
-  animation: liquidFloat 30s infinite ease-in-out;
   pointer-events: none;
-  filter: blur(60px);
 }
 
-.shape-1 {
-  top: 10%;
-  left: 10%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, var(--green-primary), var(--green-dark));
-  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-  animation: liquidFloat 30s infinite ease-in-out, morphBlob1 12s infinite ease-in-out;
-  animation-delay: 0s;
-}
-
-.shape-2 {
-  top: 60%;
-  right: 15%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, var(--purple-primary), var(--purple-dark));
-  border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
-  animation: liquidFloat 35s infinite ease-in-out reverse, morphBlob2 15s infinite ease-in-out;
-  animation-delay: -8s;
-}
-
-.shape-3 {
-  bottom: 20%;
-  left: 20%;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, var(--green-light), var(--purple-light));
-  border-radius: 50% 50% 30% 70% / 30% 30% 70% 70%;
-  animation: liquidFloat 28s infinite ease-in-out, morphBlob3 18s infinite ease-in-out;
-  animation-delay: -15s;
-}
-
-@keyframes liquidFloat {
-  0%, 100% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-  }
-  33% {
-    transform: translate(60px, -80px) scale(1.2) rotate(120deg);
-  }
-  66% {
-    transform: translate(-50px, -50px) scale(0.9) rotate(240deg);
-  }
-}
-
-@keyframes morphBlob1 {
-  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-  50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-}
-
-@keyframes morphBlob2 {
-  0%, 100% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-  50% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-}
-
-@keyframes morphBlob3 {
-  0%, 100% { border-radius: 50% 50% 30% 70% / 30% 30% 70% 70%; }
-  50% { border-radius: 70% 30% 50% 50% / 70% 70% 30% 30%; }
-}
-
-/* ===== TESORO NAVIGATION ===== */
+/* ===== NAVIGATION ===== */
 .navbar {
   position: fixed;
   top: 0;
   width: 100%;
-  background: rgba(26, 26, 26, 0.85);
-  backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(26, 26, 26, 0.9);
+  backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border-color);
   z-index: 1000;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
 }
 
-.navbar.scrolled {
-  background: rgba(26, 26, 26, 0.95);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+[data-theme="light"] .navbar {
+  background: rgba(253, 248, 243, 0.9);
 }
 
 .nav-container {
@@ -288,20 +135,16 @@ body::before {
 .nav-logo {
   display: flex;
   align-items: center;
-  text-decoration: none;
-  transition: all 0.3s ease;
 }
 
 .logo-image {
   height: 36px;
   width: auto;
-  display: block;
-  transition: transform 0.3s ease, filter 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .nav-logo:hover .logo-image {
   transform: scale(1.05);
-  filter: drop-shadow(0 0 12px var(--green-glow));
 }
 
 .nav-menu {
@@ -316,11 +159,9 @@ body::before {
   text-decoration: none;
   font-weight: 500;
   font-size: 0.95rem;
-  position: relative;
-  transition: all 0.3s ease;
   padding: 0.75rem 1.25rem;
   border-radius: var(--radius-md);
-  letter-spacing: 0;
+  transition: all 0.3s ease;
 }
 
 .nav-link:hover {
@@ -333,7 +174,6 @@ body::before {
   background: rgba(0, 210, 106, 0.1);
 }
 
-/* Theme Toggle Button - Tesoro style */
 .theme-toggle {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border-color);
@@ -341,11 +181,11 @@ body::before {
   padding: 0.6rem;
   border-radius: 50%;
   cursor: pointer;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
   transition: all 0.3s ease;
   font-size: 1.1rem;
   margin-left: 0.5rem;
@@ -355,15 +195,16 @@ body::before {
   background: rgba(0, 210, 106, 0.15);
   border-color: var(--green-primary);
   color: var(--green-primary);
-  transform: rotate(20deg);
 }
 
-/* Hamburger Menu */
 .hamburger {
   display: none;
   flex-direction: column;
   cursor: pointer;
   gap: 5px;
+  background: none;
+  border: none;
+  padding: 0.5rem;
 }
 
 .hamburger span {
@@ -387,265 +228,682 @@ body::before {
 }
 
 /* ===== TESORO HERO SECTION ===== */
-.hero {
+.hero-tesoro {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
+  padding: 140px 2rem 100px;
   overflow: hidden;
-  padding: 140px 20px 100px;
 }
 
-/* Physics Canvas for floating icons */
-#physics-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.7;
-}
-
-.hero-content {
+.hero-tesoro-content {
   text-align: center;
   z-index: 2;
-  max-width: 1000px;
+  max-width: 1200px;
+  position: relative;
 }
 
-.hero-title {
+/* Central Geometric Shape */
+.hero-geometric-shape {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.geometric-octagon {
+  width: clamp(300px, 50vw, 500px);
+  height: clamp(300px, 50vw, 500px);
+  background: linear-gradient(135deg,
+    rgba(0, 210, 106, 0.1) 0%,
+    rgba(124, 58, 237, 0.08) 50%,
+    rgba(0, 210, 106, 0.05) 100%
+  );
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  border: 1px solid rgba(0, 210, 106, 0.2);
+  animation: floatOctagon 20s ease-in-out infinite, pulseGlow 4s ease-in-out infinite;
+}
+
+@keyframes floatOctagon {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(15deg) scale(1.05); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Hero Text */
+.hero-text-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-mega-title {
   font-family: 'Outfit', 'Space Grotesk', sans-serif;
-  font-size: clamp(3.5rem, 10vw, 7rem);
-  font-weight: 800;
-  margin-bottom: 1.5rem;
-  line-height: 1.1;
+  font-size: var(--font-mega);
+  font-weight: 900;
+  line-height: 0.95;
   letter-spacing: -0.04em;
-  background: linear-gradient(135deg, var(--green-primary) 0%, var(--green-light) 50%, var(--purple-light) 100%);
+  margin-bottom: 2rem;
+}
+
+.hero-mega-title .title-line {
+  display: block;
+  background: linear-gradient(
+    135deg,
+    var(--green-primary) 0%,
+    var(--green-light) 25%,
+    var(--purple-light) 50%,
+    var(--green-light) 75%,
+    var(--green-primary) 100%
+  );
+  background-size: 300% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  background-size: 200% 200%;
-  animation: gradientFlow 8s ease infinite;
-  filter: drop-shadow(0 4px 30px var(--green-glow));
-  transition: transform 0.2s ease;
-  transform-style: preserve-3d;
+  animation: gradientShift 6s ease infinite;
+  filter: drop-shadow(0 0 40px var(--green-glow));
 }
 
-@keyframes gradientFlow {
+@keyframes gradientShift {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
 }
 
-.hero-subtitle {
+.hero-tagline {
   font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(1.25rem, 3vw, 1.75rem);
   color: var(--text-secondary);
-  margin-bottom: 1.5rem;
+  margin-bottom: 3rem;
   font-weight: 500;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
-.hero-description {
-  font-size: clamp(1.1rem, 2vw, 1.35rem);
-  color: var(--text-muted);
-  margin-bottom: 3.5rem;
-  line-height: 1.7;
-  font-weight: 400;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.hero-buttons {
+.hero-cta-group {
   display: flex;
   gap: 1.5rem;
   justify-content: center;
-  margin-bottom: 4rem;
   flex-wrap: wrap;
 }
 
-/* Tesoro-style Buttons */
-.btn {
-  padding: 1.1rem 2.5rem;
+/* Tesoro Buttons */
+.btn-tesoro {
+  padding: 1.25rem 2.5rem;
   font-size: 1rem;
   font-weight: 600;
   text-decoration: none;
   border-radius: var(--radius-lg);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
   border: 2px solid;
   font-family: 'Space Grotesk', sans-serif;
   letter-spacing: 0.02em;
+  display: inline-block;
 }
 
-.btn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.5s ease, height 0.5s ease;
-}
-
-.btn:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
-.btn-primary {
+.btn-tesoro-primary {
   background: var(--green-primary);
   color: #000;
   border-color: var(--green-primary);
   box-shadow: 0 8px 30px var(--green-glow);
 }
 
-.btn-primary:hover {
+.btn-tesoro-primary:hover {
   transform: translateY(-4px);
   box-shadow: 0 16px 50px var(--green-glow);
   background: var(--green-light);
 }
 
-.btn-secondary {
+.btn-tesoro-secondary {
   background: transparent;
   color: var(--purple-light);
   border-color: var(--purple-primary);
   box-shadow: 0 8px 30px rgba(124, 58, 237, 0.2);
 }
 
-.btn-secondary:hover {
+.btn-tesoro-secondary:hover {
   background: rgba(124, 58, 237, 0.15);
   transform: translateY(-4px);
   box-shadow: 0 16px 50px var(--purple-glow);
   color: var(--text-primary);
 }
 
-.social-links {
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  opacity: 0.6;
+  animation: fadeInUp 1s ease 1s both;
+}
+
+.scroll-text {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.scroll-line {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(180deg, var(--green-primary), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  to { opacity: 0.6; transform: translateX(-50%) translateY(0); }
+}
+
+/* ===== PAGE HERO (Subpages) ===== */
+.page-hero-tesoro {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 160px 2rem 80px;
+  position: relative;
+}
+
+.page-hero-content {
+  text-align: center;
+  max-width: 900px;
+}
+
+.page-mega-title {
+  font-family: 'Outfit', 'Space Grotesk', sans-serif;
+  font-size: var(--font-page-title);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(
+    135deg,
+    var(--green-primary) 0%,
+    var(--green-light) 30%,
+    var(--purple-light) 60%,
+    var(--green-primary) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 6s ease infinite;
+  filter: drop-shadow(0 0 30px var(--green-glow));
+}
+
+.page-hero-subtitle {
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+  color: var(--text-muted);
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* ===== TESORO SECTIONS ===== */
+.tesoro-section {
+  padding: var(--section-padding) 2rem;
+  position: relative;
+}
+
+.tesoro-section-alt {
+  background: var(--bg-section-alt);
+}
+
+.tesoro-container {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* Section Title - Centered Bold */
+.tesoro-section-title {
+  font-family: 'Outfit', 'Space Grotesk', sans-serif;
+  font-size: var(--font-section);
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 5rem;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--green-primary) 0%, var(--purple-primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Alternating Row Layout */
+.tesoro-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+  margin-bottom: var(--section-gap);
+}
+
+.tesoro-row:last-child {
+  margin-bottom: 0;
+}
+
+.tesoro-row-reverse {
+  direction: rtl;
+}
+
+.tesoro-row-reverse > * {
+  direction: ltr;
+}
+
+/* Image Column */
+.tesoro-image-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Geometric Image Wrapper */
+.geometric-image-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  aspect-ratio: 1;
+}
+
+.geometric-image-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg,
+    var(--green-primary) 0%,
+    var(--purple-primary) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease;
+  position: relative;
+}
+
+.geometric-image-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+    rgba(0, 210, 106, 0.3) 0%,
+    rgba(124, 58, 237, 0.3) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.geometric-image-wrapper:hover .geometric-image-placeholder::before {
+  opacity: 1;
+}
+
+.geometric-image-placeholder i {
+  font-size: 5rem;
+  color: #000;
+  transition: transform 0.4s ease;
+}
+
+.geometric-image-wrapper:hover .geometric-image-placeholder i {
+  transform: scale(1.1);
+}
+
+.geometric-image-large i {
+  font-size: 6rem;
+}
+
+.geometric-image-project i {
+  font-size: 5rem;
+}
+
+/* Geometric Clip-Paths for Images */
+.clip-octagon-image .geometric-image-placeholder {
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+}
+
+.clip-hexagon-image .geometric-image-placeholder {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+
+.clip-diamond-image .geometric-image-placeholder {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+/* Glow effect on hover */
+.geometric-image-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle, var(--green-glow), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+}
+
+.geometric-image-wrapper:hover::after {
+  opacity: 0.5;
+}
+
+/* Text Column */
+.tesoro-text-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.tesoro-heading {
+  font-family: 'Outfit', 'Space Grotesk', sans-serif;
+  font-size: var(--font-heading);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  background: linear-gradient(135deg, var(--green-primary) 0%, var(--purple-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tesoro-body {
+  font-size: var(--font-body);
+  color: var(--text-secondary);
+  line-height: 1.8;
+  font-weight: 400;
+}
+
+.tesoro-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--green-primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.tesoro-link i {
+  transition: transform 0.3s ease;
+}
+
+.tesoro-link:hover {
+  color: var(--purple-light);
+}
+
+.tesoro-link:hover i {
+  transform: translateX(8px);
+}
+
+.tesoro-link-disabled {
+  color: var(--text-muted);
+  cursor: default;
+}
+
+.tesoro-link-disabled:hover {
+  color: var(--text-muted);
+}
+
+.tesoro-link-disabled:hover i {
+  transform: none;
+}
+
+/* ===== PROJECT SECTIONS ===== */
+.tesoro-project-section .tesoro-row {
+  margin-bottom: 0;
+}
+
+.project-label {
+  font-size: var(--font-small);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--purple-primary);
+}
+
+.project-tags-tesoro {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.tag-tesoro {
+  background: rgba(0, 210, 106, 0.1);
+  color: var(--green-primary);
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid rgba(0, 210, 106, 0.2);
+  border-radius: var(--radius-md);
+  transition: all 0.3s ease;
+}
+
+.tag-tesoro:hover {
+  background: rgba(124, 58, 237, 0.15);
+  color: var(--purple-light);
+  border-color: var(--purple-primary);
+}
+
+/* ===== SKILLS GRID ===== */
+.tesoro-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
+}
+
+.tesoro-skill-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+  padding: 3rem 2rem;
+  text-align: center;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Skill card clip-paths */
+.clip-skill-octagon {
+  clip-path: polygon(15% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0% 85%, 0% 15%);
+}
+
+.clip-skill-hexagon {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+
+.clip-skill-diamond {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.tesoro-skill-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--green-primary), var(--purple-primary));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.tesoro-skill-card:hover::before {
+  opacity: 1;
+}
+
+.tesoro-skill-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--green-primary);
+  box-shadow: 0 20px 50px rgba(0, 210, 106, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.skill-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  background: linear-gradient(135deg, var(--green-primary), var(--purple-primary));
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+}
+
+.tesoro-skill-card:hover .skill-icon-wrapper {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.skill-icon-wrapper i {
+  font-size: 2rem;
+  color: #000;
+}
+
+.tesoro-skill-card h3 {
+  font-family: 'Outfit', sans-serif;
+  color: var(--text-primary);
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.tesoro-skill-card p {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+/* ===== FOOTER ===== */
+.footer-tesoro {
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid var(--border-color);
+  padding: 4rem 2rem;
+}
+
+.footer-tesoro-content {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-copyright {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.footer-social-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-social-links a {
+  color: var(--text-muted);
+  font-size: 1.4rem;
+  transition: all 0.3s ease;
+  padding: 0.75rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+}
+
+.footer-social-links a:hover {
+  color: var(--green-primary);
+  transform: translateY(-4px);
+  border-color: var(--green-primary);
+  box-shadow: 0 8px 25px var(--green-glow);
+}
+
+/* ===== LEGACY SUPPORT ===== */
+/* These styles support existing pages that haven't been updated yet */
+
+.footer {
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid var(--border-color);
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.footer p {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.footer-social {
+  display: flex;
+  gap: 1.5rem;
   justify-content: center;
 }
 
-.social-links a {
+.footer-social a {
   color: var(--text-muted);
-  font-size: 1.75rem;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  display: inline-flex;
+  font-size: 1.4rem;
+  transition: all 0.3s ease;
   padding: 0.75rem;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-color);
 }
 
-.social-links a:hover {
+.footer-social a:hover {
   color: var(--green-primary);
   transform: translateY(-4px);
-  background: rgba(0, 210, 106, 0.1);
   border-color: var(--green-primary);
   box-shadow: 0 8px 25px var(--green-glow);
 }
 
-.hero-decoration {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 150px;
-  background: linear-gradient(180deg, transparent, var(--bg-primary));
-  z-index: 1;
-}
-
-/* ===== TESORO SECTION STYLING ===== */
-section {
-  padding: var(--section-gap) 20px;
-  position: relative;
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 1s ease, transform 1s ease;
-}
-
-section.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.section-title {
-  font-family: 'Outfit', 'Space Grotesk', sans-serif;
-  font-size: clamp(2.5rem, 6vw, 4rem);
-  text-align: center;
-  margin-bottom: var(--content-gap);
-  background: linear-gradient(135deg, var(--green-primary) 0%, var(--purple-primary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-weight: 700;
-  position: relative;
-  letter-spacing: -0.03em;
-  line-height: 1.2;
-}
-
-.section-title::after {
-  content: '';
-  position: absolute;
-  bottom: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, var(--green-primary), var(--purple-primary));
-  border-radius: 20px;
-}
-
-/* Page title for subpages */
+/* Legacy page section */
 .page-section {
-  padding-top: 140px;
+  padding-top: 160px;
+  padding-bottom: var(--section-padding);
   min-height: 100vh;
 }
 
 .page-title {
   font-family: 'Outfit', 'Space Grotesk', sans-serif;
-  font-size: clamp(2.5rem, 6vw, 4rem);
-  font-weight: 700;
+  font-size: var(--font-section);
+  font-weight: 800;
   background: linear-gradient(135deg, var(--green-primary) 0%, var(--purple-primary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: var(--content-gap);
+  margin-bottom: 3rem;
   text-align: center;
   letter-spacing: -0.03em;
 }
 
-/* ===== TESORO ABOUT SECTION ===== */
-.about {
-  background: transparent;
-  position: relative;
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 2rem;
 }
 
-.about-content {
-  display: grid;
-  gap: var(--content-gap);
-}
-
-.about-text p {
-  font-size: 1.25rem;
-  color: var(--text-secondary);
-  margin-bottom: 1.5rem;
-  line-height: 1.9;
-  font-weight: 400;
-}
-
+/* Legacy skill cards */
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--card-gap);
-  margin-top: var(--content-gap);
+  gap: 2rem;
+  margin-top: 3rem;
 }
 
 .skill-card {
@@ -654,46 +912,19 @@ section.visible {
   padding: 2.5rem;
   text-align: center;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
   border-radius: var(--radius-lg);
-  backdrop-filter: blur(10px);
-}
-
-.skill-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, var(--green-primary), var(--purple-primary));
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.skill-card:hover::before {
-  opacity: 1;
 }
 
 .skill-card:hover {
   transform: translateY(-8px);
   border-color: var(--green-primary);
   box-shadow: 0 20px 50px rgba(0, 210, 106, 0.15);
-  background: rgba(255, 255, 255, 0.04);
 }
 
 .skill-card i {
   font-size: 2.75rem;
   color: var(--green-primary);
   margin-bottom: 1.5rem;
-  transition: all 0.4s ease;
-  display: block;
-}
-
-.skill-card:hover i {
-  color: var(--purple-primary);
-  transform: scale(1.15);
 }
 
 .skill-card h3 {
@@ -702,264 +933,31 @@ section.visible {
   margin-bottom: 0.75rem;
   font-size: 1.35rem;
   font-weight: 600;
-  letter-spacing: -0.02em;
 }
 
 .skill-card p {
   color: var(--text-muted);
   font-size: 1rem;
-  font-weight: 400;
 }
 
-/* ===== TESORO PROJECTS SECTION ===== */
-.projects {
-  background: transparent;
-  position: relative;
-}
-
-/* Tesoro-style Bento Grid */
-.bento-grid {
+/* Legacy about content */
+.about-content {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: var(--card-gap);
-  padding: 2rem 0;
+  gap: 3rem;
 }
 
-.bento-item {
-  position: relative;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--border-color);
-  backdrop-filter: blur(10px);
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.bento-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(90deg, var(--green-primary), var(--purple-primary));
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.bento-item:hover::before {
-  opacity: 1;
-}
-
-.bento-item:hover {
-  transform: translateY(-8px);
-  border-color: rgba(0, 210, 106, 0.4);
-  box-shadow: 0 25px 60px rgba(0, 210, 106, 0.15);
-  background: rgba(255, 255, 255, 0.04);
-}
-
-/* Bento grid item sizes */
-.bento-item.large {
-  grid-column: span 8;
-  grid-row: span 2;
-  min-height: 450px;
-  display: flex;
-  flex-direction: column;
-}
-
-.bento-item.medium {
-  grid-column: span 6;
-  grid-row: span 1;
-  min-height: 320px;
-  display: flex;
-  flex-direction: column;
-}
-
-.bento-item.small {
-  grid-column: span 4;
-  grid-row: span 1;
-  min-height: 280px;
-  display: flex;
-  flex-direction: column;
-}
-
-.bento-item.tall {
-  grid-column: span 4;
-  grid-row: span 2;
-  min-height: 450px;
-  display: flex;
-  flex-direction: column;
-}
-
-.bento-item.wide {
-  grid-column: span 12;
-  grid-row: span 1;
-  min-height: 220px;
-}
-
-/* Bento item content styling */
-.bento-item .project-image {
-  background: linear-gradient(135deg, var(--green-primary), var(--purple-primary));
-  padding: 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  min-height: 140px;
-}
-
-.bento-item .project-image i {
-  font-size: 3rem;
-  color: #000;
-}
-
-.bento-item .project-content {
-  padding: 2rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.bento-item .project-content h3 {
-  font-family: 'Outfit', sans-serif;
-  color: var(--text-primary);
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-.bento-item .project-content p {
-  color: var(--text-muted);
+.about-text p {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
   margin-bottom: 1.5rem;
-  line-height: 1.7;
-  flex: 1;
-  font-size: 1rem;
+  line-height: 1.9;
 }
 
-/* Project Cards (non-bento) */
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-  gap: var(--card-gap);
-}
-
-.project-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  backdrop-filter: blur(10px);
-}
-
-.project-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 25px 60px rgba(0, 210, 106, 0.15);
-  border-color: var(--green-primary);
-}
-
-.project-image {
-  background: linear-gradient(135deg, var(--green-primary), var(--purple-primary));
-  padding: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.project-image i {
-  font-size: 3.5rem;
-  color: #000;
-  z-index: 1;
-  transition: transform 0.3s ease;
-}
-
-.project-card:hover .project-image i {
-  transform: scale(1.1);
-}
-
-.project-content {
-  padding: 2.5rem;
-}
-
-.project-content h3 {
-  font-family: 'Outfit', sans-serif;
-  color: var(--text-primary);
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-.project-content p {
-  color: var(--text-muted);
-  margin-bottom: 1.5rem;
-  line-height: 1.7;
-  font-size: 1.05rem;
-}
-
-.project-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
-}
-
-.tag {
-  background: rgba(0, 210, 106, 0.1);
-  color: var(--green-primary);
-  padding: 0.5rem 1rem;
-  font-size: 0.85rem;
-  border: 1px solid rgba(0, 210, 106, 0.2);
-  border-radius: var(--radius-md);
-  transition: all 0.3s ease;
-  font-weight: 500;
-}
-
-.tag:hover {
-  background: rgba(124, 58, 237, 0.15);
-  color: var(--purple-light);
-  border-color: var(--purple-primary);
-  transform: translateY(-2px);
-}
-
-.project-link {
-  color: var(--green-primary);
-  text-decoration: none;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.3s ease;
-  font-size: 1rem;
-}
-
-.project-link:hover {
-  color: var(--purple-light);
-  transform: translateX(5px);
-}
-
-.project-link i {
-  transition: transform 0.3s ease;
-}
-
-.project-link:hover i {
-  transform: translateX(5px);
-}
-
-/* ===== TESORO HOMELAB SECTION ===== */
-.homelab {
-  background: transparent;
-  position: relative;
-}
-
+/* Legacy homelab styles */
 .homelab-intro {
   text-align: center;
   max-width: 900px;
-  margin: 0 auto var(--content-gap);
+  margin: 0 auto 4rem;
 }
 
 .homelab-intro p {
@@ -971,7 +969,7 @@ section.visible {
 .homelab-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: var(--card-gap);
+  gap: 2rem;
 }
 
 .homelab-card {
@@ -980,25 +978,6 @@ section.visible {
   border-radius: var(--radius-lg);
   padding: 2.5rem;
   transition: all 0.4s ease;
-  position: relative;
-  backdrop-filter: blur(10px);
-}
-
-.homelab-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, var(--green-primary), var(--purple-primary));
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-}
-
-.homelab-card:hover::before {
-  opacity: 1;
 }
 
 .homelab-card:hover {
@@ -1016,12 +995,6 @@ section.visible {
   align-items: center;
   justify-content: center;
   margin-bottom: 1.5rem;
-  transition: all 0.4s ease;
-}
-
-.homelab-card:hover .homelab-icon {
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 10px 30px var(--green-glow);
 }
 
 .homelab-icon i {
@@ -1035,12 +1008,10 @@ section.visible {
   font-size: 1.5rem;
   margin-bottom: 1.25rem;
   font-weight: 600;
-  letter-spacing: -0.02em;
 }
 
 .homelab-card ul {
   list-style: none;
-  padding: 0;
 }
 
 .homelab-card li {
@@ -1062,15 +1033,11 @@ section.visible {
   border-radius: 50%;
 }
 
-/* ===== TESORO BLOG SECTION ===== */
-.blog {
-  background: transparent;
-}
-
+/* Legacy blog styles */
 .blog-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: var(--card-gap);
+  gap: 2rem;
 }
 
 .blog-card {
@@ -1079,9 +1046,7 @@ section.visible {
   border-radius: var(--radius-lg);
   padding: 2.5rem;
   transition: all 0.4s ease;
-  position: relative;
   cursor: pointer;
-  backdrop-filter: blur(10px);
 }
 
 .blog-card:hover {
@@ -1106,7 +1071,6 @@ section.visible {
   margin-bottom: 1rem;
   line-height: 1.4;
   font-weight: 600;
-  letter-spacing: -0.02em;
 }
 
 .blog-card p {
@@ -1130,7 +1094,7 @@ section.visible {
   transform: translateX(5px);
 }
 
-/* Blog Modal - Tesoro style */
+/* Blog Modal */
 .blog-modal {
   display: none;
   position: fixed;
@@ -1141,12 +1105,6 @@ section.visible {
   height: 100%;
   background: rgba(26, 26, 26, 0.95);
   backdrop-filter: blur(10px);
-  animation: modalFadeIn 0.3s ease;
-}
-
-@keyframes modalFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
 }
 
 .blog-modal-content {
@@ -1160,27 +1118,6 @@ section.visible {
   max-height: 85vh;
   overflow-y: auto;
   position: relative;
-  animation: modalSlideIn 0.4s ease;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-}
-
-@keyframes modalSlideIn {
-  from { transform: translateY(-50px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-.blog-modal-content::-webkit-scrollbar {
-  width: 8px;
-}
-
-.blog-modal-content::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-}
-
-.blog-modal-content::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--green-primary), var(--purple-primary));
-  border-radius: 10px;
 }
 
 .blog-modal-close {
@@ -1191,8 +1128,6 @@ section.visible {
   cursor: pointer;
   transition: all 0.3s ease;
   line-height: 1;
-  padding: 0.5rem;
-  border-radius: 50%;
 }
 
 .blog-modal-close:hover {
@@ -1206,7 +1141,6 @@ section.visible {
   font-size: 2.25rem;
   margin-bottom: 1.5rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
 }
 
 #blogModalBody h3 {
@@ -1259,17 +1193,15 @@ section.visible {
   margin-bottom: 2rem;
 }
 
-/* ===== TESORO CONTACT SECTION ===== */
+/* Legacy contact styles */
 .contact {
-  background: transparent;
-  position: relative;
-  padding-top: 140px;
+  padding-top: 160px;
 }
 
 .contact-content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-  gap: var(--content-gap);
+  gap: 4rem;
 }
 
 .contact-info h3 {
@@ -1278,7 +1210,6 @@ section.visible {
   font-size: 2rem;
   margin-bottom: 1.5rem;
   font-weight: 600;
-  letter-spacing: -0.02em;
 }
 
 .contact-info p {
@@ -1314,15 +1245,14 @@ section.visible {
 .contact-item i {
   font-size: 1.4rem;
   color: var(--green-primary);
-  min-width: 28px;
 }
 
 .contact-item a,
 .contact-item span {
   color: var(--text-secondary);
   text-decoration: none;
-  transition: all 0.3s ease;
   font-size: 1.05rem;
+  transition: color 0.3s ease;
 }
 
 .contact-item:hover a {
@@ -1334,7 +1264,6 @@ section.visible {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   padding: 2.5rem;
-  backdrop-filter: blur(10px);
 }
 
 .form-group {
@@ -1359,7 +1288,6 @@ section.visible {
   outline: none;
   border-color: var(--green-primary);
   box-shadow: 0 0 20px rgba(0, 210, 106, 0.15);
-  background: rgba(0, 0, 0, 0.3);
 }
 
 .form-group input::placeholder,
@@ -1372,67 +1300,68 @@ section.visible {
   min-height: 150px;
 }
 
-/* ===== TESORO FOOTER ===== */
-.footer {
-  background: rgba(0, 0, 0, 0.3);
-  border-top: 1px solid var(--border-color);
-  padding: 3rem 2rem;
-  text-align: center;
+/* Legacy buttons */
+.btn {
+  padding: 1.1rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--radius-lg);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid;
+  font-family: 'Space Grotesk', sans-serif;
+  display: inline-block;
+  cursor: pointer;
 }
 
-.footer p {
-  color: var(--text-muted);
-  margin-bottom: 1.5rem;
-  font-size: 0.95rem;
-}
-
-.footer-social {
-  display: flex;
-  gap: 1.5rem;
-  justify-content: center;
-}
-
-.footer-social a {
-  color: var(--text-muted);
-  font-size: 1.4rem;
-  transition: all 0.3s ease;
-  padding: 0.75rem;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border-color);
-}
-
-.footer-social a:hover {
-  color: var(--green-primary);
-  transform: translateY(-4px);
+.btn-primary {
+  background: var(--green-primary);
+  color: #000;
   border-color: var(--green-primary);
-  box-shadow: 0 8px 25px var(--green-glow);
+  box-shadow: 0 8px 30px var(--green-glow);
 }
 
-/* ===== RESPONSIVE DESIGN - TESORO STYLE ===== */
+.btn-primary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 50px var(--green-glow);
+  background: var(--green-light);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--purple-light);
+  border-color: var(--purple-primary);
+}
+
+.btn-secondary:hover {
+  background: rgba(124, 58, 237, 0.15);
+  transform: translateY(-4px);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 1024px) {
-  .bento-grid {
-    grid-template-columns: repeat(6, 1fr);
+  :root {
+    --section-padding: 8rem;
+    --section-gap: 6rem;
   }
 
-  .bento-item.large {
-    grid-column: span 6;
+  .tesoro-row {
+    gap: 4rem;
   }
 
-  .bento-item.tall {
-    grid-column: span 6;
-    grid-row: span 1;
-  }
-
-  .bento-item.medium {
-    grid-column: span 6;
+  .tesoro-skills-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
   :root {
-    --section-gap: 5rem;
-    --content-gap: 3rem;
+    --section-padding: 6rem;
+    --section-gap: 4rem;
+    --font-mega: clamp(3rem, 12vw, 5rem);
+    --font-page-title: clamp(2.5rem, 10vw, 4rem);
+    --font-section: clamp(2rem, 6vw, 3rem);
+    --font-heading: clamp(1.75rem, 4vw, 2.5rem);
   }
 
   .nav-menu {
@@ -1447,7 +1376,10 @@ section.visible {
     padding: 2rem 0;
     border-bottom: 1px solid var(--border-color);
     backdrop-filter: blur(15px);
-    gap: 0.5rem;
+  }
+
+  [data-theme="light"] .nav-menu {
+    background: rgba(253, 248, 243, 0.98);
   }
 
   .nav-menu.active {
@@ -1458,130 +1390,112 @@ section.visible {
     display: flex;
   }
 
-  .hero-title {
-    font-size: clamp(2.5rem, 8vw, 4rem);
-  }
-
-  .bento-grid {
+  .tesoro-row {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 3rem;
+    text-align: center;
   }
 
-  .bento-item {
-    grid-column: span 1 !important;
-    grid-row: span 1 !important;
-    min-height: 320px !important;
+  .tesoro-row-reverse {
+    direction: ltr;
   }
 
-  .bento-item.wide {
-    min-height: 280px !important;
+  .tesoro-text-col {
+    align-items: center;
   }
 
-  .bento-item.wide > div {
-    flex-direction: column !important;
+  .geometric-image-wrapper {
+    max-width: 300px;
   }
 
-  .projects-grid {
+  .tesoro-skills-grid {
     grid-template-columns: 1fr;
+  }
+
+  .footer-tesoro-content {
+    flex-direction: column;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .hero-geometric-shape {
+    opacity: 0.3;
+  }
+
+  .scroll-indicator {
+    display: none;
   }
 
   .contact-content {
     grid-template-columns: 1fr;
   }
-
-  .shape-1,
-  .shape-2,
-  .shape-3 {
-    display: none;
-  }
 }
 
 @media (max-width: 480px) {
   :root {
-    --section-gap: 4rem;
-    --content-gap: 2.5rem;
-    --card-gap: 1.25rem;
+    --section-padding: 4rem;
+    --section-gap: 3rem;
   }
 
-  .hero-title {
-    font-size: 2.25rem;
+  .nav-container {
+    padding: 1rem 1.5rem;
   }
 
-  .section-title {
-    font-size: 2rem;
+  .hero-tesoro {
+    padding: 120px 1.5rem 60px;
   }
 
-  .skills-grid {
-    grid-template-columns: 1fr;
+  .tesoro-section {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
-}
 
-/* ===== ANIMATIONS ===== */
+  .geometric-image-wrapper {
+    max-width: 250px;
+  }
 
-/* Kinetic Typography */
-.hero-title .char {
-  display: inline-block;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform;
-  transform-style: preserve-3d;
-}
+  .geometric-image-placeholder i {
+    font-size: 3.5rem;
+  }
 
-.hero-title .word {
-  display: inline-block;
-  white-space: nowrap;
-  margin-right: 0.3em;
-  transform-style: preserve-3d;
-}
+  .tesoro-skill-card {
+    padding: 2rem 1.5rem;
+  }
 
-/* Card animations on scroll */
-.skill-card,
-.homelab-card,
-.blog-card,
-.bento-item {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+  }
 
-.skill-card.visible,
-.homelab-card.visible,
-.blog-card.visible,
-.bento-item.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Hover effects */
-.hover-lift {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.hover-lift:hover {
-  transform: translateY(-4px);
-}
-
-.hover-glow {
-  position: relative;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.hover-glow::after {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  background: linear-gradient(135deg, var(--green-primary), var(--purple-primary));
-  border-radius: inherit;
-  opacity: 0;
-  z-index: -1;
-  transition: opacity 0.4s ease;
-  filter: blur(20px);
-}
-
-.hover-glow:hover::after {
-  opacity: 0.2;
+  .btn-tesoro {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 /* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .geometric-octagon,
+  .scroll-line,
+  .hero-mega-title .title-line {
+    animation: none !important;
+  }
+}
+
+/* Focus styles for accessibility */
+a:focus,
+button:focus {
+  outline: 2px solid var(--green-primary);
+  outline-offset: 2px;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -1594,474 +1508,46 @@ section.visible {
   border: 0;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+/* ===== SCROLL ANIMATIONS ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
   }
-
-  .geometric-shape,
-  #liquid-canvas,
-  #custom-cursor,
-  #physics-canvas {
-    display: none !important;
-  }
-
-  .hero-title,
-  .particle,
-  .particle-text,
-  .gradient-text {
-    animation: none !important;
-  }
-
-  .bento-item[data-shape] {
-    clip-path: none !important;
-  }
-
-  .momentum-card {
-    transform: none !important;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* ===== TESORO-INSPIRED ADVANCED FEATURES ===== */
-
-/* Gradient Text */
-.gradient-text {
-  background: linear-gradient(
-    90deg,
-    var(--green-primary) 0%,
-    var(--green-light) 25%,
-    var(--purple-light) 50%,
-    var(--green-light) 75%,
-    var(--green-primary) 100%
-  );
-  background-size: 300% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: gradientCycle 5s ease infinite;
-  filter: drop-shadow(0 0 30px var(--green-glow));
-}
-
-@keyframes gradientCycle {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.gradient-text:hover {
-  filter: drop-shadow(0 0 50px var(--green-glow))
-          drop-shadow(0 0 80px var(--purple-glow));
-}
-
-/* Geometric Clip-path Project Cards */
-.bento-item[data-shape] {
-  transition: clip-path 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.5s ease;
-  will-change: clip-path, transform;
-}
-
-.clip-hexagon {
-  clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
-  border-radius: 0;
-}
-
-.clip-hexagon:hover {
-  clip-path: polygon(0% 0%, 100% 0%, 100% 50%, 100% 100%, 0% 100%, 0% 50%);
-}
-
-.clip-octagon {
-  clip-path: polygon(15% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0% 85%, 0% 15%);
-  border-radius: 0;
-}
-
-.clip-octagon:hover {
-  clip-path: polygon(5% 0%, 95% 0%, 100% 5%, 100% 95%, 95% 100%, 5% 100%, 0% 95%, 0% 5%);
-}
-
-.clip-pentagon {
-  clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
-  border-radius: 0;
-}
-
-.clip-pentagon:hover {
-  clip-path: polygon(50% 5%, 95% 40%, 80% 95%, 20% 95%, 5% 40%);
-}
-
-.clip-diamond {
-  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-  border-radius: 0;
-}
-
-.clip-diamond:hover {
-  clip-path: polygon(50% 5%, 95% 50%, 50% 95%, 5% 50%);
-}
-
-.clip-trapezoid {
-  clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
-  border-radius: 0;
-}
-
-.clip-trapezoid:hover {
-  clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%);
-}
-
-/* Character-level text animations */
-.split-char {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(50px) rotateX(-90deg);
-  transform-origin: center bottom;
-  will-change: transform, opacity;
-}
-
-.split-char.revealed {
-  opacity: 1;
-  transform: translateY(0) rotateX(0deg);
-}
-
-.hero-title .char {
-  transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
-}
-
-.hero-title .char:hover {
-  color: var(--purple-light);
-  text-shadow: 0 0 20px var(--purple-glow);
-  transform: scale(1.2) translateY(-5px);
-}
-
-.section-title .char {
-  display: inline-block;
-  transition: color 0.02s ease, transform 0.3s ease;
-}
-
-.section-title.in-view .char {
-  animation: charWave 0.6s ease forwards;
-  animation-delay: calc(var(--char-index) * 0.02s);
-}
-
-@keyframes charWave {
-  0% { opacity: 0; transform: translateY(30px) rotateY(-20deg); }
-  50% { opacity: 1; transform: translateY(-10px) rotateY(10deg); }
-  100% { opacity: 1; transform: translateY(0) rotateY(0deg); }
-}
-
-/* Momentum-based hover effects */
-.momentum-card {
-  --momentum-x: 0;
-  --momentum-y: 0;
-  --momentum-rotation: 0deg;
-  --momentum-scale: 1;
-  transform:
-    translateX(calc(var(--momentum-x) * 1px))
-    translateY(calc(var(--momentum-y) * 1px))
-    rotateX(calc(var(--momentum-rotation) * 0.5))
-    rotateY(calc(var(--momentum-rotation) * -0.3))
-    scale(var(--momentum-scale));
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform;
-}
-
-.momentum-card.active {
-  transition: none;
-}
-
-/* Pinned scroll sections */
-.pinned-section {
-  position: relative;
-  height: 300vh;
-}
-
-.pinned-content {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.hero.pinned {
-  position: sticky;
-  top: 0;
-  z-index: 5;
-}
-
-.hero-content.shrinking {
-  transform: scale(var(--shrink-scale, 1));
-  opacity: var(--shrink-opacity, 1);
-  transition: transform 0.1s ease-out, opacity 0.1s ease-out;
-}
-
-/* Floating tech icons */
-.floating-tech-icon {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
-  height: 60px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-accent);
-  border-radius: 50%;
-  backdrop-filter: blur(10px);
-  font-size: 1.5rem;
-  color: var(--green-primary);
-  pointer-events: none;
-  z-index: 2;
-  box-shadow: 0 8px 32px var(--green-glow);
-}
-
-/* Stagger reveal animations */
-.stagger-reveal {
-  opacity: 0;
-  transform: translateY(40px);
-}
-
-.stagger-reveal.revealed {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Scroll parallax */
-.parallax-layer {
-  will-change: transform;
-  transition: transform 0.1s linear;
-}
-
-/* Glow border animation */
-@property --glow-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-.glow-border {
-  position: relative;
-  background: var(--bg-secondary);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
-
-.glow-border::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  background: conic-gradient(
-    from var(--glow-angle),
-    var(--green-primary),
-    var(--purple-primary),
-    var(--green-light),
-    var(--purple-light),
-    var(--green-primary)
-  );
-  border-radius: inherit;
-  z-index: -1;
-  animation: glowRotate 4s linear infinite;
-}
-
-.glow-border::after {
-  content: '';
-  position: absolute;
-  inset: 2px;
-  background: var(--bg-secondary);
-  border-radius: inherit;
-  z-index: 0;
-}
-
-@keyframes glowRotate {
-  from { --glow-angle: 0deg; }
-  to { --glow-angle: 360deg; }
-}
-
-/* Scroll progress indicator */
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.05);
-  z-index: 10000;
-  overflow: hidden;
-}
-
-.scroll-progress-bar {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--green-primary), var(--purple-primary));
-  transition: width 0.1s linear;
-  box-shadow: 0 0 10px var(--green-glow), 0 0 20px var(--purple-glow);
-}
-
-/* Text mask reveal */
-.text-mask-reveal {
-  position: relative;
-  overflow: hidden;
-}
-
-.text-mask-reveal::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--bg-primary);
-  transform: translateX(-100%);
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.text-mask-reveal.revealed::after {
-  transform: translateX(100%);
-}
-
-/* Spotlight card effect */
-.spotlight-card {
-  position: relative;
-  overflow: hidden;
-}
-
-.spotlight-card::before {
-  content: '';
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, var(--green-glow) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  z-index: 10;
-  transform: translate(-50%, -50%);
-}
-
-.spotlight-card:hover::before {
-  opacity: 1;
-}
-
-/* Elastic scale effect */
-.elastic-hover {
-  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.elastic-hover:hover {
-  transform: scale(1.05);
-}
-
-.elastic-hover:active {
-  transform: scale(0.95);
-  transition: transform 0.1s ease;
-}
-
-/* 3D Card effects */
-.card-3d {
-  transform-style: preserve-3d;
-  perspective: 1000px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card-3d-inner {
-  transform-style: preserve-3d;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card-3d:hover .card-3d-inner {
-  transform: rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg)) translateZ(20px);
-}
-
-/* ===== VIEW TRANSITIONS API (2025) ===== */
-.section-title {
-  view-transition-name: section-heading;
-}
-
-::view-transition-old(section-heading) {
-  animation: fade-slide-out 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-::view-transition-new(section-heading) {
-  animation: fade-slide-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes fade-slide-out {
-  from { opacity: 1; transform: translateY(0); }
-  to { opacity: 0; transform: translateY(-30px); }
-}
-
-@keyframes fade-slide-in {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-::view-transition-old(root) {
-  animation: fade-out-scale 0.3s ease-out;
-}
-
-::view-transition-new(root) {
-  animation: fade-in-scale 0.3s ease-in;
-}
-
-@keyframes fade-out-scale {
-  from { opacity: 1; transform: scale(1); }
-  to { opacity: 0; transform: scale(0.98); }
-}
-
-@keyframes fade-in-scale {
-  from { opacity: 0; transform: scale(0.98); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-/* ===== CSS SCROLL-DRIVEN ANIMATIONS (2025) ===== */
-@keyframes reveal-up {
-  from { opacity: 0; transform: translateY(50px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.skill-card,
-.homelab-card,
-.bento-item,
-.project-card {
-  animation: reveal-up linear both;
-  animation-timeline: view();
-  animation-range: entry 0% entry 100%;
-}
-
-@keyframes parallax-float {
-  from { transform: translateY(0) rotate(0deg); }
-  to { transform: translateY(-100px) rotate(45deg); }
-}
-
-.geometric-shape {
-  animation: parallax-float linear both;
-  animation-timeline: scroll();
-  animation-range: 0 500px;
-}
-
-@keyframes hero-scale {
-  from { transform: scale(1); opacity: 1; }
-  to { transform: scale(0.85); opacity: 0.4; }
-}
-
-.hero-title {
-  animation: hero-scale linear both;
-  animation-timeline: scroll();
-  animation-range: 0 400px;
-}
-
-@keyframes fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-.hero-subtitle,
-.hero-description {
-  animation: fade-out linear both;
-  animation-timeline: scroll();
-  animation-range: 0 300px;
+.tesoro-row,
+.tesoro-skill-card {
+  animation: fadeInUp 0.8s ease both;
+}
+
+/* Staggered animation for skills */
+.tesoro-skill-card:nth-child(1) { animation-delay: 0.1s; }
+.tesoro-skill-card:nth-child(2) { animation-delay: 0.2s; }
+.tesoro-skill-card:nth-child(3) { animation-delay: 0.3s; }
+.tesoro-skill-card:nth-child(4) { animation-delay: 0.4s; }
+.tesoro-skill-card:nth-child(5) { animation-delay: 0.5s; }
+.tesoro-skill-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* CSS Scroll-driven animations for modern browsers */
+@supports (animation-timeline: view()) {
+  .tesoro-row,
+  .tesoro-skill-card {
+    animation: fadeInUp linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 50%;
+  }
+
+  .tesoro-skill-card:nth-child(1),
+  .tesoro-skill-card:nth-child(2),
+  .tesoro-skill-card:nth-child(3),
+  .tesoro-skill-card:nth-child(4),
+  .tesoro-skill-card:nth-child(5),
+  .tesoro-skill-card:nth-child(6) {
+    animation-delay: 0s;
+  }
 }

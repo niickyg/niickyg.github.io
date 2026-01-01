@@ -8,25 +8,14 @@
   <link rel="stylesheet" href="style_updated.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Tesoro-inspired Typography: Space Grotesk + Outfit -->
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <!-- GSAP with ScrollTrigger -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 <body>
-  <!-- Liquid Canvas Background -->
+  <!-- Subtle Liquid Canvas Background -->
   <canvas id="liquid-canvas" aria-hidden="true"></canvas>
-
-  <!-- Morphing Cursor -->
-  <div id="custom-cursor" class="custom-cursor" aria-hidden="true">
-    <div class="cursor-inner"></div>
-  </div>
-
-  <!-- Floating Geometric Shapes -->
-  <div class="geometric-shape shape-1" aria-hidden="true"></div>
-  <div class="geometric-shape shape-2" aria-hidden="true"></div>
-  <div class="geometric-shape shape-3" aria-hidden="true"></div>
 
   <!-- Navigation -->
   <nav class="navbar" role="navigation" aria-label="Main navigation">
@@ -55,54 +44,141 @@
     </div>
   </nav>
 
-  <!-- About Section -->
-  <section id="about" class="about page-section">
-    <div class="container">
-      <h1 class="page-title">About Me</h1>
-      <div class="about-content">
-        <div class="about-text">
-          <p>Hey there! I'm Nicholas, a passionate team lead at Ski Butlers Park City and founder of Mountain West Surface, an exterior cleaning and protection company serving Utah's mountain communities.</p>
-          <p>I thrive on solving complex problems, building efficient systems, and leading talented teams to achieve amazing results. Whether it's developing AI-powered automation tools or growing a service business, I'm dedicated to creating solutions that make a real impact.</p>
+  <!-- Hero Section for About Page -->
+  <section class="page-hero-tesoro">
+    <div class="page-hero-content">
+      <h1 class="page-mega-title">About Me</h1>
+      <p class="page-hero-subtitle">Building, leading, and innovating in Utah's mountain communities</p>
+    </div>
+  </section>
+
+  <!-- About Section 1: Introduction with Geometric Image Left -->
+  <section class="tesoro-section">
+    <div class="tesoro-container">
+      <div class="tesoro-row">
+        <div class="tesoro-image-col">
+          <div class="geometric-image-wrapper clip-octagon-image">
+            <div class="geometric-image-placeholder geometric-image-large">
+              <i class="fas fa-user"></i>
+            </div>
+          </div>
+        </div>
+        <div class="tesoro-text-col">
+          <h2 class="tesoro-heading">The Journey</h2>
+          <p class="tesoro-body">Hey there! I'm Nicholas, a passionate team lead at Ski Butlers Park City and founder of Mountain West Surface, an exterior cleaning and protection company serving Utah's mountain communities.</p>
+          <p class="tesoro-body">I thrive on solving complex problems, building efficient systems, and leading talented teams to achieve amazing results. Whether it's developing AI-powered automation tools or growing a service business, I'm dedicated to creating solutions that make a real impact.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section 2: Philosophy with Geometric Image Right -->
+  <section class="tesoro-section tesoro-section-alt">
+    <div class="tesoro-container">
+      <div class="tesoro-row tesoro-row-reverse">
+        <div class="tesoro-image-col">
+          <div class="geometric-image-wrapper clip-hexagon-image">
+            <div class="geometric-image-placeholder geometric-image-large">
+              <i class="fas fa-mountain"></i>
+            </div>
+          </div>
+        </div>
+        <div class="tesoro-text-col">
+          <h2 class="tesoro-heading">Philosophy</h2>
+          <p class="tesoro-body">Living in the mountains has taught me that the best solutions come from understanding the terrain. I approach every challenge with patience, adaptability, and a commitment to excellence.</p>
+          <p class="tesoro-body">The intersection of business, technology, and sustainability drives everything I do. I believe in building things that last - whether that's a business, a team, or a piece of software.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section class="tesoro-section">
+    <div class="tesoro-container">
+      <h2 class="tesoro-section-title">Core Strengths</h2>
+
+      <div class="tesoro-skills-grid">
+        <div class="tesoro-skill-card clip-skill-octagon">
+          <div class="skill-icon-wrapper">
+            <i class="fas fa-briefcase"></i>
+          </div>
+          <h3>Entrepreneurship</h3>
+          <p>Founded Mountain West Surface</p>
         </div>
 
-        <div class="skills-grid">
-          <div class="skill-card" data-skill="entrepreneurship">
-            <i class="fas fa-briefcase"></i>
-            <h3>Entrepreneurship</h3>
-            <p>Founded Mountain West Surface</p>
-          </div>
-          <div class="skill-card" data-skill="leadership">
+        <div class="tesoro-skill-card clip-skill-hexagon">
+          <div class="skill-icon-wrapper">
             <i class="fas fa-users"></i>
-            <h3>Leadership</h3>
-            <p>Team management & mentoring</p>
           </div>
-          <div class="skill-card" data-skill="sustainability">
+          <h3>Leadership</h3>
+          <p>Team management & mentoring</p>
+        </div>
+
+        <div class="tesoro-skill-card clip-skill-diamond">
+          <div class="skill-icon-wrapper">
             <i class="fas fa-leaf"></i>
-            <h3>Sustainability</h3>
-            <p>Environmental stewardship</p>
           </div>
-          <div class="skill-card" data-skill="innovation">
+          <h3>Sustainability</h3>
+          <p>Environmental stewardship</p>
+        </div>
+
+        <div class="tesoro-skill-card clip-skill-octagon">
+          <div class="skill-icon-wrapper">
             <i class="fas fa-lightbulb"></i>
-            <h3>Innovation</h3>
-            <p>Creative problem solving</p>
           </div>
-          <div class="skill-card" data-skill="strategy">
+          <h3>Innovation</h3>
+          <p>Creative problem solving</p>
+        </div>
+
+        <div class="tesoro-skill-card clip-skill-hexagon">
+          <div class="skill-icon-wrapper">
             <i class="fas fa-chart-line"></i>
-            <h3>Strategy</h3>
-            <p>Planning & execution</p>
           </div>
+          <h3>Strategy</h3>
+          <p>Planning & execution</p>
+        </div>
+
+        <div class="tesoro-skill-card clip-skill-diamond">
+          <div class="skill-icon-wrapper">
+            <i class="fas fa-code"></i>
+          </div>
+          <h3>Development</h3>
+          <p>Full-stack & automation</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Current Focus Section with Geometric Image Left -->
+  <section class="tesoro-section tesoro-section-alt">
+    <div class="tesoro-container">
+      <div class="tesoro-row">
+        <div class="tesoro-image-col">
+          <div class="geometric-image-wrapper clip-diamond-image">
+            <div class="geometric-image-placeholder geometric-image-large">
+              <i class="fas fa-rocket"></i>
+            </div>
+          </div>
+        </div>
+        <div class="tesoro-text-col">
+          <h2 class="tesoro-heading">Current Focus</h2>
+          <p class="tesoro-body">Right now, I'm focused on scaling Mountain West Surface, leading teams at Ski Butlers during the ski season, and building automation tools that improve operational efficiency.</p>
+          <p class="tesoro-body">On the tech side, I'm exploring AI integration, developing trading algorithms, and maintaining my homelab infrastructure for continuous learning and experimentation.</p>
+          <a href="projects.html" class="tesoro-link">See What I'm Building <i class="fas fa-arrow-right"></i></a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="footer">
-    <p>&copy; <span id="year"></span> Nicholas Guerriero. All Rights Reserved.</p>
-    <div class="footer-social">
-      <a href="https://www.linkedin.com/in/nickguerriero/" target="_blank" aria-label="LinkedIn" rel="noopener noreferrer"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
-      <a href="https://github.com/niickyg" target="_blank" aria-label="GitHub" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i></a>
-      <a href="mailto:me@nickguerriero.com" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+  <footer class="footer-tesoro">
+    <div class="footer-tesoro-content">
+      <p class="footer-copyright">&copy; <span id="year"></span> Nicholas Guerriero</p>
+      <div class="footer-social-links">
+        <a href="https://www.linkedin.com/in/nickguerriero/" target="_blank" aria-label="LinkedIn" rel="noopener noreferrer"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+        <a href="https://github.com/niickyg" target="_blank" aria-label="GitHub" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i></a>
+        <a href="mailto:me@nickguerriero.com" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+      </div>
     </div>
   </footer>
 
