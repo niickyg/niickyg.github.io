@@ -517,13 +517,11 @@ body::before {
 }
 
 .project-card {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   padding: 2rem;
   transition: all 0.4s var(--ease-smooth);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
 .project-card:hover {
@@ -685,6 +683,42 @@ body::before {
 
 .project-coral .project-link {
   color: var(--coral-primary);
+}
+
+.project-purple .project-image-placeholder {
+  background: #A78BFA;
+}
+
+.project-purple .project-label {
+  color: #A78BFA;
+  background: rgba(167, 139, 250, 0.08);
+}
+
+.project-purple:hover {
+  border-color: #A78BFA;
+  box-shadow: 0 8px 40px rgba(167, 139, 250, 0.25);
+}
+
+.project-purple .project-link {
+  color: #A78BFA;
+}
+
+.project-blue .project-image-placeholder {
+  background: #60A5FA;
+}
+
+.project-blue .project-label {
+  color: #60A5FA;
+  background: rgba(96, 165, 250, 0.08);
+}
+
+.project-blue:hover {
+  border-color: #60A5FA;
+  box-shadow: 0 8px 40px rgba(96, 165, 250, 0.25);
+}
+
+.project-blue .project-link {
+  color: #60A5FA;
 }
 
 @media (max-width: 768px) {
