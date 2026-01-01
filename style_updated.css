@@ -29,6 +29,24 @@
   --coral-glow: rgba(255, 133, 133, 0.25);
   --coral-subtle: rgba(255, 133, 133, 0.08);
 
+  --purple-primary: #A78BFA;
+  --purple-light: #C4B5FD;
+  --purple-dark: #8B5CF6;
+  --purple-glow: rgba(167, 139, 250, 0.25);
+  --purple-subtle: rgba(167, 139, 250, 0.08);
+
+  --blue-primary: #60A5FA;
+  --blue-light: #93C5FD;
+  --blue-dark: #3B82F6;
+  --blue-glow: rgba(96, 165, 250, 0.25);
+  --blue-subtle: rgba(96, 165, 250, 0.08);
+
+  --teal-primary: #14B8A6;
+  --teal-light: #5EEAD4;
+  --teal-dark: #0D9488;
+  --teal-glow: rgba(20, 184, 166, 0.25);
+  --teal-subtle: rgba(20, 184, 166, 0.08);
+
   /* Text Colors */
   --text-primary: #FFFFFF;
   --text-secondary: #E8E8E8;
@@ -68,6 +86,9 @@
   --shadow-glow-green: 0 8px 40px var(--green-glow);
   --shadow-glow-coral: 0 8px 40px var(--coral-glow);
   --shadow-glow-gold: 0 8px 40px var(--gold-glow);
+  --shadow-glow-purple: 0 8px 40px var(--purple-glow);
+  --shadow-glow-blue: 0 8px 40px var(--blue-glow);
+  --shadow-glow-teal: 0 8px 40px var(--teal-glow);
 
   /* Smooth Transitions */
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
@@ -686,39 +707,39 @@ body::before {
 }
 
 .project-purple .project-image-placeholder {
-  background: #A78BFA;
+  background: var(--purple-primary);
 }
 
 .project-purple .project-label {
-  color: #A78BFA;
-  background: rgba(167, 139, 250, 0.08);
+  color: var(--purple-primary);
+  background: var(--purple-subtle);
 }
 
 .project-purple:hover {
-  border-color: #A78BFA;
-  box-shadow: 0 8px 40px rgba(167, 139, 250, 0.25);
+  border-color: var(--purple-primary);
+  box-shadow: var(--shadow-glow-purple);
 }
 
 .project-purple .project-link {
-  color: #A78BFA;
+  color: var(--purple-primary);
 }
 
 .project-blue .project-image-placeholder {
-  background: #60A5FA;
+  background: var(--blue-primary);
 }
 
 .project-blue .project-label {
-  color: #60A5FA;
-  background: rgba(96, 165, 250, 0.08);
+  color: var(--blue-primary);
+  background: var(--blue-subtle);
 }
 
 .project-blue:hover {
-  border-color: #60A5FA;
-  box-shadow: 0 8px 40px rgba(96, 165, 250, 0.25);
+  border-color: var(--blue-primary);
+  box-shadow: var(--shadow-glow-blue);
 }
 
 .project-blue .project-link {
-  color: #60A5FA;
+  color: var(--blue-primary);
 }
 
 @media (max-width: 768px) {
@@ -842,6 +863,19 @@ body::before {
 .geometric-image-wrapper:hover .geometric-image-placeholder {
   transform: scale(1.03);
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
+}
+
+/* About section image - unique purple theme */
+.geometric-image-wrapper.about-image .geometric-image-placeholder {
+  background: var(--purple-primary);
+}
+
+.geometric-image-wrapper.about-image::after {
+  background: radial-gradient(circle, var(--purple-glow), transparent 70%);
+}
+
+.geometric-image-wrapper.about-image:hover .geometric-image-placeholder {
+  box-shadow: 0 24px 70px var(--purple-glow);
 }
 
 .geometric-image-placeholder i {
@@ -1052,7 +1086,6 @@ body::before {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--green-primary), var(--gold-primary), var(--coral-primary));
   opacity: 0;
   transition: opacity 0.4s var(--ease-smooth);
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
@@ -1064,8 +1097,6 @@ body::before {
 
 .tesoro-skill-card:hover {
   transform: translateY(-6px) scale(1.01);
-  border-color: var(--green-primary);
-  box-shadow: var(--shadow-glow-green);
   background: rgba(255, 255, 255, 0.05);
 }
 
@@ -1073,7 +1104,6 @@ body::before {
   width: 80px;
   height: 80px;
   margin: 0 auto 1.5rem;
-  background: linear-gradient(135deg, var(--green-primary), var(--gold-primary), var(--coral-primary));
   /* Rounded icon wrapper */
   border-radius: var(--radius-md);
   display: flex;
@@ -1106,6 +1136,85 @@ body::before {
   color: var(--text-muted);
   font-size: 1rem;
   line-height: 1.6;
+}
+
+/* Individual Skill Card Color Schemes */
+.tesoro-skill-card.skill-green .skill-icon-wrapper {
+  background: var(--green-primary);
+}
+
+.tesoro-skill-card.skill-green::before {
+  background: var(--green-primary);
+}
+
+.tesoro-skill-card.skill-green:hover {
+  border-color: var(--green-primary);
+  box-shadow: var(--shadow-glow-green);
+}
+
+.tesoro-skill-card.skill-gold .skill-icon-wrapper {
+  background: var(--gold-primary);
+}
+
+.tesoro-skill-card.skill-gold::before {
+  background: var(--gold-primary);
+}
+
+.tesoro-skill-card.skill-gold:hover {
+  border-color: var(--gold-primary);
+  box-shadow: var(--shadow-glow-gold);
+}
+
+.tesoro-skill-card.skill-coral .skill-icon-wrapper {
+  background: var(--coral-primary);
+}
+
+.tesoro-skill-card.skill-coral::before {
+  background: var(--coral-primary);
+}
+
+.tesoro-skill-card.skill-coral:hover {
+  border-color: var(--coral-primary);
+  box-shadow: var(--shadow-glow-coral);
+}
+
+.tesoro-skill-card.skill-purple .skill-icon-wrapper {
+  background: var(--purple-primary);
+}
+
+.tesoro-skill-card.skill-purple::before {
+  background: var(--purple-primary);
+}
+
+.tesoro-skill-card.skill-purple:hover {
+  border-color: var(--purple-primary);
+  box-shadow: var(--shadow-glow-purple);
+}
+
+.tesoro-skill-card.skill-blue .skill-icon-wrapper {
+  background: var(--blue-primary);
+}
+
+.tesoro-skill-card.skill-blue::before {
+  background: var(--blue-primary);
+}
+
+.tesoro-skill-card.skill-blue:hover {
+  border-color: var(--blue-primary);
+  box-shadow: var(--shadow-glow-blue);
+}
+
+.tesoro-skill-card.skill-teal .skill-icon-wrapper {
+  background: var(--teal-primary);
+}
+
+.tesoro-skill-card.skill-teal::before {
+  background: var(--teal-primary);
+}
+
+.tesoro-skill-card.skill-teal:hover {
+  border-color: var(--teal-primary);
+  box-shadow: var(--shadow-glow-teal);
 }
 
 /* ===== FOOTER ===== */
@@ -1584,14 +1693,12 @@ body::before {
 }
 
 .contact-item:hover {
-  background: var(--green-subtle);
-  border-color: var(--green-primary);
   transform: translateX(6px);
 }
 
 .contact-item i {
   font-size: 1.4rem;
-  color: var(--green-primary);
+  transition: all 0.3s var(--ease-smooth);
 }
 
 .contact-item a,
@@ -1602,8 +1709,44 @@ body::before {
   transition: color 0.3s var(--ease-smooth);
 }
 
-.contact-item:hover a {
+/* Individual Contact Item Colors */
+.contact-item.contact-green i {
   color: var(--green-primary);
+}
+
+.contact-item.contact-green:hover {
+  background: var(--green-subtle);
+  border-color: var(--green-primary);
+}
+
+.contact-item.contact-green:hover a {
+  color: var(--green-primary);
+}
+
+.contact-item.contact-blue i {
+  color: var(--blue-primary);
+}
+
+.contact-item.contact-blue:hover {
+  background: var(--blue-subtle);
+  border-color: var(--blue-primary);
+}
+
+.contact-item.contact-blue:hover a {
+  color: var(--blue-primary);
+}
+
+.contact-item.contact-coral i {
+  color: var(--coral-primary);
+}
+
+.contact-item.contact-coral:hover {
+  background: var(--coral-subtle);
+  border-color: var(--coral-primary);
+}
+
+.contact-item.contact-coral:hover span {
+  color: var(--coral-primary);
 }
 
 .contact-form {
