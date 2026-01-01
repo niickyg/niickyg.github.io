@@ -115,8 +115,8 @@
   ];
 
   boosterPositions.forEach(pos => {
-    // Booster nozzle
-    const nozzleGeometry = new THREE.CylinderGeometry(0.12, 0.15, 0.3, 16);
+    // Booster nozzle - wider
+    const nozzleGeometry = new THREE.CylinderGeometry(0.17, 0.21, 0.3, 16);
     const nozzleMaterial = new THREE.MeshStandardMaterial({
       color: 0x333333,
       metalness: 0.9,
@@ -126,8 +126,8 @@
     nozzle.position.set(pos.x, -1.4, pos.z);
     rocketGroup.add(nozzle);
 
-    // Flame/thrust - pointing DOWN
-    const flameGeometry = new THREE.ConeGeometry(0.15, 0.8, 16);
+    // Flame/thrust - pointing DOWN, wider
+    const flameGeometry = new THREE.ConeGeometry(0.21, 0.8, 16);
     const flameMaterial = new THREE.MeshStandardMaterial({
       color: 0xFF8585,
       emissive: 0xFF8585,
@@ -140,8 +140,8 @@
     // NO rotation - cone points up by default, so position it below
     rocketGroup.add(flame);
 
-    // Inner flame glow (brighter)
-    const innerFlameGeometry = new THREE.ConeGeometry(0.08, 0.6, 16);
+    // Inner flame glow - brighter and wider
+    const innerFlameGeometry = new THREE.ConeGeometry(0.11, 0.6, 16);
     const innerFlameMaterial = new THREE.MeshStandardMaterial({
       color: 0xFFFFAA,
       emissive: 0xFFFFAA,
