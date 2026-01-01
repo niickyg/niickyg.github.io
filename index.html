@@ -12,10 +12,15 @@
   <!-- GSAP with ScrollTrigger -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Three.js for 3D Graphics -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
   <!-- Subtle Liquid Canvas Background -->
   <canvas id="liquid-canvas" aria-hidden="true"></canvas>
+
+  <!-- 3D Hero Canvas -->
+  <canvas id="hero-3d-canvas" aria-hidden="true"></canvas>
 
   <!-- Navigation -->
   <nav class="navbar" role="navigation" aria-label="Main navigation">
@@ -42,16 +47,14 @@
     </div>
   </nav>
 
-  <!-- Hero Section - Clean & Simple -->
-  <section id="home" class="hero-tesoro">
-    <div class="hero-tesoro-content">
-      <!-- Hero Text Content -->
+  <!-- Hero Section - 3D Immersive -->
+  <section id="home" class="hero-3d">
+    <div class="hero-3d-content">
       <div class="hero-text-wrapper">
-        <h1 class="hero-mega-title">
-          <span class="title-line">Nicholas</span>
-          <span class="title-line">Guerriero</span>
+        <h1 class="hero-3d-title">
+          <span class="hero-3d-name">Nicholas Guerriero</span>
         </h1>
-        <p class="hero-tagline">Team Lead | Developer | Business Owner</p>
+        <p class="hero-3d-tagline">Team Lead | Developer | Business Owner</p>
         <div class="hero-cta-group">
           <a href="#projects" class="btn-tesoro btn-tesoro-primary">View My Work</a>
           <a href="#contact" class="btn-tesoro btn-tesoro-secondary">Get In Touch</a>
@@ -306,6 +309,7 @@
     </div>
   </footer>
 
+  <script src="hero-3d.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
