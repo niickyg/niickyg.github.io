@@ -193,7 +193,7 @@ body::before {
 }
 
 .logo-image {
-  height: 36px;
+  height: 70px;
   width: auto;
   transition: transform 0.4s var(--ease-smooth);
 }
