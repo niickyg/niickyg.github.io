@@ -82,15 +82,15 @@
     rocketGroup.add(window);
   }
 
-  // Fins (4 triangular fins) - flat triangle shapes
+  // Fins (4 triangular fins) - flat triangle shapes, slightly larger
   const finShape = new THREE.Shape();
   finShape.moveTo(0, 0);
-  finShape.lineTo(0.4, -0.8);
-  finShape.lineTo(0, -0.6);
+  finShape.lineTo(0.5, -1.0);
+  finShape.lineTo(0, -0.75);
   finShape.lineTo(0, 0);
 
   const finGeometry = new THREE.ExtrudeGeometry(finShape, {
-    depth: 0.05,
+    depth: 0.06,
     bevelEnabled: false
   });
 
@@ -157,6 +157,7 @@
   // Scale and position the rocket
   rocketGroup.scale.set(1.5, 1.5, 1.5);
   rocketGroup.rotation.z = -Math.PI / 4; // Tilt 45 degrees to the right
+  rocketGroup.rotation.x = -0.15; // Lean slightly away from viewer
   scene.add(rocketGroup);
 
   // Store flames for animation
@@ -254,7 +255,7 @@
     targetRotationY = mouseX * 0.3;
 
     // Smooth mouse following
-    rocketGroup.rotation.x += (targetRotationX - rocketGroup.rotation.x) * 0.05;
+    rocketGroup.rotation.x += (targetRotationX - 0.15 - rocketGroup.rotation.x) * 0.05;
     rocketGroup.rotation.y += (targetRotationY - rocketGroup.rotation.y) * 0.05;
 
     // Animate particles
