@@ -73,7 +73,7 @@ class ThemeManager {
       metaTheme.name = 'theme-color';
       document.head.appendChild(metaTheme);
     }
-    metaTheme.content = this.theme === 'dark' ? '#0A1929' : '#f5f5f7';
+    metaTheme.content = this.theme === 'dark' ? '#1a1a1a' : '#FDF8F3';
   }
 
   updateIcon() {
@@ -197,9 +197,9 @@ document.addEventListener('keydown', (e) => {
 
 // ===== INTERACTIVE FEATURES & EASTER EGGS =====
 
-// Mouse trail effect with colorful particles
+// Mouse trail effect with colorful particles - Tesoro palette
 let particles = [];
-const colors = ['#60D394', '#AAF683', '#FFD97D', '#FF9B85', '#4ECDC4', '#44A08D', '#F38181', '#95E1D3'];
+const colors = ['#00D26A', '#4AE88C', '#7C3AED', '#A78BFA', '#00A855', '#5B21B6', '#F59E0B', '#EF4444'];
 
 // Only enable mouse trail if reduced motion is not preferred
 if (!prefersReducedMotion) {
@@ -266,16 +266,16 @@ function activateMatrixMode() {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 3rem;
-    color: #4FC3F7;
-    text-shadow: 0 0 30px #4FC3F7, 0 0 60px #7E57C2;
+    color: #00D26A;
+    text-shadow: 0 0 30px rgba(0, 210, 106, 0.8), 0 0 60px rgba(124, 58, 237, 0.6);
     z-index: 99999;
     font-weight: 900;
     pointer-events: none;
     animation: pulse 0.5s infinite alternate;
-    background: rgba(10, 25, 41, 0.9);
+    background: rgba(26, 26, 26, 0.95);
     padding: 2rem 3rem;
     border-radius: 20px;
-    border: 3px solid #4FC3F7;
+    border: 3px solid #00D26A;
     backdrop-filter: blur(15px);
   `;
 
@@ -321,14 +321,14 @@ function showSecretMessage() {
     left: 50%;
     transform: translate(-50%, -50%) scale(0.5);
     font-size: 2rem;
-    color: #E91E63;
-    text-shadow: 0 0 20px #E91E63, 0 0 40px #7E57C2;
+    color: #7C3AED;
+    text-shadow: 0 0 20px rgba(124, 58, 237, 0.8), 0 0 40px rgba(0, 210, 106, 0.6);
     z-index: 99999;
     font-weight: 900;
     pointer-events: none;
     padding: 2rem;
-    background: rgba(10, 25, 41, 0.95);
-    border: 3px solid #E91E63;
+    background: rgba(26, 26, 26, 0.95);
+    border: 3px solid #7C3AED;
     border-radius: 20px;
     backdrop-filter: blur(15px);
     transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -360,7 +360,7 @@ document.querySelectorAll('.project-card, .homelab-card').forEach(card => {
     ripple.style.cssText = `
       position: absolute;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(79, 195, 247, 0.6), rgba(126, 87, 194, 0.3), transparent);
+      background: radial-gradient(circle, rgba(0, 210, 106, 0.6), rgba(124, 58, 237, 0.3), transparent);
       width: 20px;
       height: 20px;
       left: ${x}px;
@@ -490,7 +490,7 @@ function triggerNeonExplosion() {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: radial-gradient(circle, rgba(79, 195, 247, 0.6), rgba(126, 87, 194, 0.3));
+    background: radial-gradient(circle, rgba(0, 210, 106, 0.6), rgba(124, 58, 237, 0.3));
     z-index: 99998;
     pointer-events: none;
     opacity: 1;
@@ -529,14 +529,14 @@ function toggleGlassmorphism() {
     bottom: 30px;
     right: 30px;
     font-size: 1.2rem;
-    color: #4FC3F7;
-    text-shadow: 0 0 15px #4FC3F7;
+    color: #00D26A;
+    text-shadow: 0 0 15px rgba(0, 210, 106, 0.8);
     z-index: 99999;
     font-weight: 700;
     pointer-events: none;
     padding: 1rem 2rem;
-    background: rgba(10, 25, 41, 0.95);
-    border: 2px solid #4FC3F7;
+    background: rgba(26, 26, 26, 0.95);
+    border: 2px solid #00D26A;
     border-radius: 15px;
     backdrop-filter: blur(15px);
     transform: translateY(100px);
@@ -672,8 +672,8 @@ function initFluid() {
 function animateFluid() {
   const ctx = canvas.getContext('2d');
 
-  // Fade effect for trails
-  ctx.fillStyle = 'rgba(15, 23, 42, 0.1)';
+  // Fade effect for trails - Tesoro dark base
+  ctx.fillStyle = 'rgba(26, 26, 26, 0.1)';
   ctx.fillRect(0, 0, width, height);
 
   // Strong blur for fluid effect
@@ -750,13 +750,13 @@ function initMagneticElements() {
       rect: el.getBoundingClientRect()
     });
 
-    // Grow cursor on hover
+    // Grow cursor on hover - Tesoro colors
     el.addEventListener('mouseenter', () => {
       cursor.style.width = '120px';
       cursor.style.height = '120px';
       cursor.querySelector('.cursor-inner').style.background = `radial-gradient(circle,
-        rgba(192, 132, 252, 0.9) 0%,
-        rgba(232, 121, 249, 0.7) 40%,
+        rgba(124, 58, 237, 0.9) 0%,
+        rgba(167, 139, 250, 0.7) 40%,
         transparent 70%)`;
     });
 
@@ -764,8 +764,8 @@ function initMagneticElements() {
       cursor.style.width = '60px';
       cursor.style.height = '60px';
       cursor.querySelector('.cursor-inner').style.background = `radial-gradient(circle,
-        rgba(138, 180, 248, 0.8) 0%,
-        rgba(167, 139, 250, 0.6) 40%,
+        rgba(0, 210, 106, 0.8) 0%,
+        rgba(74, 232, 140, 0.6) 40%,
         transparent 70%)`;
     });
   });
@@ -1025,7 +1025,7 @@ function createParticleText(element) {
       if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
       if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
-      ctx.fillStyle = `rgba(138, 180, 248, ${p.opacity})`;
+      ctx.fillStyle = `rgba(0, 210, 106, ${p.opacity})`;
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
       ctx.fill();
@@ -1177,24 +1177,24 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Console message for curious developers
-console.log('%c WELCOME TO THE LIQUID DIMENSION', 'color: #8AB4F8; font-size: 24px; font-weight: bold; text-shadow: 0 0 15px #8AB4F8;');
-console.log('%c Interactive Features:', 'color: #A78BFA; font-size: 16px; font-weight: bold;');
-console.log('%c  Morphing liquid blobs in background', 'color: #8AB4F8; font-size: 13px;');
-console.log('%c  Interactive Skill Constellation Network', 'color: #60D394; font-size: 14px; font-weight: bold;');
-console.log('%c  Custom morphing cursor that follows you', 'color: #8AB4F8; font-size: 13px;');
-console.log('%c  Mouse trail particles everywhere', 'color: #A78BFA; font-size: 13px;');
-console.log('%c  Click the logo 5 times', 'color: #C084FC; font-size: 13px;');
-console.log('%c  Try the Konami code (upupdowndownleftrightleftrightBA)', 'color: #C084FC; font-size: 13px;');
-console.log('%c  Type "neon" anywhere for explosion', 'color: #E879F9; font-size: 13px;');
-console.log('%c  Type "glass" to toggle glassmorphism', 'color: #E879F9; font-size: 13px;');
-console.log('%c  Double-click the hero section to shake', 'color: #8AB4F8; font-size: 13px;');
-console.log('%c  Click on cards for ripple effects', 'color: #A78BFA; font-size: 13px;');
-console.log('%c  Hover over section titles for color magic', 'color: #C084FC; font-size: 13px;');
-console.log('%c  3D tilt on cards when you hover', 'color: #E879F9; font-size: 13px;');
-console.log('%c  Physics-based floating tech icons', 'color: #60D394; font-size: 13px;');
-console.log('%c  Geometric clip-path project cards', 'color: #4ECDC4; font-size: 13px;');
-console.log('%c\n Flowing smoothly through the digital universe', 'color: #A78BFA; font-size: 12px; font-style: italic;');
+// Console message for curious developers - Tesoro colors
+console.log('%c WELCOME TO THE TESORO DIMENSION', 'color: #00D26A; font-size: 24px; font-weight: bold; text-shadow: 0 0 15px rgba(0, 210, 106, 0.8);');
+console.log('%c Interactive Features:', 'color: #7C3AED; font-size: 16px; font-weight: bold;');
+console.log('%c  Morphing liquid blobs in background', 'color: #00D26A; font-size: 13px;');
+console.log('%c  Interactive Skill Constellation Network', 'color: #4AE88C; font-size: 14px; font-weight: bold;');
+console.log('%c  Custom morphing cursor that follows you', 'color: #00D26A; font-size: 13px;');
+console.log('%c  Mouse trail particles everywhere', 'color: #7C3AED; font-size: 13px;');
+console.log('%c  Click the logo 5 times', 'color: #A78BFA; font-size: 13px;');
+console.log('%c  Try the Konami code (upupdowndownleftrightleftrightBA)', 'color: #A78BFA; font-size: 13px;');
+console.log('%c  Type "neon" anywhere for explosion', 'color: #5B21B6; font-size: 13px;');
+console.log('%c  Type "glass" to toggle glassmorphism', 'color: #5B21B6; font-size: 13px;');
+console.log('%c  Double-click the hero section to shake', 'color: #00D26A; font-size: 13px;');
+console.log('%c  Click on cards for ripple effects', 'color: #7C3AED; font-size: 13px;');
+console.log('%c  Hover over section titles for color magic', 'color: #A78BFA; font-size: 13px;');
+console.log('%c  3D tilt on cards when you hover', 'color: #5B21B6; font-size: 13px;');
+console.log('%c  Physics-based floating tech icons', 'color: #4AE88C; font-size: 13px;');
+console.log('%c  Geometric clip-path project cards', 'color: #00A855; font-size: 13px;');
+console.log('%c\n Flowing smoothly through the Tesoro universe', 'color: #7C3AED; font-size: 12px; font-style: italic;');
 
 
 // ===== TESORO-INSPIRED 2025 FEATURES =====
@@ -1297,8 +1297,8 @@ class CharacterAnimator {
         neighbors.forEach((neighbor, i) => {
           const delay = Math.abs(i - 2) * 0.05;
           gsap.to(neighbor, {
-            color: '#AAF683',
-            textShadow: '0 0 20px #AAF683',
+            color: '#00D26A',
+            textShadow: '0 0 20px rgba(0, 210, 106, 0.8)',
             duration: 0.3,
             delay: delay,
             ease: 'power2.out'
@@ -1786,7 +1786,7 @@ class SpotlightEffect {
       position: absolute;
       width: 200px;
       height: 200px;
-      background: radial-gradient(circle, rgba(96, 211, 148, 0.15) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(0, 210, 106, 0.15) 0%, transparent 70%);
       pointer-events: none;
       z-index: 10;
       transform: translate(-50%, -50%);
@@ -1885,6 +1885,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize stagger reveal
     new StaggerReveal();
 
-    console.log('%c Tesoro-inspired 2025 features loaded!', 'color: #60D394; font-size: 14px; font-weight: bold;');
+    console.log('%c Tesoro-inspired 2025 features loaded!', 'color: #00D26A; font-size: 14px; font-weight: bold;');
   }, 100);
 });
