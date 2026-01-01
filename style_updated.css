@@ -508,6 +508,11 @@ body::before {
   position: relative;
 }
 
+/* Compact project sections */
+.tesoro-project-section {
+  padding: 4rem 2rem;
+}
+
 .tesoro-section-alt {
   background: var(--bg-section-alt);
   /* Soft rounded section containers */
@@ -570,6 +575,15 @@ body::before {
   width: 100%;
   max-width: 450px;
   aspect-ratio: 1;
+}
+
+/* Smaller images for project sections */
+.geometric-image-project {
+  max-width: 280px;
+}
+
+.tesoro-project-section .geometric-image-wrapper {
+  max-width: 280px;
 }
 
 .geometric-image-placeholder {
