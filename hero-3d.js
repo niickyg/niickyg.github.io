@@ -61,35 +61,24 @@
     opacity: 0.9
   });
 
-  // Main body - rounded capsule shape (sphere + cylinder)
-  const topSphereGeometry = new THREE.SphereGeometry(0.5, 32, 32, 0, Math.PI * 2, 0, Math.PI / 2);
-  const topSphere = new THREE.Mesh(topSphereGeometry, bodyMaterial);
-  topSphere.position.y = 0.8;
-  rocketGroup.add(topSphere);
-
-  const bodyGeometry = new THREE.CylinderGeometry(0.5, 0.5, 1.6, 32);
+  // Main body - sleek rocket cylinder
+  const bodyGeometry = new THREE.CylinderGeometry(0.5, 0.5, 2.5, 32);
   const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
   body.position.y = 0;
   rocketGroup.add(body);
 
-  const bottomSphereGeometry = new THREE.SphereGeometry(0.5, 32, 32, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2);
-  const bottomSphere = new THREE.Mesh(bottomSphereGeometry, bodyMaterial);
-  bottomSphere.position.y = -0.8;
-  rocketGroup.add(bottomSphere);
-
-  // Nose cone - more rounded
-  const noseGeometry = new THREE.SphereGeometry(0.35, 32, 32);
+  // Nose cone - sharp and aerodynamic
+  const noseGeometry = new THREE.ConeGeometry(0.5, 1.2, 32);
   const nose = new THREE.Mesh(noseGeometry, noseMaterial);
-  nose.position.y = 1.5;
-  nose.scale.set(1, 1.3, 1); // Slightly elongated
+  nose.position.y = 1.85;
   rocketGroup.add(nose);
 
   // Windows (spheres)
   const windowGeometry = new THREE.SphereGeometry(0.15, 32, 32);
   for (let i = 0; i < 3; i++) {
     const window = new THREE.Mesh(windowGeometry, windowMaterial);
-    window.position.y = 0.6 - (i * 0.6);
-    window.position.z = 0.42;
+    window.position.y = 0.8 - (i * 0.5);
+    window.position.z = 0.51;
     rocketGroup.add(window);
   }
 
@@ -104,7 +93,7 @@
 
   finPositions.forEach(pos => {
     const fin = new THREE.Mesh(finGeometry, finMaterial);
-    fin.position.set(pos.x, -1, pos.z);
+    fin.position.set(pos.x, -1.5, pos.z);
     fin.rotation.z = pos.rotation;
     rocketGroup.add(fin);
   });
@@ -126,7 +115,7 @@
       roughness: 0.2
     });
     const nozzle = new THREE.Mesh(nozzleGeometry, nozzleMaterial);
-    nozzle.position.set(pos.x, -1.0, pos.z);
+    nozzle.position.set(pos.x, -1.4, pos.z);
     rocketGroup.add(nozzle);
 
     // Flame/thrust - pointing DOWN
@@ -139,7 +128,7 @@
       opacity: 0.85
     });
     const flame = new THREE.Mesh(flameGeometry, flameMaterial);
-    flame.position.set(pos.x, -1.6, pos.z);
+    flame.position.set(pos.x, -2.0, pos.z);
     // NO rotation - cone points up by default, so position it below
     rocketGroup.add(flame);
 
@@ -153,7 +142,7 @@
       opacity: 0.9
     });
     const innerFlame = new THREE.Mesh(innerFlameGeometry, innerFlameMaterial);
-    innerFlame.position.set(pos.x, -1.5, pos.z);
+    innerFlame.position.set(pos.x, -1.9, pos.z);
     rocketGroup.add(innerFlame);
   });
 
