@@ -24,12 +24,10 @@
         <img src="logo.svg" alt="Nicholas Guerriero" class="logo-image">
       </a>
       <ul class="nav-menu" role="menubar">
-        <li role="none"><a href="index.html" class="nav-link active" role="menuitem">Home</a></li>
-        <li role="none"><a href="about.html" class="nav-link" role="menuitem">About</a></li>
-        <li role="none"><a href="projects.html" class="nav-link" role="menuitem">Projects</a></li>
-        <li role="none"><a href="homelab.html" class="nav-link" role="menuitem">Homelab</a></li>
-        <li role="none"><a href="blog.html" class="nav-link" role="menuitem">Blog</a></li>
-        <li role="none"><a href="contact.html" class="nav-link" role="menuitem">Contact</a></li>
+        <li role="none"><a href="#home" class="nav-link active" role="menuitem">Home</a></li>
+        <li role="none"><a href="#about" class="nav-link" role="menuitem">About</a></li>
+        <li role="none"><a href="#projects" class="nav-link" role="menuitem">Projects</a></li>
+        <li role="none"><a href="#contact" class="nav-link" role="menuitem">Contact</a></li>
         <li role="none">
           <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light theme" role="menuitem">
             <i class="fas fa-moon" id="theme-icon"></i>
@@ -60,8 +58,8 @@
         </h1>
         <p class="hero-tagline">Team Lead | Developer | Business Owner</p>
         <div class="hero-cta-group">
-          <a href="projects.html" class="btn-tesoro btn-tesoro-primary">View My Work</a>
-          <a href="contact.html" class="btn-tesoro btn-tesoro-secondary">Get In Touch</a>
+          <a href="#projects" class="btn-tesoro btn-tesoro-primary">View My Work</a>
+          <a href="#contact" class="btn-tesoro btn-tesoro-secondary">Get In Touch</a>
         </div>
       </div>
     </div>
@@ -73,55 +71,264 @@
     </div>
   </section>
 
-  <!-- Featured Section - Tesoro Alternating Pattern -->
-  <section class="tesoro-section">
+  <!-- About Section -->
+  <section id="about" class="tesoro-section">
     <div class="tesoro-container">
-      <!-- Section 1: Image Left, Text Right -->
+      <h2 class="tesoro-section-title">About Me</h2>
+
       <div class="tesoro-row">
         <div class="tesoro-image-col">
           <div class="geometric-image-wrapper clip-octagon-image">
-            <div class="geometric-image-placeholder">
-              <i class="fas fa-briefcase"></i>
+            <div class="geometric-image-placeholder geometric-image-large">
+              <i class="fas fa-user"></i>
             </div>
           </div>
         </div>
         <div class="tesoro-text-col">
-          <h2 class="tesoro-heading">Building Ventures</h2>
-          <p class="tesoro-body">Founder of Mountain West Surface, leading teams at Ski Butlers, and constantly exploring new opportunities to create impact through business and technology.</p>
-          <a href="about.html" class="tesoro-link">Learn More <i class="fas fa-arrow-right"></i></a>
+          <h3 class="tesoro-heading">The Journey</h3>
+          <p class="tesoro-body">Hey there! I'm Nicholas, a passionate team lead at Ski Butlers Park City and founder of Mountain West Surface, an exterior cleaning and protection company serving Utah's mountain communities.</p>
+          <p class="tesoro-body">I thrive on solving complex problems, building efficient systems, and leading talented teams to achieve amazing results. Whether it's developing AI-powered automation tools or growing a service business, I'm dedicated to creating solutions that make a real impact.</p>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- Section 2: Text Left, Image Right -->
+  <!-- Skills Section -->
+  <section class="tesoro-section tesoro-section-alt">
+    <div class="tesoro-container">
+      <h2 class="tesoro-section-title">Core Strengths</h2>
+
+      <div class="tesoro-skills-grid">
+        <div class="tesoro-skill-card">
+          <div class="skill-icon-wrapper">
+            <i class="fas fa-briefcase"></i>
+          </div>
+          <h3>Entrepreneurship</h3>
+          <p>Founded Mountain West Surface, scaling service operations</p>
+        </div>
+
+        <div class="tesoro-skill-card">
+          <div class="skill-icon-wrapper">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3>Leadership</h3>
+          <p>Team management & mentoring at Ski Butlers</p>
+        </div>
+
+        <div class="tesoro-skill-card">
+          <div class="skill-icon-wrapper">
+            <i class="fas fa-leaf"></i>
+          </div>
+          <h3>Sustainability</h3>
+          <p>Environmental stewardship & eco-friendly practices</p>
+        </div>
+
+        <div class="tesoro-skill-card">
+          <div class="skill-icon-wrapper">
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <h3>Innovation</h3>
+          <p>Creative problem solving & process optimization</p>
+        </div>
+
+        <div class="tesoro-skill-card">
+          <div class="skill-icon-wrapper">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3>Strategy</h3>
+          <p>Business planning & execution excellence</p>
+        </div>
+
+        <div class="tesoro-skill-card">
+          <div class="skill-icon-wrapper">
+            <i class="fas fa-code"></i>
+          </div>
+          <h3>Development</h3>
+          <p>Full-stack development & AI automation</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="tesoro-section">
+    <div class="tesoro-container">
+      <h2 class="tesoro-section-title">Featured Projects</h2>
+    </div>
+  </section>
+
+  <!-- Project 1: Mountain West Surface -->
+  <section class="tesoro-section tesoro-project-section">
+    <div class="tesoro-container">
+      <div class="tesoro-row">
+        <div class="tesoro-image-col">
+          <div class="geometric-image-wrapper clip-octagon-image">
+            <div class="geometric-image-placeholder geometric-image-project">
+              <i class="fas fa-spray-can"></i>
+            </div>
+          </div>
+        </div>
+        <div class="tesoro-text-col">
+          <span class="project-label">Business Venture</span>
+          <h3 class="tesoro-heading">Mountain West Surface</h3>
+          <p class="tesoro-body">Licensed exterior cleaning and protection company serving Utah's mountain communities. Specializing in pressure washing, concrete sealing, and softwashing services.</p>
+          <div class="project-tags-tesoro">
+            <span class="tag-tesoro">Business</span>
+            <span class="tag-tesoro">Service Industry</span>
+            <span class="tag-tesoro">Utah</span>
+          </div>
+          <a href="https://mountainwestsurface.com" target="_blank" class="tesoro-link">Visit Website <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project 2: GoTo Call Automation -->
+  <section class="tesoro-section tesoro-section-alt tesoro-project-section">
+    <div class="tesoro-container">
       <div class="tesoro-row tesoro-row-reverse">
         <div class="tesoro-image-col">
           <div class="geometric-image-wrapper clip-hexagon-image">
-            <div class="geometric-image-placeholder">
-              <i class="fas fa-code"></i>
+            <div class="geometric-image-placeholder geometric-image-project">
+              <i class="fas fa-phone-volume"></i>
             </div>
           </div>
         </div>
         <div class="tesoro-text-col">
-          <h2 class="tesoro-heading">Crafting Solutions</h2>
-          <p class="tesoro-body">From AI-powered automation systems to trading algorithms, I build tools that solve real problems. Every project is an opportunity to push boundaries.</p>
-          <a href="projects.html" class="tesoro-link">View Projects <i class="fas fa-arrow-right"></i></a>
+          <span class="project-label">AI System</span>
+          <h3 class="tesoro-heading">GoTo Call Automation</h3>
+          <p class="tesoro-body">Production-ready AI-powered call recording transcription and analysis system with real-time dashboards, sentiment analysis, and automated action items.</p>
+          <div class="project-tags-tesoro">
+            <span class="tag-tesoro">React</span>
+            <span class="tag-tesoro">FastAPI</span>
+            <span class="tag-tesoro">PostgreSQL</span>
+            <span class="tag-tesoro">OpenAI</span>
+            <span class="tag-tesoro">Docker</span>
+          </div>
+          <a href="https://github.com/niickyg/goto-automation" target="_blank" class="tesoro-link">View on GitHub <i class="fas fa-arrow-right"></i></a>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- Section 3: Image Left, Text Right -->
+  <!-- Project 3: RDT Trading System -->
+  <section class="tesoro-section tesoro-project-section">
+    <div class="tesoro-container">
       <div class="tesoro-row">
         <div class="tesoro-image-col">
           <div class="geometric-image-wrapper clip-diamond-image">
-            <div class="geometric-image-placeholder">
+            <div class="geometric-image-placeholder geometric-image-project">
+              <i class="fas fa-chart-line"></i>
+            </div>
+          </div>
+        </div>
+        <div class="tesoro-text-col">
+          <span class="project-label">Trading Algorithm</span>
+          <h3 class="tesoro-heading">RDT Trading System</h3>
+          <p class="tesoro-body">Autonomous trading bot with multi-agent architecture implementing Real Relative Strength methodology. Features backtesting, risk management, and parameter optimization.</p>
+          <div class="project-tags-tesoro">
+            <span class="tag-tesoro">Python</span>
+            <span class="tag-tesoro">SQLAlchemy</span>
+            <span class="tag-tesoro">Asyncio</span>
+            <span class="tag-tesoro">Docker</span>
+          </div>
+          <a href="https://github.com/niickyg/rdt-trading-system" target="_blank" class="tesoro-link">View on GitHub <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project 4: OANDA Trading Bot -->
+  <section class="tesoro-section tesoro-section-alt tesoro-project-section">
+    <div class="tesoro-container">
+      <div class="tesoro-row tesoro-row-reverse">
+        <div class="tesoro-image-col">
+          <div class="geometric-image-wrapper clip-octagon-image">
+            <div class="geometric-image-placeholder geometric-image-project">
+              <i class="fas fa-robot"></i>
+            </div>
+          </div>
+        </div>
+        <div class="tesoro-text-col">
+          <span class="project-label">Automation</span>
+          <h3 class="tesoro-heading">OANDA Trading Bot</h3>
+          <p class="tesoro-body">Forex trading bot with technical analysis, multiple strategy engines, and statistical arbitrage. Designed for automated market analysis and trade execution.</p>
+          <div class="project-tags-tesoro">
+            <span class="tag-tesoro">Python</span>
+            <span class="tag-tesoro">OANDA API</span>
+            <span class="tag-tesoro">Technical Analysis</span>
+          </div>
+          <a href="https://github.com/niickyg/oanda-trading-bot" target="_blank" class="tesoro-link">View on GitHub <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project 5: Media Server Infrastructure -->
+  <section class="tesoro-section tesoro-project-section">
+    <div class="tesoro-container">
+      <div class="tesoro-row">
+        <div class="tesoro-image-col">
+          <div class="geometric-image-wrapper clip-hexagon-image">
+            <div class="geometric-image-placeholder geometric-image-project">
               <i class="fas fa-server"></i>
             </div>
           </div>
         </div>
         <div class="tesoro-text-col">
-          <h2 class="tesoro-heading">Infrastructure Enthusiast</h2>
-          <p class="tesoro-body">Running a homelab with Docker, virtualization, and self-hosted services. The intersection of hardware and software is where innovation happens.</p>
-          <a href="homelab.html" class="tesoro-link">Explore Homelab <i class="fas fa-arrow-right"></i></a>
+          <span class="project-label">Infrastructure</span>
+          <h3 class="tesoro-heading">Media Server Infrastructure</h3>
+          <p class="tesoro-body">Dockerized home media server with Jellyfin for streaming. Infrastructure design and container orchestration for personal media management.</p>
+          <div class="project-tags-tesoro">
+            <span class="tag-tesoro">Docker</span>
+            <span class="tag-tesoro">Jellyfin</span>
+            <span class="tag-tesoro">Infrastructure</span>
+            <span class="tag-tesoro">Linux</span>
+          </div>
+          <span class="tesoro-link tesoro-link-disabled">Private Project</span>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="tesoro-section tesoro-section-alt">
+    <div class="tesoro-container">
+      <h2 class="tesoro-section-title">Let's Connect</h2>
+      <div class="contact-content">
+        <div class="contact-info">
+          <h3>Get In Touch</h3>
+          <p>I'm always interested in hearing about new projects and opportunities. Whether you have a question or just want to say hi, feel free to reach out!</p>
+          <div class="contact-details">
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <a href="mailto:me@nickguerriero.com">me@nickguerriero.com</a>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-phone"></i>
+              <a href="tel:+16312054499">+1 (631) 205-4499</a>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Park City, Utah</span>
+            </div>
+          </div>
+        </div>
+        <form class="contact-form">
+          <div class="form-group">
+            <label for="contact-name" class="visually-hidden">Your Name</label>
+            <input type="text" id="contact-name" name="name" placeholder="Your Name" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="contact-email" class="visually-hidden">Your Email</label>
+            <input type="email" id="contact-email" name="email" placeholder="Your Email" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="contact-message" class="visually-hidden">Your Message</label>
+            <textarea id="contact-message" name="message" rows="5" placeholder="Your Message" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
       </div>
     </div>
   </section>
@@ -131,9 +338,9 @@
     <div class="footer-tesoro-content">
       <p class="footer-copyright">&copy; <span id="year"></span> Nicholas Guerriero</p>
       <div class="footer-social-links">
-        <a href="https://www.linkedin.com/in/nickguerriero/" target="_blank" aria-label="LinkedIn Profile" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
-        <a href="https://github.com/niickyg" target="_blank" aria-label="GitHub Profile" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
-        <a href="mailto:me@nickguerriero.com" aria-label="Email Nicholas"><i class="fas fa-envelope"></i></a>
+        <a href="https://www.linkedin.com/in/nickguerriero/" target="_blank" aria-label="LinkedIn Profile" rel="noopener noreferrer"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+        <a href="https://github.com/niickyg" target="_blank" aria-label="GitHub Profile" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i></a>
+        <a href="mailto:me@nickguerriero.com" aria-label="Email Nicholas"><i class="fas fa-envelope" aria-hidden="true"></i></a>
       </div>
     </div>
   </footer>
