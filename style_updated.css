@@ -10,18 +10,13 @@
   --bg-tertiary: #2a2a2a;
   --bg-section-alt: #151515;
 
-  /* Monochromatic Purple Base with Gold & Coral Accents */
-  /* Purple Shades - Main Color Palette */
-  --purple-lightest: #E9D5FF;
-  --purple-lighter: #C4B5FD;
-  --purple-light: #A78BFA;
-  --purple-primary: #8B5CF6;
-  --purple-medium: #7C3AED;
-  --purple-dark: #6D28D9;
-  --purple-glow: rgba(139, 92, 246, 0.25);
-  --purple-subtle: rgba(139, 92, 246, 0.08);
+  /* Primary Colors - Green, Gold, Coral (Softened by 10-15%) */
+  --green-primary: #2DD881;
+  --green-light: #6AEE9F;
+  --green-dark: #1DB86A;
+  --green-glow: rgba(45, 216, 129, 0.25);
+  --green-subtle: rgba(45, 216, 129, 0.08);
 
-  /* Accent Colors - Used Sparingly */
   --gold-primary: #F7B42C;
   --gold-light: #FCDC73;
   --gold-dark: #E09D18;
@@ -34,12 +29,11 @@
   --coral-glow: rgba(255, 133, 133, 0.25);
   --coral-subtle: rgba(255, 133, 133, 0.08);
 
-  /* Legacy colors kept for compatibility */
-  --green-primary: #2DD881;
-  --green-light: #6AEE9F;
-  --green-dark: #1DB86A;
-  --green-glow: rgba(45, 216, 129, 0.25);
-  --green-subtle: rgba(45, 216, 129, 0.08);
+  --purple-primary: #A78BFA;
+  --purple-light: #C4B5FD;
+  --purple-dark: #8B5CF6;
+  --purple-glow: rgba(167, 139, 250, 0.25);
+  --purple-subtle: rgba(167, 139, 250, 0.08);
 
   --blue-primary: #60A5FA;
   --blue-light: #93C5FD;
@@ -89,19 +83,10 @@
   --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.15);
   --shadow-md: 0 8px 40px rgba(0, 0, 0, 0.2);
   --shadow-lg: 0 16px 60px rgba(0, 0, 0, 0.25);
-
-  /* Purple Shadow Variations - Main */
-  --shadow-glow-purple: 0 8px 40px var(--purple-glow);
-  --shadow-glow-purple-light: 0 8px 40px rgba(167, 139, 250, 0.2);
-  --shadow-glow-purple-medium: 0 8px 40px rgba(124, 58, 237, 0.25);
-  --shadow-glow-purple-dark: 0 8px 40px rgba(109, 40, 217, 0.25);
-
-  /* Accent Shadows - Used Sparingly */
-  --shadow-glow-gold: 0 8px 40px var(--gold-glow);
-  --shadow-glow-coral: 0 8px 40px var(--coral-glow);
-
-  /* Legacy shadows */
   --shadow-glow-green: 0 8px 40px var(--green-glow);
+  --shadow-glow-coral: 0 8px 40px var(--coral-glow);
+  --shadow-glow-gold: 0 8px 40px var(--gold-glow);
+  --shadow-glow-purple: 0 8px 40px var(--purple-glow);
   --shadow-glow-blue: 0 8px 40px var(--blue-glow);
   --shadow-glow-teal: 0 8px 40px var(--teal-glow);
 
@@ -160,7 +145,7 @@ body {
   pointer-events: none;
 }
 
-/* Gentle gradient overlay - Purple Monochromatic with Accents */
+/* Gentle gradient overlay */
 body::before {
   content: '';
   position: fixed;
@@ -169,8 +154,8 @@ body::before {
   width: 100%;
   height: 100%;
   background:
-    radial-gradient(ellipse at 20% 30%, rgba(139, 92, 246, 0.08), transparent 55%),
-    radial-gradient(ellipse at 80% 70%, rgba(167, 139, 250, 0.06), transparent 55%),
+    radial-gradient(ellipse at 20% 30%, rgba(45, 216, 129, 0.06), transparent 55%),
+    radial-gradient(ellipse at 80% 70%, rgba(255, 133, 133, 0.04), transparent 55%),
     radial-gradient(ellipse at 50% 50%, rgba(247, 180, 44, 0.03), transparent 60%);
   z-index: -2;
   pointer-events: none;
@@ -240,8 +225,8 @@ body::before {
 }
 
 .nav-link.active {
-  color: var(--purple-primary);
-  background: var(--purple-subtle);
+  color: var(--green-primary);
+  background: var(--green-subtle);
 }
 
 .theme-toggle {
@@ -262,9 +247,9 @@ body::before {
 }
 
 .theme-toggle:hover {
-  background: var(--purple-subtle);
-  border-color: var(--purple-primary);
-  color: var(--purple-primary);
+  background: var(--green-subtle);
+  border-color: var(--green-primary);
+  color: var(--green-primary);
   transform: scale(1.05);
 }
 
@@ -281,7 +266,7 @@ body::before {
 .hamburger span {
   width: 26px;
   height: 3px;
-  background: linear-gradient(90deg, var(--purple-primary), var(--gold-primary), var(--coral-primary));
+  background: linear-gradient(90deg, var(--green-primary), var(--gold-primary), var(--coral-primary));
   border-radius: var(--radius-full);
   transition: all 0.3s var(--ease-smooth);
 }
@@ -375,19 +360,18 @@ body::before {
   display: block;
   background: linear-gradient(
     135deg,
-    var(--purple-light) 0%,
-    var(--purple-primary) 30%,
-    var(--gold-primary) 60%,
-    var(--coral-primary) 85%,
-    var(--purple-primary) 100%
+    var(--green-primary) 0%,
+    var(--gold-primary) 40%,
+    var(--coral-primary) 80%,
+    var(--green-primary) 100%
   );
   background-size: 300% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   animation: gradientShift 8s ease infinite;
-  /* Softer purple text glow */
-  filter: drop-shadow(0 0 60px rgba(139, 92, 246, 0.25));
+  /* Softer text glow */
+  filter: drop-shadow(0 0 60px rgba(45, 216, 129, 0.2));
 }
 
 @keyframes gradientShift {
@@ -518,18 +502,18 @@ body::before {
   margin-bottom: 1.5rem;
   background: linear-gradient(
     135deg,
-    var(--purple-light) 0%,
-    var(--purple-primary) 40%,
+    var(--green-primary) 0%,
+    var(--green-light) 40%,
     var(--gold-primary) 70%,
-    var(--purple-primary) 100%
+    var(--green-primary) 100%
   );
   background-size: 200% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   animation: gradientShift 8s ease infinite;
-  /* Softer purple glow */
-  filter: drop-shadow(0 0 40px rgba(139, 92, 246, 0.2));
+  /* Softer glow */
+  filter: drop-shadow(0 0 40px rgba(45, 216, 129, 0.15));
 }
 
 .page-hero-subtitle {
@@ -722,59 +706,40 @@ body::before {
   color: var(--coral-primary);
 }
 
-/* Purple Project Shades - Monochromatic Base */
-.project-purple-light .project-image-placeholder {
-  background: var(--purple-light);
-}
-
-.project-purple-light .project-label {
-  color: var(--purple-light);
-  background: rgba(167, 139, 250, 0.08);
-}
-
-.project-purple-light:hover {
-  border-color: var(--purple-light);
-  box-shadow: var(--shadow-glow-purple);
-}
-
-.project-purple-light .project-link {
-  color: var(--purple-light);
-}
-
-.project-purple-primary .project-image-placeholder {
+.project-purple .project-image-placeholder {
   background: var(--purple-primary);
 }
 
-.project-purple-primary .project-label {
+.project-purple .project-label {
   color: var(--purple-primary);
   background: var(--purple-subtle);
 }
 
-.project-purple-primary:hover {
+.project-purple:hover {
   border-color: var(--purple-primary);
   box-shadow: var(--shadow-glow-purple);
 }
 
-.project-purple-primary .project-link {
+.project-purple .project-link {
   color: var(--purple-primary);
 }
 
-.project-purple-medium .project-image-placeholder {
-  background: var(--purple-medium);
+.project-blue .project-image-placeholder {
+  background: var(--blue-primary);
 }
 
-.project-purple-medium .project-label {
-  color: var(--purple-medium);
-  background: rgba(124, 58, 237, 0.08);
+.project-blue .project-label {
+  color: var(--blue-primary);
+  background: var(--blue-subtle);
 }
 
-.project-purple-medium:hover {
-  border-color: var(--purple-medium);
-  box-shadow: var(--shadow-glow-purple-medium);
+.project-blue:hover {
+  border-color: var(--blue-primary);
+  box-shadow: var(--shadow-glow-blue);
 }
 
-.project-purple-medium .project-link {
-  color: var(--purple-medium);
+.project-blue .project-link {
+  color: var(--blue-primary);
 }
 
 @media (max-width: 768px) {
@@ -797,7 +762,7 @@ body::before {
   margin: 0 auto;
 }
 
-/* Section Title - Purple Monochromatic with Accents */
+/* Section Title */
 .tesoro-section-title {
   font-family: 'Outfit', 'Space Grotesk', sans-serif;
   font-size: var(--font-section);
@@ -805,7 +770,7 @@ body::before {
   text-align: center;
   margin-bottom: 5rem;
   letter-spacing: -0.03em;
-  background: linear-gradient(135deg, var(--purple-light) 0%, var(--purple-primary) 40%, var(--gold-primary) 70%, var(--coral-primary) 100%);
+  background: linear-gradient(135deg, var(--green-primary) 0%, var(--gold-primary) 50%, var(--coral-primary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -982,7 +947,7 @@ body::before {
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1.15;
-  background: linear-gradient(135deg, var(--purple-light) 0%, var(--purple-primary) 50%, var(--gold-primary) 100%);
+  background: linear-gradient(135deg, var(--green-primary) 0%, var(--gold-primary) 50%, var(--coral-primary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -999,7 +964,7 @@ body::before {
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  color: var(--purple-primary);
+  color: var(--green-primary);
   text-decoration: none;
   font-weight: 600;
   font-size: 1.1rem;
@@ -1016,7 +981,7 @@ body::before {
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--purple-primary);
+  background: var(--green-primary);
   border-radius: var(--radius-full);
   transition: width 0.3s var(--ease-smooth);
 }
@@ -1030,7 +995,7 @@ body::before {
 }
 
 .tesoro-link:hover {
-  color: var(--purple-light);
+  color: var(--green-light);
 }
 
 .tesoro-link:hover i {
@@ -1173,60 +1138,20 @@ body::before {
   line-height: 1.6;
 }
 
-/* Individual Skill Card Color Schemes - Purple Monochromatic Base */
-.tesoro-skill-card.skill-purple-lighter .skill-icon-wrapper {
-  background: var(--purple-lighter);
+/* Individual Skill Card Color Schemes */
+.tesoro-skill-card.skill-green .skill-icon-wrapper {
+  background: var(--green-primary);
 }
 
-.tesoro-skill-card.skill-purple-lighter::before {
-  background: var(--purple-lighter);
+.tesoro-skill-card.skill-green::before {
+  background: var(--green-primary);
 }
 
-.tesoro-skill-card.skill-purple-lighter:hover {
-  border-color: var(--purple-lighter);
-  box-shadow: var(--shadow-glow-purple-light);
+.tesoro-skill-card.skill-green:hover {
+  border-color: var(--green-primary);
+  box-shadow: var(--shadow-glow-green);
 }
 
-.tesoro-skill-card.skill-purple-light .skill-icon-wrapper {
-  background: var(--purple-light);
-}
-
-.tesoro-skill-card.skill-purple-light::before {
-  background: var(--purple-light);
-}
-
-.tesoro-skill-card.skill-purple-light:hover {
-  border-color: var(--purple-light);
-  box-shadow: var(--shadow-glow-purple);
-}
-
-.tesoro-skill-card.skill-purple-primary .skill-icon-wrapper {
-  background: var(--purple-primary);
-}
-
-.tesoro-skill-card.skill-purple-primary::before {
-  background: var(--purple-primary);
-}
-
-.tesoro-skill-card.skill-purple-primary:hover {
-  border-color: var(--purple-primary);
-  box-shadow: var(--shadow-glow-purple);
-}
-
-.tesoro-skill-card.skill-purple-medium .skill-icon-wrapper {
-  background: var(--purple-medium);
-}
-
-.tesoro-skill-card.skill-purple-medium::before {
-  background: var(--purple-medium);
-}
-
-.tesoro-skill-card.skill-purple-medium:hover {
-  border-color: var(--purple-medium);
-  box-shadow: var(--shadow-glow-purple-medium);
-}
-
-/* Accent Skill Cards - Gold & Coral */
 .tesoro-skill-card.skill-gold .skill-icon-wrapper {
   background: var(--gold-primary);
 }
@@ -1251,6 +1176,45 @@ body::before {
 .tesoro-skill-card.skill-coral:hover {
   border-color: var(--coral-primary);
   box-shadow: var(--shadow-glow-coral);
+}
+
+.tesoro-skill-card.skill-purple .skill-icon-wrapper {
+  background: var(--purple-primary);
+}
+
+.tesoro-skill-card.skill-purple::before {
+  background: var(--purple-primary);
+}
+
+.tesoro-skill-card.skill-purple:hover {
+  border-color: var(--purple-primary);
+  box-shadow: var(--shadow-glow-purple);
+}
+
+.tesoro-skill-card.skill-blue .skill-icon-wrapper {
+  background: var(--blue-primary);
+}
+
+.tesoro-skill-card.skill-blue::before {
+  background: var(--blue-primary);
+}
+
+.tesoro-skill-card.skill-blue:hover {
+  border-color: var(--blue-primary);
+  box-shadow: var(--shadow-glow-blue);
+}
+
+.tesoro-skill-card.skill-teal .skill-icon-wrapper {
+  background: var(--teal-primary);
+}
+
+.tesoro-skill-card.skill-teal::before {
+  background: var(--teal-primary);
+}
+
+.tesoro-skill-card.skill-teal:hover {
+  border-color: var(--teal-primary);
+  box-shadow: var(--shadow-glow-teal);
 }
 
 /* ===== FOOTER ===== */
@@ -1297,11 +1261,11 @@ body::before {
 }
 
 .footer-social-links a:hover {
-  color: var(--purple-primary);
+  color: var(--green-primary);
   transform: translateY(-3px) scale(1.05);
-  border-color: var(--purple-primary);
-  box-shadow: var(--shadow-glow-purple);
-  background: var(--purple-subtle);
+  border-color: var(--green-primary);
+  box-shadow: var(--shadow-glow-green);
+  background: var(--green-subtle);
 }
 
 /* ===== LEGACY SUPPORT ===== */
@@ -1745,45 +1709,44 @@ body::before {
   transition: color 0.3s var(--ease-smooth);
 }
 
-/* Individual Contact Item Colors - Purple Monochromatic Base */
-.contact-item.contact-purple-light i {
-  color: var(--purple-light);
+/* Individual Contact Item Colors */
+.contact-item.contact-green i {
+  color: var(--green-primary);
 }
 
-.contact-item.contact-purple-light:hover {
-  background: rgba(167, 139, 250, 0.08);
-  border-color: var(--purple-light);
+.contact-item.contact-green:hover {
+  background: var(--green-subtle);
+  border-color: var(--green-primary);
 }
 
-.contact-item.contact-purple-light:hover a {
-  color: var(--purple-light);
+.contact-item.contact-green:hover a {
+  color: var(--green-primary);
 }
 
-.contact-item.contact-purple-primary i {
-  color: var(--purple-primary);
+.contact-item.contact-blue i {
+  color: var(--blue-primary);
 }
 
-.contact-item.contact-purple-primary:hover {
-  background: var(--purple-subtle);
-  border-color: var(--purple-primary);
+.contact-item.contact-blue:hover {
+  background: var(--blue-subtle);
+  border-color: var(--blue-primary);
 }
 
-.contact-item.contact-purple-primary:hover a {
-  color: var(--purple-primary);
+.contact-item.contact-blue:hover a {
+  color: var(--blue-primary);
 }
 
-/* Accent Contact Items */
-.contact-item.contact-gold i {
-  color: var(--gold-primary);
+.contact-item.contact-coral i {
+  color: var(--coral-primary);
 }
 
-.contact-item.contact-gold:hover {
-  background: var(--gold-subtle);
-  border-color: var(--gold-primary);
+.contact-item.contact-coral:hover {
+  background: var(--coral-subtle);
+  border-color: var(--coral-primary);
 }
 
-.contact-item.contact-gold:hover span {
-  color: var(--gold-primary);
+.contact-item.contact-coral:hover span {
+  color: var(--coral-primary);
 }
 
 .contact-form {
@@ -1815,8 +1778,8 @@ body::before {
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: var(--purple-primary);
-  box-shadow: 0 0 0 4px var(--purple-subtle);
+  border-color: var(--green-primary);
+  box-shadow: 0 0 0 4px var(--green-subtle);
 }
 
 .form-group input::placeholder,
@@ -2046,18 +2009,18 @@ body::before {
   }
 }
 
-/* Soft focus styles for accessibility - Purple Theme */
+/* Soft focus styles for accessibility */
 a:focus,
 button:focus {
   outline: none;
-  box-shadow: 0 0 0 3px var(--purple-subtle), 0 0 0 5px var(--purple-primary);
+  box-shadow: 0 0 0 3px var(--green-subtle), 0 0 0 5px var(--green-primary);
   border-radius: var(--radius-sm);
 }
 
 a:focus-visible,
 button:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px var(--purple-subtle), 0 0 0 5px var(--purple-primary);
+  box-shadow: 0 0 0 3px var(--green-subtle), 0 0 0 5px var(--green-primary);
 }
 
 .visually-hidden {
