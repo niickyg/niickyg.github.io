@@ -23,21 +23,99 @@
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   camera.position.z = 5;
 
-  // Create the main 3D geometric shape - Torus Knot for maximum wow factor
-  const geometry = new THREE.TorusKnotGeometry(1.5, 0.4, 100, 16);
+  // Create a 3D Rocketship
+  const rocketGroup = new THREE.Group();
 
-  // Create a gradient-like material using vertex colors or shaders
-  const material = new THREE.MeshStandardMaterial({
-    color: 0x8B5CF6, // Purple primary
-    metalness: 0.7,
+  // Materials
+  const bodyMaterial = new THREE.MeshStandardMaterial({
+    color: 0xEEEEEE,
+    metalness: 0.8,
     roughness: 0.2,
     emissive: 0x8B5CF6,
-    emissiveIntensity: 0.3,
-    flatShading: false
+    emissiveIntensity: 0.1
   });
 
-  const torusKnot = new THREE.Mesh(geometry, material);
-  scene.add(torusKnot);
+  const noseMaterial = new THREE.MeshStandardMaterial({
+    color: 0x8B5CF6,
+    metalness: 0.9,
+    roughness: 0.1,
+    emissive: 0x8B5CF6,
+    emissiveIntensity: 0.4
+  });
+
+  const finMaterial = new THREE.MeshStandardMaterial({
+    color: 0xF7B42C,
+    metalness: 0.7,
+    roughness: 0.3,
+    emissive: 0xF7B42C,
+    emissiveIntensity: 0.2
+  });
+
+  const windowMaterial = new THREE.MeshStandardMaterial({
+    color: 0x60A5FA,
+    metalness: 0.1,
+    roughness: 0.1,
+    emissive: 0x60A5FA,
+    emissiveIntensity: 0.6,
+    transparent: true,
+    opacity: 0.9
+  });
+
+  // Main body (cylinder)
+  const bodyGeometry = new THREE.CylinderGeometry(0.4, 0.4, 2.5, 32);
+  const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+  body.position.y = 0;
+  rocketGroup.add(body);
+
+  // Nose cone (cone)
+  const noseGeometry = new THREE.ConeGeometry(0.4, 1, 32);
+  const nose = new THREE.Mesh(noseGeometry, noseMaterial);
+  nose.position.y = 1.75;
+  rocketGroup.add(nose);
+
+  // Windows (spheres)
+  const windowGeometry = new THREE.SphereGeometry(0.15, 32, 32);
+  for (let i = 0; i < 3; i++) {
+    const window = new THREE.Mesh(windowGeometry, windowMaterial);
+    window.position.y = 0.6 - (i * 0.6);
+    window.position.z = 0.42;
+    rocketGroup.add(window);
+  }
+
+  // Fins (4 triangular fins)
+  const finGeometry = new THREE.ConeGeometry(0.3, 0.8, 3);
+  const finPositions = [
+    { x: 0.5, z: 0, rotation: Math.PI / 2 },
+    { x: -0.5, z: 0, rotation: -Math.PI / 2 },
+    { x: 0, z: 0.5, rotation: 0 },
+    { x: 0, z: -0.5, rotation: Math.PI }
+  ];
+
+  finPositions.forEach(pos => {
+    const fin = new THREE.Mesh(finGeometry, finMaterial);
+    fin.position.set(pos.x, -1, pos.z);
+    fin.rotation.z = pos.rotation;
+    rocketGroup.add(fin);
+  });
+
+  // Engine glow (bottom cone)
+  const engineGeometry = new THREE.ConeGeometry(0.35, 0.5, 32);
+  const engineMaterial = new THREE.MeshStandardMaterial({
+    color: 0xFF8585,
+    emissive: 0xFF8585,
+    emissiveIntensity: 0.8,
+    transparent: true,
+    opacity: 0.8
+  });
+  const engine = new THREE.Mesh(engineGeometry, engineMaterial);
+  engine.position.y = -1.5;
+  engine.rotation.x = Math.PI;
+  rocketGroup.add(engine);
+
+  // Scale and position the rocket
+  rocketGroup.scale.set(1.5, 1.5, 1.5);
+  rocketGroup.rotation.x = -0.3; // Tilt it slightly
+  scene.add(rocketGroup);
 
   // Add particles for extra wow factor
   const particlesGeometry = new THREE.BufferGeometry();
@@ -116,23 +194,22 @@
 
     if (!heroVisible) return;
 
-    // Rotate the torus knot
-    torusKnot.rotation.x += 0.003;
-    torusKnot.rotation.y += 0.005;
+    // Gentle rotation of the rocket
+    rocketGroup.rotation.y += 0.005;
 
     // Add mouse interaction - smooth following
-    targetRotationX = mouseY * 0.3;
+    targetRotationX = mouseY * 0.2;
     targetRotationY = mouseX * 0.3;
 
-    torusKnot.rotation.x += (targetRotationX - torusKnot.rotation.x) * 0.05;
-    torusKnot.rotation.y += (targetRotationY - torusKnot.rotation.y) * 0.05;
+    // Smooth mouse following
+    rocketGroup.rotation.x += (targetRotationX - 0.3 - rocketGroup.rotation.x) * 0.05;
+    rocketGroup.rotation.y += (targetRotationY - rocketGroup.rotation.y) * 0.05;
 
     // Animate particles
     particlesMesh.rotation.y += 0.0005;
 
-    // Pulsing effect on the shape
-    const scale = 1 + Math.sin(Date.now() * 0.001) * 0.05;
-    torusKnot.scale.set(scale, scale, scale);
+    // Gentle floating effect on the rocket
+    rocketGroup.position.y = Math.sin(Date.now() * 0.001) * 0.2;
 
     // Slowly move lights for dynamic lighting
     pointLight1.position.x = Math.sin(Date.now() * 0.001) * 3;
