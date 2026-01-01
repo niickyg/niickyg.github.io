@@ -82,19 +82,27 @@
     rocketGroup.add(window);
   }
 
-  // Fins (4 triangular fins)
-  const finGeometry = new THREE.ConeGeometry(0.3, 0.8, 3);
-  const finPositions = [
-    { x: 0.5, z: 0, rotation: Math.PI / 2 },
-    { x: -0.5, z: 0, rotation: -Math.PI / 2 },
-    { x: 0, z: 0.5, rotation: 0 },
-    { x: 0, z: -0.5, rotation: Math.PI }
-  ];
+  // Fins (4 triangular fins) - flat triangle shapes
+  const finShape = new THREE.Shape();
+  finShape.moveTo(0, 0);
+  finShape.lineTo(0.4, -0.8);
+  finShape.lineTo(0, -0.6);
+  finShape.lineTo(0, 0);
 
-  finPositions.forEach(pos => {
+  const finGeometry = new THREE.ExtrudeGeometry(finShape, {
+    depth: 0.05,
+    bevelEnabled: false
+  });
+
+  const finAngles = [0, Math.PI / 2, Math.PI, Math.PI * 1.5];
+
+  finAngles.forEach(angle => {
     const fin = new THREE.Mesh(finGeometry, finMaterial);
-    fin.position.set(pos.x, -1.5, pos.z);
-    fin.rotation.z = pos.rotation;
+    fin.position.y = -0.7;
+    fin.rotation.y = angle;
+    // Position fin at edge of rocket body
+    fin.position.x = Math.cos(angle) * 0.5;
+    fin.position.z = Math.sin(angle) * 0.5;
     rocketGroup.add(fin);
   });
 
