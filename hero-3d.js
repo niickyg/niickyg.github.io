@@ -156,7 +156,7 @@
 
   // Scale and position the rocket
   rocketGroup.scale.set(1.5, 1.5, 1.5);
-  rocketGroup.rotation.x = -Math.PI / 4; // Tilt 45 degrees
+  rocketGroup.rotation.z = -Math.PI / 4; // Tilt 45 degrees to the right
   scene.add(rocketGroup);
 
   // Store flames for animation
@@ -254,7 +254,7 @@
     targetRotationY = mouseX * 0.3;
 
     // Smooth mouse following
-    rocketGroup.rotation.x += (targetRotationX - Math.PI / 4 - rocketGroup.rotation.x) * 0.05;
+    rocketGroup.rotation.x += (targetRotationX - rocketGroup.rotation.x) * 0.05;
     rocketGroup.rotation.y += (targetRotationY - rocketGroup.rotation.y) * 0.05;
 
     // Animate particles
