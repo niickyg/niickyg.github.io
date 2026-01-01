@@ -61,16 +61,27 @@
     opacity: 0.9
   });
 
-  // Main body (cylinder)
-  const bodyGeometry = new THREE.CylinderGeometry(0.4, 0.4, 2.5, 32);
+  // Main body - rounded capsule shape (sphere + cylinder)
+  const topSphereGeometry = new THREE.SphereGeometry(0.5, 32, 32, 0, Math.PI * 2, 0, Math.PI / 2);
+  const topSphere = new THREE.Mesh(topSphereGeometry, bodyMaterial);
+  topSphere.position.y = 0.8;
+  rocketGroup.add(topSphere);
+
+  const bodyGeometry = new THREE.CylinderGeometry(0.5, 0.5, 1.6, 32);
   const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
   body.position.y = 0;
   rocketGroup.add(body);
 
-  // Nose cone (cone)
-  const noseGeometry = new THREE.ConeGeometry(0.4, 1, 32);
+  const bottomSphereGeometry = new THREE.SphereGeometry(0.5, 32, 32, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2);
+  const bottomSphere = new THREE.Mesh(bottomSphereGeometry, bodyMaterial);
+  bottomSphere.position.y = -0.8;
+  rocketGroup.add(bottomSphere);
+
+  // Nose cone - more rounded
+  const noseGeometry = new THREE.SphereGeometry(0.35, 32, 32);
   const nose = new THREE.Mesh(noseGeometry, noseMaterial);
-  nose.position.y = 1.75;
+  nose.position.y = 1.5;
+  nose.scale.set(1, 1.3, 1); // Slightly elongated
   rocketGroup.add(nose);
 
   // Windows (spheres)
@@ -98,24 +109,68 @@
     rocketGroup.add(fin);
   });
 
-  // Engine glow (bottom cone)
-  const engineGeometry = new THREE.ConeGeometry(0.35, 0.5, 32);
-  const engineMaterial = new THREE.MeshStandardMaterial({
-    color: 0xFF8585,
-    emissive: 0xFF8585,
-    emissiveIntensity: 0.8,
-    transparent: true,
-    opacity: 0.8
+  // Engine boosters - pointing DOWN with flame effect
+  const boosterPositions = [
+    { x: 0.3, z: 0.3 },
+    { x: -0.3, z: 0.3 },
+    { x: 0.3, z: -0.3 },
+    { x: -0.3, z: -0.3 }
+  ];
+
+  boosterPositions.forEach(pos => {
+    // Booster nozzle
+    const nozzleGeometry = new THREE.CylinderGeometry(0.12, 0.15, 0.3, 16);
+    const nozzleMaterial = new THREE.MeshStandardMaterial({
+      color: 0x333333,
+      metalness: 0.9,
+      roughness: 0.2
+    });
+    const nozzle = new THREE.Mesh(nozzleGeometry, nozzleMaterial);
+    nozzle.position.set(pos.x, -1.0, pos.z);
+    rocketGroup.add(nozzle);
+
+    // Flame/thrust - pointing DOWN
+    const flameGeometry = new THREE.ConeGeometry(0.15, 0.8, 16);
+    const flameMaterial = new THREE.MeshStandardMaterial({
+      color: 0xFF8585,
+      emissive: 0xFF8585,
+      emissiveIntensity: 1.2,
+      transparent: true,
+      opacity: 0.85
+    });
+    const flame = new THREE.Mesh(flameGeometry, flameMaterial);
+    flame.position.set(pos.x, -1.6, pos.z);
+    // NO rotation - cone points up by default, so position it below
+    rocketGroup.add(flame);
+
+    // Inner flame glow (brighter)
+    const innerFlameGeometry = new THREE.ConeGeometry(0.08, 0.6, 16);
+    const innerFlameMaterial = new THREE.MeshStandardMaterial({
+      color: 0xFFFFAA,
+      emissive: 0xFFFFAA,
+      emissiveIntensity: 1.5,
+      transparent: true,
+      opacity: 0.9
+    });
+    const innerFlame = new THREE.Mesh(innerFlameGeometry, innerFlameMaterial);
+    innerFlame.position.set(pos.x, -1.5, pos.z);
+    rocketGroup.add(innerFlame);
   });
-  const engine = new THREE.Mesh(engineGeometry, engineMaterial);
-  engine.position.y = -1.5;
-  engine.rotation.x = Math.PI;
-  rocketGroup.add(engine);
 
   // Scale and position the rocket
   rocketGroup.scale.set(1.5, 1.5, 1.5);
   rocketGroup.rotation.x = -0.3; // Tilt it slightly
   scene.add(rocketGroup);
+
+  // Store flames for animation
+  const flames = [];
+  rocketGroup.children.forEach(child => {
+    if (child.material && child.material.emissive &&
+        (child.material.emissive.getHex() === 0xFF8585 ||
+         child.material.emissive.getHex() === 0xFFFFAA)) {
+      flames.push(child);
+    }
+  });
 
   // Add particles for extra wow factor
   const particlesGeometry = new THREE.BufferGeometry();
@@ -217,6 +272,15 @@
 
     pointLight2.position.x = Math.cos(Date.now() * 0.0007) * 3;
     pointLight2.position.z = Math.sin(Date.now() * 0.0007) * 3;
+
+    // Animate flames - pulsing effect for realistic thrust
+    flames.forEach((flame, index) => {
+      const pulse = Math.sin(Date.now() * 0.01 + index) * 0.15 + 1;
+      flame.scale.y = pulse;
+      if (flame.material.opacity !== undefined) {
+        flame.material.opacity = 0.7 + (pulse - 1) * 0.5;
+      }
+    });
 
     renderer.render(scene, camera);
   }
