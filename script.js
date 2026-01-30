@@ -87,14 +87,16 @@ class SplashScreen {
       this.splashScreen.classList.add('hidden');
     }
 
-    // Show main content after splash fades
+    // Show main content after splash fades (500ms matches CSS transition)
     setTimeout(() => {
       if (this.mainContent) {
         this.mainContent.classList.remove('hidden');
       }
       // Trigger scroll reveal for visible sections
-      revealSections();
-    }, 300);
+      if (typeof revealSections === 'function') {
+        revealSections();
+      }
+    }, 500);
   }
 }
 
@@ -189,6 +191,7 @@ const themeManager = new ThemeManager();
 // Navbar scroll effect
 window.addEventListener('scroll', () => {
   const navbar = document.querySelector('.navbar');
+  if (!navbar) return;
   if (window.scrollY > 50) {
     navbar.classList.add('scrolled');
   } else {
@@ -235,21 +238,6 @@ if (hamburger && navMenu) {
   });
 }
 
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      const offsetTop = target.offsetTop - 70;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: 'smooth'
-      });
-    }
-  });
-});
-
 // Blog modal functionality
 const blogModal = document.getElementById('blogModal');
 const blogModalBody = document.getElementById('blogModalBody');
@@ -271,7 +259,7 @@ document.querySelectorAll('.read-more').forEach(link => {
 });
 
 // Close blog modal
-if (blogModalClose) {
+if (blogModalClose && blogModal) {
   blogModalClose.addEventListener('click', () => {
     blogModal.style.display = 'none';
     document.body.style.overflow = 'auto';
@@ -288,7 +276,7 @@ window.addEventListener('click', (e) => {
 
 // Close modal with Escape key
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && blogModal.style.display === 'block') {
+  if (blogModal && e.key === 'Escape' && blogModal.style.display === 'block') {
     blogModal.style.display = 'none';
     document.body.style.overflow = 'auto';
   }
@@ -850,13 +838,10 @@ let isMagnetic = false;
 // Track all interactive elements
 const magneticElements = [];
 
-// Skip custom cursor setup if enhanced effects are disabled
-if (!ENHANCED_EFFECTS) {
-  // Empty functions to prevent errors
-  function initMagneticElements() {}
-  function updateMagneticPositions() {}
-  function animateCursor() {}
-}
+// Declare functions at module level (will be replaced if enhanced effects are on)
+let initMagneticElements = function() {};
+let updateMagneticPositions = function() {};
+let animateCursor = function() {};
 
 function initMagneticElementsReal() {
   if (!ENHANCED_EFFECTS || !cursor) return;

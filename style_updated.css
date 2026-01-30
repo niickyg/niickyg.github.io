@@ -178,6 +178,16 @@ body::before {
   background: rgba(253, 248, 243, 0.85);
 }
 
+.navbar.scrolled {
+  background: rgba(26, 26, 26, 0.95);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .navbar.scrolled {
+  background: rgba(253, 248, 243, 0.95);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
 .nav-container {
   max-width: 1400px;
   margin: 0 auto;
@@ -602,6 +612,7 @@ body::before {
 .tesoro-section {
   padding: var(--section-padding) 2rem;
   position: relative;
+  scroll-margin-top: 100px; /* Account for fixed navbar */
 }
 
 /* Projects Grid Layout */
@@ -2089,6 +2100,16 @@ body::before {
   pointer-events: none;
 }
 
+/* Immediately hide splash if already dismissed (set by inline script) */
+html.splash-dismissed .splash-screen {
+  display: none !important;
+}
+
+html.splash-dismissed .main-content {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
 .splash-content {
   text-align: center;
   display: flex;
@@ -2166,6 +2187,7 @@ body::before {
 
 .main-content.hidden {
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
 }
 
