@@ -1,8 +1,105 @@
 // Set current year in footer
-document.getElementById('year').textContent = new Date().getFullYear();
+const yearEl = document.getElementById('year');
+if (yearEl) {
+  yearEl.textContent = new Date().getFullYear();
+}
 
 // Detect reduced motion preference for accessibility
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ===== ENHANCED EFFECTS FLAG =====
+// Set to false to disable heavy visual effects (custom cursor, particle trails, liquid canvas, morphing blobs)
+const ENHANCED_EFFECTS = false;
+
+// ===== SPLASH SCREEN HANDLER =====
+class SplashScreen {
+  constructor() {
+    this.splashScreen = document.getElementById('splash-screen');
+    this.mainContent = document.getElementById('main-content');
+    this.enterBtn = document.getElementById('splash-enter-btn');
+    this.sessionKey = 'splashDismissed';
+
+    this.init();
+  }
+
+  init() {
+    // Check if splash was already dismissed this session
+    if (sessionStorage.getItem(this.sessionKey)) {
+      this.skipSplash();
+      return;
+    }
+
+    // Show splash and set up listeners
+    this.showSplash();
+    this.setupListeners();
+  }
+
+  showSplash() {
+    if (this.splashScreen) {
+      this.splashScreen.classList.remove('hidden');
+    }
+    if (this.mainContent) {
+      this.mainContent.classList.add('hidden');
+    }
+  }
+
+  skipSplash() {
+    // Immediately hide splash and show content (no animation)
+    if (this.splashScreen) {
+      this.splashScreen.style.display = 'none';
+      this.splashScreen.classList.add('hidden');
+    }
+    if (this.mainContent) {
+      this.mainContent.classList.remove('hidden');
+    }
+  }
+
+  setupListeners() {
+    // Click button to enter
+    if (this.enterBtn) {
+      this.enterBtn.addEventListener('click', () => this.dismissSplash());
+    }
+
+    // Press Enter or Space to enter
+    document.addEventListener('keydown', (e) => {
+      if ((e.key === 'Enter' || e.key === ' ') && !this.splashScreen.classList.contains('hidden')) {
+        e.preventDefault();
+        this.dismissSplash();
+      }
+    });
+
+    // Click anywhere on splash to enter
+    if (this.splashScreen) {
+      this.splashScreen.addEventListener('click', (e) => {
+        if (e.target === this.splashScreen || e.target.closest('.splash-content')) {
+          this.dismissSplash();
+        }
+      });
+    }
+  }
+
+  dismissSplash() {
+    // Store in session so it doesn't show again during this visit
+    sessionStorage.setItem(this.sessionKey, 'true');
+
+    // Animate out
+    if (this.splashScreen) {
+      this.splashScreen.classList.add('hidden');
+    }
+
+    // Show main content after splash fades
+    setTimeout(() => {
+      if (this.mainContent) {
+        this.mainContent.classList.remove('hidden');
+      }
+      // Trigger scroll reveal for visible sections
+      revealSections();
+    }, 300);
+  }
+}
+
+// Initialize splash screen
+const splashScreen = new SplashScreen();
 
 // ===== THEME MANAGER (2025) =====
 class ThemeManager {
@@ -123,18 +220,20 @@ document.addEventListener('DOMContentLoaded', revealSections);
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
-hamburger.addEventListener('click', () => {
-  navMenu.classList.toggle('active');
-  hamburger.classList.toggle('active');
-});
-
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', () => {
-    navMenu.classList.remove('active');
-    hamburger.classList.remove('active');
+if (hamburger && navMenu) {
+  hamburger.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+    hamburger.classList.toggle('active');
   });
-});
+
+  // Close mobile menu when clicking on a link
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu.classList.remove('active');
+      hamburger.classList.remove('active');
+    });
+  });
+}
 
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -201,8 +300,8 @@ document.addEventListener('keydown', (e) => {
 let particles = [];
 const colors = ['#00D26A', '#4AE88C', '#7C3AED', '#A78BFA', '#00A855', '#5B21B6', '#F59E0B', '#EF4444'];
 
-// Only enable mouse trail if reduced motion is not preferred
-if (!prefersReducedMotion) {
+// Only enable mouse trail if reduced motion is not preferred AND enhanced effects are on
+if (!prefersReducedMotion && ENHANCED_EFFECTS) {
   document.addEventListener('mousemove', (e) => {
     if (Math.random() > 0.85) {
       createParticle(e.clientX, e.clientY);
@@ -291,15 +390,17 @@ function activateMatrixMode() {
 let logoClicks = 0;
 const navLogo = document.querySelector('.nav-logo');
 
-navLogo.addEventListener('click', (e) => {
-  e.preventDefault();
-  logoClicks++;
+if (navLogo) {
+  navLogo.addEventListener('click', (e) => {
+    e.preventDefault();
+    logoClicks++;
 
-  if (logoClicks === 5) {
-    showSecretMessage();
-    logoClicks = 0;
-  }
-});
+    if (logoClicks === 5) {
+      showSecretMessage();
+      logoClicks = 0;
+    }
+  });
+}
 
 function showSecretMessage() {
   const messages = [
@@ -575,6 +676,7 @@ style.textContent = `
 document.head.appendChild(style);
 
 // ===== ADVANCED FLUID SIMULATION =====
+// Only runs when ENHANCED_EFFECTS is true
 
 const canvas = document.getElementById('liquid-canvas');
 
@@ -584,6 +686,7 @@ let mouseX = 0, mouseY = 0;
 let time = 0;
 
 function resizeCanvas() {
+  if (!canvas) return;
   width = canvas.width = window.innerWidth;
   height = canvas.height = window.innerHeight;
 }
@@ -661,6 +764,7 @@ class FluidParticle {
 
 // Initialize particles
 function initFluid() {
+  if (!canvas || !ENHANCED_EFFECTS) return;
   fluidParticles = [];
   const count = Math.min(20, Math.floor(width * height / 50000)); // Adaptive count
   for (let i = 0; i < count; i++) {
@@ -670,6 +774,7 @@ function initFluid() {
 
 // Animation loop
 function animateFluid() {
+  if (!canvas || !ENHANCED_EFFECTS) return;
   const ctx = canvas.getContext('2d');
 
   // Fade effect for trails - Tesoro dark base
@@ -721,17 +826,20 @@ document.addEventListener('mousemove', (e) => {
   mouseY = e.clientY;
 });
 
-// Initialize
-resizeCanvas();
-initFluid();
-animateFluid();
-
-window.addEventListener('resize', () => {
+// Initialize fluid simulation only if canvas exists and enhanced effects are enabled
+if (canvas && ENHANCED_EFFECTS) {
   resizeCanvas();
   initFluid();
-});
+  animateFluid();
+
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    initFluid();
+  });
+}
 
 // ===== MAGNETIC MORPHING CURSOR =====
+// Only runs when ENHANCED_EFFECTS is true
 
 let cursor = null; // Will be set after DOM loads
 let cursorX = 0, cursorY = 0;
@@ -742,7 +850,17 @@ let isMagnetic = false;
 // Track all interactive elements
 const magneticElements = [];
 
-function initMagneticElements() {
+// Skip custom cursor setup if enhanced effects are disabled
+if (!ENHANCED_EFFECTS) {
+  // Empty functions to prevent errors
+  function initMagneticElements() {}
+  function updateMagneticPositions() {}
+  function animateCursor() {}
+}
+
+function initMagneticElementsReal() {
+  if (!ENHANCED_EFFECTS || !cursor) return;
+
   const selectors = 'a, button, .project-card, .skill-card, .blog-card, .homelab-card, .nav-link, .btn';
   document.querySelectorAll(selectors).forEach(el => {
     magneticElements.push({
@@ -752,78 +870,97 @@ function initMagneticElements() {
 
     // Grow cursor on hover - Tesoro colors
     el.addEventListener('mouseenter', () => {
+      if (!cursor) return;
       cursor.style.width = '120px';
       cursor.style.height = '120px';
-      cursor.querySelector('.cursor-inner').style.background = `radial-gradient(circle,
-        rgba(124, 58, 237, 0.9) 0%,
-        rgba(167, 139, 250, 0.7) 40%,
-        transparent 70%)`;
+      const cursorInner = cursor.querySelector('.cursor-inner');
+      if (cursorInner) {
+        cursorInner.style.background = `radial-gradient(circle,
+          rgba(124, 58, 237, 0.9) 0%,
+          rgba(167, 139, 250, 0.7) 40%,
+          transparent 70%)`;
+      }
     });
 
     el.addEventListener('mouseleave', () => {
+      if (!cursor) return;
       cursor.style.width = '60px';
       cursor.style.height = '60px';
-      cursor.querySelector('.cursor-inner').style.background = `radial-gradient(circle,
-        rgba(0, 210, 106, 0.8) 0%,
-        rgba(74, 232, 140, 0.6) 40%,
-        transparent 70%)`;
+      const cursorInner = cursor.querySelector('.cursor-inner');
+      if (cursorInner) {
+        cursorInner.style.background = `radial-gradient(circle,
+          rgba(0, 210, 106, 0.8) 0%,
+          rgba(74, 232, 140, 0.6) 40%,
+          transparent 70%)`;
+      }
     });
   });
 }
 
+// Alias for the real function when enhanced effects are on
+if (ENHANCED_EFFECTS) {
+  initMagneticElements = initMagneticElementsReal;
+}
+
 // Update magnetic element positions on scroll/resize
-function updateMagneticPositions() {
+function updateMagneticPositionsReal() {
+  if (!ENHANCED_EFFECTS) return;
   magneticElements.forEach(item => {
     item.rect = item.element.getBoundingClientRect();
   });
 }
 
-window.addEventListener('scroll', updateMagneticPositions);
-window.addEventListener('resize', () => {
-  updateMagneticPositions();
-  initMagneticElements();
-});
+if (ENHANCED_EFFECTS) {
+  updateMagneticPositions = updateMagneticPositionsReal;
+  window.addEventListener('scroll', updateMagneticPositions);
+  window.addEventListener('resize', () => {
+    updateMagneticPositions();
+    if (typeof initMagneticElements === 'function') initMagneticElements();
+  });
+}
 
-document.addEventListener('mousemove', (e) => {
-  cursorX = e.clientX;
-  cursorY = e.clientY;
+if (ENHANCED_EFFECTS) {
+  document.addEventListener('mousemove', (e) => {
+    cursorX = e.clientX;
+    cursorY = e.clientY;
 
-  // Check for magnetic attraction
-  let closestDistance = Infinity;
-  let closestElement = null;
+    // Check for magnetic attraction
+    let closestDistance = Infinity;
+    let closestElement = null;
 
-  magneticElements.forEach(item => {
-    const rect = item.rect;
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
+    magneticElements.forEach(item => {
+      const rect = item.rect;
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
 
-    const dx = cursorX - centerX;
-    const dy = cursorY - centerY;
-    const distance = Math.sqrt(dx * dx + dy * dy);
+      const dx = cursorX - centerX;
+      const dy = cursorY - centerY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
 
-    const magneticRadius = Math.max(rect.width, rect.height) * 0.8;
+      const magneticRadius = Math.max(rect.width, rect.height) * 0.8;
 
-    if (distance < magneticRadius && distance < closestDistance) {
-      closestDistance = distance;
-      closestElement = { centerX, centerY, distance, magneticRadius };
+      if (distance < magneticRadius && distance < closestDistance) {
+        closestDistance = distance;
+        closestElement = { centerX, centerY, distance, magneticRadius };
+      }
+    });
+
+    if (closestElement) {
+      isMagnetic = true;
+      const strength = 1 - (closestElement.distance / closestElement.magneticRadius);
+      const pullX = (closestElement.centerX - cursorX) * strength * 0.3;
+      const pullY = (closestElement.centerY - cursorY) * strength * 0.3;
+
+      cursorX += pullX;
+      cursorY += pullY;
+    } else {
+      isMagnetic = false;
     }
   });
+}
 
-  if (closestElement) {
-    isMagnetic = true;
-    const strength = 1 - (closestElement.distance / closestElement.magneticRadius);
-    const pullX = (closestElement.centerX - cursorX) * strength * 0.3;
-    const pullY = (closestElement.centerY - cursorY) * strength * 0.3;
-
-    cursorX += pullX;
-    cursorY += pullY;
-  } else {
-    isMagnetic = false;
-  }
-});
-
-function animateCursor() {
-  if (!cursor) return; // Safety check
+function animateCursorReal() {
+  if (!cursor || !ENHANCED_EFFECTS) return; // Safety check
 
   // Smooth magnetic follow
   const smoothing = isMagnetic ? 0.2 : 0.15;
@@ -833,21 +970,26 @@ function animateCursor() {
   cursor.style.left = currentX - 30 + 'px';
   cursor.style.top = currentY - 30 + 'px';
 
-  requestAnimationFrame(animateCursor);
+  requestAnimationFrame(animateCursorReal);
 }
 
-// Initialize after DOM loaded
+if (ENHANCED_EFFECTS) {
+  animateCursor = animateCursorReal;
+}
+
+// Initialize custom cursor after DOM loaded (only if enhanced effects enabled)
 document.addEventListener('DOMContentLoaded', () => {
+  if (!ENHANCED_EFFECTS) return;
+
   cursor = document.querySelector('.custom-cursor');
 
   if (!cursor) {
-    console.error('Cursor element not found in DOM!');
+    // Custom cursor element doesn't exist, which is fine when enhanced effects are off
     return;
   }
 
-  console.log('Cursor element found:', cursor);
-  initMagneticElements();
-  animateCursor();
+  if (typeof initMagneticElements === 'function') initMagneticElements();
+  if (typeof animateCursor === 'function') animateCursor();
 });
 
 // ===== KINETIC SPLIT-TEXT TYPOGRAPHY =====

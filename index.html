@@ -12,13 +12,475 @@
   <!-- GSAP with ScrollTrigger -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <!-- Three.js for 3D Graphics -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-  <!-- Centered Logo -->
-  <div style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #1a1a1a;">
-    <img src="logo.svg" alt="Nicholas Guerriero" style="width: 400px; height: auto; filter: drop-shadow(0 4px 20px rgba(139, 92, 246, 0.4));">
+  <!-- ===== SPLASH SCREEN ===== -->
+  <div id="splash-screen" class="splash-screen">
+    <div class="splash-content">
+      <img src="logo.svg" alt="Nicholas Guerriero" class="splash-logo">
+      <button class="splash-enter-btn" id="splash-enter-btn">
+        <span>Click to Enter</span>
+        <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== MAIN CONTENT (Hidden until splash dismissed) ===== -->
+  <div id="main-content" class="main-content hidden">
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="#" class="nav-logo">
+          <img src="logo.svg" alt="NG" class="logo-image">
+        </a>
+        <ul class="nav-menu">
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#experience" class="nav-link">Experience</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#blog" class="nav-link">Blog</a></li>
+          <li>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+              <i class="fas fa-sun" id="theme-icon"></i>
+            </button>
+          </li>
+        </ul>
+        <button class="hamburger" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ===== ABOUT ME SECTION ===== -->
+    <section id="about" class="tesoro-section about-section">
+      <div class="tesoro-container">
+        <h2 class="tesoro-section-title">About Me</h2>
+        <div class="about-content-grid">
+          <div class="about-image-col">
+            <div class="geometric-image-wrapper about-image">
+              <div class="geometric-image-placeholder">
+                <i class="fas fa-user"></i>
+              </div>
+            </div>
+          </div>
+          <div class="about-text-col">
+            <h3 class="about-name">Nicholas Guerriero</h3>
+            <p class="about-role">Entrepreneur & Technology Enthusiast</p>
+            <p class="about-bio">
+              I'm the founder and owner of <strong>Mountain West Surface</strong>, a commercial cleaning company
+              serving the greater Denver area. My passion for technology drives me to continuously explore
+              automation, AI solutions, and innovative systems that can transform business operations.
+            </p>
+            <p class="about-bio">
+              When I'm not running the business, you'll find me building trading bots, experimenting with
+              cryptocurrency mining setups, or tinkering with my homelab infrastructure. I believe in the
+              power of combining hands-on business experience with cutting-edge tech solutions.
+            </p>
+            <div class="about-quick-facts">
+              <div class="quick-fact">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Denver, Colorado</span>
+              </div>
+              <div class="quick-fact">
+                <i class="fas fa-briefcase"></i>
+                <span>Business Owner</span>
+              </div>
+              <div class="quick-fact">
+                <i class="fas fa-code"></i>
+                <span>Tech & Automation</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== WORK EXPERIENCE TIMELINE ===== -->
+    <section id="experience" class="tesoro-section tesoro-section-alt experience-section">
+      <div class="tesoro-container">
+        <h2 class="tesoro-section-title">Work Experience</h2>
+        <div class="timeline">
+          <!-- Mountain West Surface -->
+          <div class="timeline-item featured">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">2023 - Present</div>
+              <h3 class="timeline-title">Owner & Founder</h3>
+              <h4 class="timeline-company">Mountain West Surface</h4>
+              <p class="timeline-description">
+                Founded and grew a commercial cleaning company serving businesses throughout the Denver metro area.
+                Responsible for all aspects of operations including client acquisition, team management,
+                quality control, and strategic growth initiatives.
+              </p>
+              <ul class="timeline-highlights">
+                <li>Built company from ground up to profitable operation</li>
+                <li>Developed client relationships with commercial properties</li>
+                <li>Implemented efficient scheduling and quality systems</li>
+                <li>Focused on sustainable and eco-friendly cleaning practices</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Ski Butlers -->
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">2021 - 2023</div>
+              <h3 class="timeline-title">Team Lead</h3>
+              <h4 class="timeline-company">Ski Butlers</h4>
+              <p class="timeline-description">
+                Led a team providing premium ski rental delivery services to clients at mountain resorts.
+                Managed logistics, customer experience, and team coordination in a fast-paced environment.
+              </p>
+              <ul class="timeline-highlights">
+                <li>Supervised team of delivery specialists</li>
+                <li>Ensured exceptional customer service standards</li>
+                <li>Coordinated equipment logistics and inventory</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PROJECTS SECTION ===== -->
+    <section id="projects" class="tesoro-section projects-section">
+      <div class="tesoro-container">
+        <h2 class="tesoro-section-title">Projects</h2>
+        <div class="projects-grid">
+
+          <!-- Cryptocurrency Mining -->
+          <div class="project-card project-gold">
+            <div class="project-image-wrapper">
+              <div class="project-image-placeholder">
+                <i class="fab fa-bitcoin"></i>
+              </div>
+            </div>
+            <div class="project-content">
+              <span class="project-label">Hardware & Blockchain</span>
+              <h3>Cryptocurrency Mining Operation</h3>
+              <p>
+                Built and maintain a personal cryptocurrency mining setup. Involves hardware selection,
+                thermal management, network configuration, and monitoring profitability across different
+                coins and mining pools.
+              </p>
+              <div class="project-tags">
+                <span class="tag">GPU Mining</span>
+                <span class="tag">Blockchain</span>
+                <span class="tag">Infrastructure</span>
+                <span class="tag">Monitoring</span>
+              </div>
+              <span class="project-link project-link-disabled">
+                <span>Private Project</span>
+                <i class="fas fa-lock"></i>
+              </span>
+            </div>
+          </div>
+
+          <!-- Call Automation System -->
+          <div class="project-card project-green">
+            <div class="project-image-wrapper">
+              <div class="project-image-placeholder">
+                <i class="fas fa-phone-alt"></i>
+              </div>
+            </div>
+            <div class="project-content">
+              <span class="project-label">AI & Automation</span>
+              <h3>Call Automation System</h3>
+              <p>
+                Developed an AI-powered call handling system using modern web technologies.
+                Features intelligent call routing, automated responses, and integration with
+                business workflows for improved customer communication.
+              </p>
+              <div class="project-tags">
+                <span class="tag">React</span>
+                <span class="tag">FastAPI</span>
+                <span class="tag">OpenAI</span>
+                <span class="tag">Twilio</span>
+              </div>
+              <span class="project-link project-link-disabled">
+                <span>In Development</span>
+                <i class="fas fa-code"></i>
+              </span>
+            </div>
+          </div>
+
+          <!-- Trading Bots -->
+          <div class="project-card project-coral">
+            <div class="project-image-wrapper">
+              <div class="project-image-placeholder">
+                <i class="fas fa-chart-line"></i>
+              </div>
+            </div>
+            <div class="project-content">
+              <span class="project-label">Algorithmic Trading</span>
+              <h3>Automated Trading Bots</h3>
+              <p>
+                Created algorithmic trading systems that execute forex and crypto trades based on
+                technical indicators and custom strategies. Includes backtesting capabilities
+                and real-time market analysis.
+              </p>
+              <div class="project-tags">
+                <span class="tag">Python</span>
+                <span class="tag">OANDA API</span>
+                <span class="tag">Technical Analysis</span>
+                <span class="tag">Automation</span>
+              </div>
+              <span class="project-link project-link-disabled">
+                <span>Private Project</span>
+                <i class="fas fa-lock"></i>
+              </span>
+            </div>
+          </div>
+
+          <!-- Homelab -->
+          <div class="project-card project-purple">
+            <div class="project-image-wrapper">
+              <div class="project-image-placeholder">
+                <i class="fas fa-server"></i>
+              </div>
+            </div>
+            <div class="project-content">
+              <span class="project-label">Infrastructure</span>
+              <h3>Homelab & Media Server</h3>
+              <p>
+                Self-hosted infrastructure running various services including media streaming,
+                home automation, network storage, and development environments. All containerized
+                with Docker for easy management and deployment.
+              </p>
+              <div class="project-tags">
+                <span class="tag">Docker</span>
+                <span class="tag">Linux</span>
+                <span class="tag">Jellyfin</span>
+                <span class="tag">Networking</span>
+              </div>
+              <span class="project-link project-link-disabled">
+                <span>Self-Hosted</span>
+                <i class="fas fa-home"></i>
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SKILLS SECTION ===== -->
+    <section id="skills" class="tesoro-section tesoro-section-alt skills-section">
+      <div class="tesoro-container">
+        <h2 class="tesoro-section-title">Skills & Expertise</h2>
+        <div class="tesoro-skills-grid">
+
+          <div class="tesoro-skill-card skill-green">
+            <div class="skill-icon-wrapper">
+              <i class="fas fa-rocket"></i>
+            </div>
+            <h3>Entrepreneurship</h3>
+            <p>Building businesses from the ground up with focus on sustainable growth and customer value.</p>
+          </div>
+
+          <div class="tesoro-skill-card skill-gold">
+            <div class="skill-icon-wrapper">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3>Leadership</h3>
+            <p>Team management, delegation, and creating positive work environments that drive results.</p>
+          </div>
+
+          <div class="tesoro-skill-card skill-coral">
+            <div class="skill-icon-wrapper">
+              <i class="fas fa-code"></i>
+            </div>
+            <h3>Development</h3>
+            <p>Python, JavaScript, React, and FastAPI for building automation tools and web applications.</p>
+          </div>
+
+          <div class="tesoro-skill-card skill-purple">
+            <div class="skill-icon-wrapper">
+              <i class="fas fa-robot"></i>
+            </div>
+            <h3>AI & Automation</h3>
+            <p>Implementing AI solutions and automated systems to streamline business operations.</p>
+          </div>
+
+          <div class="tesoro-skill-card skill-blue">
+            <div class="skill-icon-wrapper">
+              <i class="fas fa-network-wired"></i>
+            </div>
+            <h3>Infrastructure</h3>
+            <p>Self-hosting, Docker, Linux administration, and network configuration.</p>
+          </div>
+
+          <div class="tesoro-skill-card skill-teal">
+            <div class="skill-icon-wrapper">
+              <i class="fas fa-leaf"></i>
+            </div>
+            <h3>Sustainability</h3>
+            <p>Committed to eco-friendly practices in both business operations and technology choices.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MINI BLOG SECTION ===== -->
+    <section id="blog" class="tesoro-section blog-section">
+      <div class="tesoro-container">
+        <h2 class="tesoro-section-title">Recent Thoughts</h2>
+        <div class="mini-blog-list">
+
+          <article class="mini-blog-item">
+            <span class="mini-blog-date">Jan 2025</span>
+            <h3 class="mini-blog-title">Why I Started Mountain West Surface</h3>
+            <button class="mini-blog-read-more read-more" data-blog="blog-1">
+              Read More <i class="fas fa-arrow-right"></i>
+            </button>
+          </article>
+
+          <article class="mini-blog-item">
+            <span class="mini-blog-date">Dec 2024</span>
+            <h3 class="mini-blog-title">Lessons from Building Trading Bots</h3>
+            <button class="mini-blog-read-more read-more" data-blog="blog-2">
+              Read More <i class="fas fa-arrow-right"></i>
+            </button>
+          </article>
+
+          <article class="mini-blog-item">
+            <span class="mini-blog-date">Nov 2024</span>
+            <h3 class="mini-blog-title">My Homelab Journey: From Chaos to Container</h3>
+            <button class="mini-blog-read-more read-more" data-blog="blog-3">
+              Read More <i class="fas fa-arrow-right"></i>
+            </button>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer-tesoro">
+      <div class="footer-tesoro-content">
+        <p class="footer-copyright">&copy; <span id="year"></span> Nicholas Guerriero. All rights reserved.</p>
+        <div class="footer-social-links">
+          <a href="https://github.com/niickyg" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://linkedin.com/in/nicholas-guerriero" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="mailto:nick@mountainwestsurface.com" aria-label="Email">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- End main-content -->
+
+  <!-- ===== BLOG MODAL ===== -->
+  <div id="blogModal" class="blog-modal">
+    <div class="blog-modal-content">
+      <span class="blog-modal-close">&times;</span>
+      <div id="blogModalBody"></div>
+    </div>
+  </div>
+
+  <!-- Hidden Blog Content -->
+  <div style="display: none;">
+    <div id="blog-1">
+      <p class="blog-date">January 2025</p>
+      <h2>Why I Started Mountain West Surface</h2>
+      <p>
+        Starting a business was never really in my long-term plan. I'd always been drawn to technology,
+        coding, and automation. But sometimes the best opportunities come from unexpected places.
+      </p>
+      <h3>The Spark</h3>
+      <p>
+        After working in various service roles, I noticed a gap in the commercial cleaning market.
+        Many businesses struggled to find reliable, quality-focused cleaning services. The idea for
+        Mountain West Surface grew from a simple question: what if we could do this better?
+      </p>
+      <h3>Building from the Ground Up</h3>
+      <p>
+        The early days were challenging. From learning the ins and outs of commercial cleaning to
+        building client relationships, every day brought new lessons. But my background in tech
+        helped me approach problems systematically.
+      </p>
+      <ul>
+        <li><strong>Systems Thinking:</strong> I applied the same logic I use in coding to business operations</li>
+        <li><strong>Automation:</strong> Even a cleaning company can benefit from automated scheduling and communication</li>
+        <li><strong>Quality Focus:</strong> Just like clean code, clean spaces require attention to detail</li>
+      </ul>
+      <h3>Looking Forward</h3>
+      <p>
+        Mountain West Surface continues to grow, and I'm excited about the future. The blend of
+        hands-on business experience and tech innovation creates unique opportunities to serve
+        our clients better every day.
+      </p>
+    </div>
+
+    <div id="blog-2">
+      <p class="blog-date">December 2024</p>
+      <h2>Lessons from Building Trading Bots</h2>
+      <p>
+        Algorithmic trading has been one of my most educational projects. Not because of profits
+        (that's a whole other story), but because of what it teaches about systems, risk, and patience.
+      </p>
+      <h3>The Allure of Automation</h3>
+      <p>
+        The idea of a program that makes money while you sleep is incredibly appealing. Who wouldn't
+        want that? But the reality is far more complex than any YouTube video suggests.
+      </p>
+      <h3>Key Lessons Learned</h3>
+      <ul>
+        <li><strong>Backtesting Lies:</strong> Past performance really doesn't guarantee future results</li>
+        <li><strong>Risk Management is Everything:</strong> The best strategy fails without proper position sizing</li>
+        <li><strong>Markets Evolve:</strong> What worked last year might not work today</li>
+        <li><strong>Emotions Still Matter:</strong> Even with bots, you'll feel the urge to intervene</li>
+      </ul>
+      <h3>The Technical Challenge</h3>
+      <p>
+        Building reliable trading infrastructure is fascinating. Real-time data feeds, execution
+        latency, error handling when money is on the line - it's a unique engineering challenge
+        that teaches you a lot about building robust systems.
+      </p>
+    </div>
+
+    <div id="blog-3">
+      <p class="blog-date">November 2024</p>
+      <h2>My Homelab Journey: From Chaos to Container</h2>
+      <p>
+        Every homelab starts the same way: "I just need a simple file server." Six months later,
+        you're managing a dozen services, troubleshooting network issues at 2 AM, and loving every minute.
+      </p>
+      <h3>Why Self-Host?</h3>
+      <p>
+        In an age of cloud services, why run your own servers? For me, it comes down to learning,
+        privacy, and the satisfaction of building something yourself.
+      </p>
+      <h3>Current Setup</h3>
+      <ul>
+        <li><strong>Media:</strong> Jellyfin for streaming my media collection anywhere</li>
+        <li><strong>Storage:</strong> Network-attached storage for backups and file sharing</li>
+        <li><strong>Development:</strong> Local environments for testing projects</li>
+        <li><strong>Monitoring:</strong> Keeping an eye on everything with dashboards</li>
+      </ul>
+      <h3>Docker Changed Everything</h3>
+      <p>
+        The move to containerization was a game-changer. Instead of conflicting dependencies and
+        messy installations, everything runs isolated and reproducible. Updates are simple,
+        backups are straightforward, and spinning up new services takes minutes.
+      </p>
+      <h3>The Learning Never Stops</h3>
+      <p>
+        That's the real value of a homelab. Every problem is an opportunity to learn something new
+        about networking, security, or system administration. It's hands-on education that
+        translates directly to real-world skills.
+      </p>
+    </div>
   </div>
 
   <script src="script.js"></script>
