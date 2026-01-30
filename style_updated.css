@@ -835,6 +835,39 @@ body::before {
   }
 }
 
+/* What's Next Callout */
+.whats-next-callout {
+  margin-top: 4rem;
+  padding: 2.5rem 3rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-left: 4px solid var(--purple-primary);
+  border-radius: var(--radius-md);
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.whats-next-callout p {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin: 0;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .whats-next-callout {
+    padding: 2rem;
+    margin-top: 3rem;
+  }
+
+  .whats-next-callout p {
+    font-size: 1.05rem;
+  }
+}
+
 .tesoro-section-alt {
   background: var(--bg-section-alt);
   /* Soft rounded section containers */
