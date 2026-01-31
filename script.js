@@ -2021,7 +2021,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===== COUNTING NUMBERS ANIMATION =====
 class CountingNumbers {
   constructor() {
-    this.numbers = document.querySelectorAll('.stat-number[data-target]');
+    this.numbers = document.querySelectorAll('.stat-number[data-target], .number-value[data-target]');
     this.init();
   }
 

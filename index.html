@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nicholas Guerriero - Portfolio & Blog</title>
+  <title>Nicholas Guerriero - Builder</title>
   <link rel="icon" type="image/svg+xml" href="logo.svg">
   <!-- Early theme and splash detection to prevent flash -->
   <script>
@@ -21,7 +21,7 @@
   </script>
   <link rel="stylesheet" href="style_updated.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Tesoro-inspired Typography: Space Grotesk + Outfit -->
+  <!-- Bold Typography: Space Grotesk + Outfit -->
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <!-- GSAP with ScrollTrigger -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -33,7 +33,7 @@
     <div class="splash-content">
       <img src="logo.svg" alt="Nicholas Guerriero" class="splash-logo">
       <button class="splash-enter-btn" id="splash-enter-btn">
-        <span>Click to Enter</span>
+        <span>Enter</span>
         <i class="fas fa-arrow-right"></i>
       </button>
     </div>
@@ -49,11 +49,10 @@
           <img src="logo.svg" alt="NG" class="logo-image">
         </a>
         <ul class="nav-menu">
-          <li><a href="#about" class="nav-link">About</a></li>
-          <li><a href="#experience" class="nav-link">Experience</a></li>
+          <li><a href="#work" class="nav-link">The Work</a></li>
+          <li><a href="#numbers" class="nav-link">Numbers</a></li>
           <li><a href="#projects" class="nav-link">Projects</a></li>
-          <li><a href="#skills" class="nav-link">Skills</a></li>
-          <li><a href="#blog" class="nav-link">Blog</a></li>
+          <li><a href="#connect" class="nav-link">Connect</a></li>
           <li>
             <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
               <i class="fas fa-sun" id="theme-icon"></i>
@@ -68,339 +67,188 @@
       </div>
     </nav>
 
-    <!-- ===== ABOUT ME SECTION ===== -->
-    <section id="about" class="tesoro-section about-section">
-      <div class="tesoro-container">
-        <h2 class="tesoro-section-title">About Me</h2>
-        <div class="about-content-grid">
-          <div class="about-image-col">
-            <div class="geometric-image-wrapper about-image">
-              <div class="geometric-image-placeholder">
-                <i class="fas fa-user"></i>
-              </div>
+    <!-- ===== HERO: THE STATEMENT ===== -->
+    <section class="hero-bold">
+      <div class="hero-bold-content">
+        <h1 class="hero-mega-statement">
+          I build things<br>that make money
+        </h1>
+        <p class="hero-subtitle">Park City entrepreneur. Building Mountain West Surface and exploring what's next.</p>
+        <div class="hero-scroll-hint">
+          <span>See what I mean</span>
+          <i class="fas fa-arrow-down"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== THE BUSINESS: MOUNTAIN WEST SURFACE ===== -->
+    <section id="work" class="section-the-business">
+      <div class="business-container">
+        <div class="business-header">
+          <span class="business-label">The Main Focus</span>
+          <h2 class="business-title">Mountain West Surface</h2>
+          <p class="business-tagline">Concrete sealing company serving Park City, Utah</p>
+        </div>
+
+        <div class="business-showcase">
+          <div class="business-visual">
+            <div class="business-image-placeholder">
+              <i class="fas fa-building"></i>
+              <span>Protecting driveways, patios, and concrete surfaces</span>
             </div>
           </div>
-          <div class="about-text-col">
-            <h3 class="about-name">Nicholas Guerriero</h3>
-            <p class="about-role">Entrepreneur & Business Owner</p>
-            <p class="about-bio">
-              I'm the founder of <strong>Mountain West Surface</strong>, a concrete sealing company
-              based in Park City, Utah. I love the process of building a business: solving problems,
-              learning new things, and working with great people. There's nothing more rewarding than
-              seeing hard work pay off.
-            </p>
-            <p class="about-bio">
-              Outside of work, I'm usually skiing, mountain biking, or on the golf course. I like
-              staying active, hanging out with friends, and tinkering with side projects. Work hard,
-              play harder.
-            </p>
-            <div class="about-quick-facts">
-              <div class="quick-fact">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>Park City, Utah</span>
-              </div>
-              <div class="quick-fact">
-                <i class="fas fa-briefcase"></i>
-                <span>Business Owner</span>
-              </div>
-              <div class="quick-fact">
-                <i class="fas fa-skiing"></i>
-                <span>Outdoor Enthusiast</span>
-              </div>
-            </div>
 
-            <!-- Live Stats -->
-            <div class="live-stats">
-              <div class="stat-item">
-                <div class="stat-number" data-target="730">0</div>
-                <div class="stat-label">Days Running Business</div>
-              </div>
-              <div class="stat-item">
-                <div class="stat-number" data-target="4">0</div>
-                <div class="stat-label">Years Experience</div>
-              </div>
-              <div class="stat-item">
-                <div class="stat-number" data-target="2">0</div>
-                <div class="stat-label">Active Projects</div>
-              </div>
-            </div>
+          <div class="business-story">
+            <h3>Started in 2023. Growing every month.</h3>
+            <p>
+              I saw an opportunity in Park City and went for it. Utah winters destroy concrete,
+              and people needed someone reliable to protect their investment. So I learned everything
+              about concrete sealing and started knocking on doors.
+            </p>
+            <p>
+              Two years later, we're known for quality work and showing up when we say we will.
+              That's it. No gimmicks, just solid service and results that last.
+            </p>
 
-            <!-- Currently Working On -->
-            <div class="currently-box">
-              <div class="currently-header">
-                <i class="fas fa-bolt"></i>
-                <span>Currently</span>
+            <div class="business-highlights">
+              <div class="highlight-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Residential & commercial clients</span>
               </div>
-              <p>Scaling Mountain West Surface operations and exploring new revenue streams. Always looking for the next opportunity.</p>
+              <div class="highlight-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Decorative & protective sealing</span>
+              </div>
+              <div class="highlight-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Built on referrals & reputation</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===== WORK EXPERIENCE TIMELINE ===== -->
-    <section id="experience" class="tesoro-section tesoro-section-alt experience-section">
-      <div class="tesoro-container">
-        <h2 class="tesoro-section-title">Work Experience</h2>
-        <div class="timeline">
-          <!-- Mountain West Surface -->
-          <div class="timeline-item featured">
-            <div class="timeline-marker"></div>
-            <div class="timeline-content">
-              <div class="timeline-date">2023 - Present</div>
-              <h3 class="timeline-title">Owner & Founder</h3>
-              <h4 class="timeline-company">Mountain West Surface</h4>
-              <p class="timeline-description">
-                Founded and grew a concrete sealing company serving residential and commercial clients
-                throughout the Park City, Utah area. Responsible for all aspects of operations including
-                client acquisition, project management, quality control, and strategic growth initiatives.
-              </p>
-              <ul class="timeline-highlights">
-                <li>Built company from ground up to profitable operation</li>
-                <li>Specialized in decorative and protective concrete sealing</li>
-                <li>Developed strong client relationships in the Park City market</li>
-                <li>Implemented efficient scheduling and quality systems</li>
-              </ul>
-            </div>
+    <!-- ===== THE NUMBERS: DATA WALL ===== -->
+    <section id="numbers" class="section-the-numbers">
+      <div class="numbers-container">
+        <h2 class="numbers-title">By the Numbers</h2>
+        <div class="numbers-grid">
+          <div class="number-block">
+            <div class="number-value" data-target="730">0</div>
+            <div class="number-label">Days Running</div>
+            <div class="number-context">Since founding MWS</div>
           </div>
 
-          <!-- Ski Butlers -->
-          <div class="timeline-item">
-            <div class="timeline-marker"></div>
-            <div class="timeline-content">
-              <div class="timeline-date">2021 - Present</div>
-              <h3 class="timeline-title">Team Lead</h3>
-              <h4 class="timeline-company">Ski Butlers</h4>
-              <p class="timeline-description">
-                Leading a team providing premium ski rental delivery services to clients at mountain resorts.
-                Managing logistics, customer experience, and team coordination in a fast-paced environment.
-              </p>
-              <ul class="timeline-highlights">
-                <li>Supervising team of delivery specialists</li>
-                <li>Ensuring exceptional customer service standards</li>
-                <li>Coordinating equipment logistics and inventory</li>
-              </ul>
-            </div>
+          <div class="number-block">
+            <div class="number-value" data-target="2">0</div>
+            <div class="number-label">Active Businesses</div>
+            <div class="number-context">MWS + Ski Butlers</div>
+          </div>
+
+          <div class="number-block">
+            <div class="number-value" data-target="4">0</div>
+            <div class="number-label">Years Experience</div>
+            <div class="number-context">Building & leading</div>
+          </div>
+
+          <div class="number-block">
+            <div class="number-value" data-target="3">0</div>
+            <div class="number-label">Side Projects</div>
+            <div class="number-context">Crypto, trading, homelab</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===== PROJECTS SECTION ===== -->
-    <section id="projects" class="tesoro-section projects-section">
-      <div class="tesoro-container">
-        <h2 class="tesoro-section-title">Projects</h2>
-        <div class="projects-grid">
+    <!-- ===== SIDE HUSTLES: COMPACT ===== -->
+    <section id="projects" class="section-side-hustles">
+      <div class="hustles-container">
+        <h2 class="hustles-title">Always Building Something</h2>
+        <p class="hustles-intro">When I'm not running Mountain West Surface, I'm usually tinkering with one of these.</p>
 
-          <!-- Mountain West Surface -->
-          <div class="project-card project-green">
-            <div class="project-image-wrapper">
-              <div class="project-image-placeholder">
-                <i class="fas fa-building"></i>
-              </div>
+        <div class="hustles-grid">
+          <div class="hustle-card hustle-crypto">
+            <div class="hustle-icon">
+              <i class="fab fa-bitcoin"></i>
             </div>
-            <div class="project-content">
-              <span class="project-label">Business</span>
-              <h3>Mountain West Surface</h3>
-              <p>
-                Built a concrete sealing company from the ground up in Park City, Utah. From
-                first client to growing operation. I handle everything from sales and marketing
-                to operations and team building.
-              </p>
-              <div class="project-tags">
-                <span class="tag">Entrepreneurship</span>
-                <span class="tag">Sales</span>
-                <span class="tag">Operations</span>
-                <span class="tag">Growth</span>
-              </div>
-              <span class="project-link project-link-disabled">
-                <span>Current Focus</span>
-                <i class="fas fa-star"></i>
-              </span>
-            </div>
+            <h3>Cryptocurrency Mining</h3>
+            <p>Personal mining operation. Learning blockchain, managing hardware, exploring passive income in digital assets.</p>
           </div>
 
-          <!-- Cryptocurrency Mining -->
-          <div class="project-card project-gold">
-            <div class="project-image-wrapper">
-              <div class="project-image-placeholder">
-                <i class="fab fa-bitcoin"></i>
-              </div>
+          <div class="hustle-card hustle-trading">
+            <div class="hustle-icon">
+              <i class="fas fa-chart-line"></i>
             </div>
-            <div class="project-content">
-              <span class="project-label">Side Hustle</span>
-              <h3>Cryptocurrency Mining</h3>
-              <p>
-                Built a personal crypto mining operation. A hands-on way to learn about
-                blockchain, manage hardware, and explore passive income opportunities
-                in the digital asset space.
-              </p>
-              <div class="project-tags">
-                <span class="tag">Crypto</span>
-                <span class="tag">Passive Income</span>
-                <span class="tag">Hardware</span>
-              </div>
-              <span class="project-link project-link-disabled">
-                <span>Private Project</span>
-                <i class="fas fa-lock"></i>
-              </span>
-            </div>
+            <h3>Automated Trading</h3>
+            <p>Building systems to automate trading strategies. Markets are unpredictable, but the process of building is worth it.</p>
           </div>
 
-          <!-- Trading -->
-          <div class="project-card project-coral">
-            <div class="project-image-wrapper">
-              <div class="project-image-placeholder">
-                <i class="fas fa-chart-line"></i>
-              </div>
+          <div class="hustle-card hustle-homelab">
+            <div class="hustle-icon">
+              <i class="fas fa-server"></i>
             </div>
-            <div class="project-content">
-              <span class="project-label">Investing</span>
-              <h3>Automated Trading</h3>
-              <p>
-                Built systems to automate trading strategies. Learning the markets, managing risk,
-                and letting technology do the heavy lifting. Always looking for an edge.
-              </p>
-              <div class="project-tags">
-                <span class="tag">Markets</span>
-                <span class="tag">Automation</span>
-                <span class="tag">Strategy</span>
-              </div>
-              <span class="project-link project-link-disabled">
-                <span>Private Project</span>
-                <i class="fas fa-lock"></i>
-              </span>
-            </div>
+            <h3>Homelab Setup</h3>
+            <p>Running my own server for media streaming, storage, and random projects. Always a work in progress.</p>
           </div>
 
-          <!-- Homelab -->
-          <div class="project-card project-green">
-            <div class="project-image-wrapper">
-              <div class="project-image-placeholder">
-                <i class="fas fa-server"></i>
-              </div>
+          <div class="hustle-card hustle-ski">
+            <div class="hustle-icon">
+              <i class="fas fa-skiing"></i>
             </div>
-            <div class="project-content">
-              <span class="project-label">Tinkering</span>
-              <h3>Homelab Setup</h3>
-              <p>
-                Running my own server at home for media streaming, storage, and messing around
-                with new tech. It's a fun way to learn and keep my hands busy.
-              </p>
-              <div class="project-tags">
-                <span class="tag">Self-Hosted</span>
-                <span class="tag">Media Server</span>
-                <span class="tag">Learning</span>
-              </div>
-              <span class="project-link project-link-disabled">
-                <span>Personal Project</span>
-                <i class="fas fa-home"></i>
-              </span>
-            </div>
+            <h3>Ski Butlers</h3>
+            <p>Team Lead since 2021. Managing equipment rentals and client relationships during ski season.</p>
           </div>
+        </div>
+      </div>
+    </section>
 
+    <!-- ===== THE PERSON: WHO I AM ===== -->
+    <section class="section-the-person">
+      <div class="person-container">
+        <div class="person-image">
+          <div class="person-image-placeholder">
+            <i class="fas fa-user-circle"></i>
+          </div>
         </div>
 
-        <!-- What's Next callout -->
-        <div class="whats-next-callout">
+        <div class="person-content">
+          <h2>Work Hard, Play Harder</h2>
           <p>
-            Always exploring new opportunities. Whether it's a new business idea, investment
-            opportunity, or partnership. I'm always open to connecting with driven people
-            who want to build something great.
+            Based in Park City, Utah. When I'm not sealing concrete or building businesses,
+            you'll find me skiing, mountain biking, golfing, or just hanging out with friends.
+          </p>
+          <p>
+            I love the process of building things, solving problems, and making stuff work.
+            Whether it's growing a business, automating a system, or just tinkering in my homelab,
+            I'm always exploring new opportunities.
+          </p>
+          <p class="person-current">
+            <i class="fas fa-bolt"></i>
+            <strong>Currently:</strong> Scaling Mountain West Surface and looking for the next challenge.
           </p>
         </div>
-
       </div>
     </section>
 
-    <!-- ===== SKILLS SECTION ===== -->
-    <section id="skills" class="tesoro-section tesoro-section-alt skills-section">
-      <div class="tesoro-container">
-        <h2 class="tesoro-section-title">What I'm About</h2>
-        <div class="tesoro-skills-grid">
-
-          <div class="tesoro-skill-card skill-green">
-            <div class="skill-icon-wrapper">
-              <i class="fas fa-hammer"></i>
-            </div>
-            <h3>Building Things</h3>
-            <p>Whether it's a business or a side project, I love creating something from scratch and watching it grow.</p>
-          </div>
-
-          <div class="tesoro-skill-card skill-gold">
-            <div class="skill-icon-wrapper">
-              <i class="fas fa-users"></i>
-            </div>
-            <h3>Working with People</h3>
-            <p>The best part of running a business is the people. Clients, team members, and everyone in between.</p>
-          </div>
-
-          <div class="tesoro-skill-card skill-coral">
-            <div class="skill-icon-wrapper">
-              <i class="fas fa-lightbulb"></i>
-            </div>
-            <h3>Problem Solving</h3>
-            <p>I enjoy figuring things out. Every challenge is a puzzle worth solving.</p>
-          </div>
-
-          <div class="tesoro-skill-card skill-green">
-            <div class="skill-icon-wrapper">
-              <i class="fas fa-book-open"></i>
-            </div>
-            <h3>Learning</h3>
-            <p>Always picking up new skills, whether it's for business or just because it's interesting.</p>
-          </div>
-
-          <div class="tesoro-skill-card skill-gold">
-            <div class="skill-icon-wrapper">
-              <i class="fas fa-mountain"></i>
-            </div>
-            <h3>Staying Active</h3>
-            <p>Skiing, biking, golf. Getting outside keeps me balanced and clear-headed.</p>
-          </div>
-
-          <div class="tesoro-skill-card skill-coral">
-            <div class="skill-icon-wrapper">
-              <i class="fas fa-handshake"></i>
-            </div>
-            <h3>Good People</h3>
-            <p>I'm lucky to be surrounded by great friends and mentors. That's what it's really all about.</p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== MINI BLOG SECTION ===== -->
-    <section id="blog" class="tesoro-section blog-section">
-      <div class="tesoro-container">
-        <h2 class="tesoro-section-title">Recent Thoughts</h2>
-        <div class="mini-blog-list">
-
-          <article class="mini-blog-item">
-            <span class="mini-blog-date">Jan 2025</span>
-            <h3 class="mini-blog-title">Why I Started Mountain West Surface</h3>
-            <button class="mini-blog-read-more read-more" data-blog="blog-1">
-              Read More <i class="fas fa-arrow-right"></i>
-            </button>
-          </article>
-
-          <article class="mini-blog-item">
-            <span class="mini-blog-date">Dec 2024</span>
-            <h3 class="mini-blog-title">Lessons from Building Trading Bots</h3>
-            <button class="mini-blog-read-more read-more" data-blog="blog-2">
-              Read More <i class="fas fa-arrow-right"></i>
-            </button>
-          </article>
-
-          <article class="mini-blog-item">
-            <span class="mini-blog-date">Nov 2024</span>
-            <h3 class="mini-blog-title">My Homelab Journey: From Chaos to Container</h3>
-            <button class="mini-blog-read-more read-more" data-blog="blog-3">
-              Read More <i class="fas fa-arrow-right"></i>
-            </button>
-          </article>
-
+    <!-- ===== WHAT'S NEXT: CTA ===== -->
+    <section id="connect" class="section-whats-next">
+      <div class="whats-next-container">
+        <h2>What's Next?</h2>
+        <p>Always looking for interesting opportunities. Got something in mind? Let's talk.</p>
+        <div class="connect-options">
+          <a href="mailto:nick@mountainwestsurface.com" class="connect-btn connect-primary">
+            <i class="fas fa-envelope"></i>
+            <span>Email Me</span>
+          </a>
+          <a href="https://linkedin.com/in/nicholas-guerriero" target="_blank" class="connect-btn connect-secondary">
+            <i class="fab fa-linkedin-in"></i>
+            <span>LinkedIn</span>
+          </a>
+          <a href="https://github.com/niickyg" target="_blank" class="connect-btn connect-secondary">
+            <i class="fab fa-github"></i>
+            <span>GitHub</span>
+          </a>
         </div>
       </div>
     </section>
@@ -408,7 +256,7 @@
     <!-- ===== FOOTER ===== -->
     <footer class="footer-tesoro">
       <div class="footer-tesoro-content">
-        <p class="footer-copyright">&copy; <span id="year"></span> Nicholas Guerriero. All rights reserved.</p>
+        <p class="footer-copyright">&copy; <span id="year"></span> Nicholas Guerriero.</p>
         <div class="footer-social-links">
           <a href="https://github.com/niickyg" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
             <i class="fab fa-github"></i>
@@ -424,95 +272,6 @@
     </footer>
 
   </div><!-- End main-content -->
-
-  <!-- ===== BLOG MODAL ===== -->
-  <div id="blogModal" class="blog-modal">
-    <div class="blog-modal-content">
-      <span class="blog-modal-close">&times;</span>
-      <div id="blogModalBody"></div>
-    </div>
-  </div>
-
-  <!-- Hidden Blog Content -->
-  <div style="display: none;">
-    <div id="blog-1">
-      <p class="blog-date">January 2025</p>
-      <h2>Why I Started Mountain West Surface</h2>
-      <p>
-        Honestly, starting a business wasn't something I had planned out. It kind of just happened.
-        I saw an opportunity and decided to go for it.
-      </p>
-      <h3>How It Started</h3>
-      <p>
-        Living in Park City, I noticed that a lot of people had concrete driveways and patios that
-        were getting beat up by the weather. Utah winters are no joke. I figured there had to be
-        a better way to help people protect their property, so I started learning everything I could
-        about concrete sealing.
-      </p>
-      <h3>The Early Days</h3>
-      <p>
-        The first few months were all about figuring things out. Learning the craft, getting my first
-        clients, making mistakes and fixing them. It wasn't always smooth, but that's part of it.
-        Every job taught me something new.
-      </p>
-      <h3>Where We're At Now</h3>
-      <p>
-        The business has grown a lot since those early days. We've got a solid reputation in
-        Park City and I'm proud of the work we do. There's still a lot to learn and a lot of
-        room to grow, and that's what keeps it exciting.
-      </p>
-    </div>
-
-    <div id="blog-2">
-      <p class="blog-date">December 2024</p>
-      <h2>Messing Around with Trading Bots</h2>
-      <p>
-        I got into automated trading as a side project. Not gonna lie, the idea of making money
-        while you sleep sounded pretty good. Reality is a bit more complicated.
-      </p>
-      <h3>What I Learned</h3>
-      <p>
-        Building these systems taught me a lot, mostly about how unpredictable markets can be.
-        Just because something worked in the past doesn't mean it'll work tomorrow.
-      </p>
-      <ul>
-        <li><strong>Risk management matters more than strategy</strong></li>
-        <li><strong>Markets change, so your approach has to change too</strong></li>
-        <li><strong>It's harder than the YouTube gurus make it look</strong></li>
-      </ul>
-      <h3>Still Worth It</h3>
-      <p>
-        Even if I'm not getting rich off it, the process of building and tweaking these systems
-        is genuinely fun. It's a good way to stay sharp and learn about markets at the same time.
-      </p>
-    </div>
-
-    <div id="blog-3">
-      <p class="blog-date">November 2024</p>
-      <h2>My Homelab Setup</h2>
-      <p>
-        It started with wanting a simple media server. Now I've got a whole setup running at home.
-        Classic scope creep, but no regrets.
-      </p>
-      <h3>What I'm Running</h3>
-      <ul>
-        <li><strong>Media server</strong> for streaming movies and shows</li>
-        <li><strong>Storage</strong> for backups and files</li>
-        <li><strong>Random projects</strong> whenever I want to try something new</li>
-      </ul>
-      <h3>Why Bother?</h3>
-      <p>
-        Honestly, it's just fun. I like learning how things work, and running your own server
-        teaches you a lot. Plus it's nice having everything under your own control instead of
-        paying for a bunch of subscriptions.
-      </p>
-      <h3>Always a Work in Progress</h3>
-      <p>
-        That's the thing about homelabs. You're never really "done." There's always something
-        to add or improve. It keeps things interesting.
-      </p>
-    </div>
-  </div>
 
   <script src="script.js"></script>
 </body>
