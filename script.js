@@ -2015,3 +2015,257 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('%c Tesoro-inspired 2025 features loaded!', 'color: #00D26A; font-size: 14px; font-weight: bold;');
   }, 100);
 });
+
+// ===== 2026 WOW FACTOR ENHANCEMENTS =====
+
+// ===== COUNTING NUMBERS ANIMATION =====
+class CountingNumbers {
+  constructor() {
+    this.numbers = document.querySelectorAll('.stat-number[data-target]');
+    this.init();
+  }
+
+  init() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.dataset.counted) {
+          this.animateNumber(entry.target);
+          entry.target.dataset.counted = 'true';
+        }
+      });
+    }, { threshold: 0.5 });
+
+    this.numbers.forEach(num => observer.observe(num));
+  }
+
+  animateNumber(element) {
+    const target = parseInt(element.dataset.target);
+    const duration = 2000;
+    const start = 0;
+    const startTime = performance.now();
+
+    const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+
+    const animate = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeOutQuart(progress);
+      const current = Math.floor(start + (target - start) * easedProgress);
+
+      element.textContent = current.toLocaleString();
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        element.textContent = target.toLocaleString();
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }
+}
+
+// ===== PARALLAX SPLASH SCREEN =====
+class ParallaxSplash {
+  constructor() {
+    this.splash = document.getElementById('splash-screen');
+    this.logo = document.querySelector('.splash-logo');
+    if (!this.splash || prefersReducedMotion) return;
+
+    this.init();
+  }
+
+  init() {
+    // Add floating animation enhancement
+    if (this.logo) {
+      document.addEventListener('mousemove', (e) => {
+        if (this.splash && !this.splash.classList.contains('hidden')) {
+          const xAxis = (window.innerWidth / 2 - e.clientX) / 25;
+          const yAxis = (window.innerHeight / 2 - e.clientY) / 25;
+          this.logo.style.transform = `translate(${xAxis}px, ${yAxis}px) scale(1)`;
+        }
+      });
+    }
+
+    // Add particle background
+    this.createParticles();
+  }
+
+  createParticles() {
+    if (!this.splash) return;
+
+    const particlesContainer = document.createElement('div');
+    particlesContainer.className = 'splash-particles';
+    particlesContainer.style.cssText = `
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+    `;
+
+    for (let i = 0; i < 30; i++) {
+      const particle = document.createElement('div');
+      const size = Math.random() * 4 + 2;
+      const duration = Math.random() * 20 + 15;
+      const delay = Math.random() * 5;
+      const xStart = Math.random() * 100;
+
+      particle.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        background: radial-gradient(circle, var(--primary-light), var(--primary));
+        border-radius: 50%;
+        left: ${xStart}%;
+        bottom: -20px;
+        opacity: ${Math.random() * 0.5 + 0.3};
+        box-shadow: 0 0 ${size * 3}px var(--primary-glow);
+        animation: floatUp ${duration}s linear ${delay}s infinite;
+      `;
+
+      particlesContainer.appendChild(particle);
+    }
+
+    this.splash.insertBefore(particlesContainer, this.splash.firstChild);
+
+    // Add float up animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0) translateX(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.6;
+        }
+        90% {
+          opacity: 0.6;
+        }
+        100% {
+          transform: translateY(-100vh) translateX(${Math.random() * 100 - 50}px);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+}
+
+// ===== ENHANCED PROJECT CARDS =====
+class EnhancedProjectCards {
+  constructor() {
+    this.cards = document.querySelectorAll('.project-card');
+    this.init();
+  }
+
+  init() {
+    this.cards.forEach(card => {
+      // Add magnetic hover effect
+      card.addEventListener('mousemove', (e) => {
+        if (prefersReducedMotion) return;
+
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const angleX = (y - centerY) / 20;
+        const angleY = (centerX - x) / 20;
+
+        card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) translateY(-8px) scale(1.01)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+
+      // Add ripple effect on click
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('a')) return;
+
+        const ripple = document.createElement('span');
+        const rect = card.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+
+        ripple.style.cssText = `
+          position: absolute;
+          width: ${size}px;
+          height: ${size}px;
+          border-radius: 50%;
+          background: radial-gradient(circle, var(--primary-glow), transparent);
+          left: ${x}px;
+          top: ${y}px;
+          transform: scale(0);
+          opacity: 1;
+          pointer-events: none;
+          animation: rippleEffect 0.8s ease-out;
+        `;
+
+        card.style.position = 'relative';
+        card.style.overflow = 'hidden';
+        card.appendChild(ripple);
+
+        setTimeout(() => ripple.remove(), 800);
+      });
+    });
+
+    // Add ripple animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes rippleEffect {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+}
+
+// ===== SMOOTH SECTION REVEALS =====
+class SmoothSectionReveals {
+  constructor() {
+    this.sections = document.querySelectorAll('.tesoro-section');
+    this.init();
+  }
+
+  init() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    this.sections.forEach(section => {
+      section.style.opacity = '0';
+      section.style.transform = 'translateY(30px)';
+      section.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+      observer.observe(section);
+    });
+  }
+}
+
+// Initialize 2026 enhancements
+document.addEventListener('DOMContentLoaded', () => {
+  new CountingNumbers();
+  new ParallaxSplash();
+  new EnhancedProjectCards();
+  new SmoothSectionReveals();
+
+  console.log('%c ✨ 2026 WOW Factor: LOADED ✨', 'color: #D4A03A; font-size: 16px; font-weight: bold; text-shadow: 0 0 10px rgba(212, 160, 58, 0.8);');
+});

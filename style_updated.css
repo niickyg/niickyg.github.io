@@ -2429,6 +2429,122 @@ html.splash-dismissed .main-content {
   transform: translateY(-2px);
 }
 
+/* ===== LIVE STATS ===== */
+.live-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+  padding: 2.5rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.stat-item {
+  text-align: center;
+  padding: 1rem;
+  transition: all 0.3s var(--ease-smooth);
+}
+
+.stat-item:hover {
+  transform: translateY(-4px);
+}
+
+.stat-number {
+  font-family: 'Outfit', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 0.75rem;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ===== CURRENTLY BOX ===== */
+.currently-box {
+  margin-top: 2.5rem;
+  padding: 2rem 2.5rem;
+  background: linear-gradient(135deg, var(--primary-subtle) 0%, var(--secondary-subtle) 100%);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.currently-box::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+  animation: currentlyPulse 4s ease-in-out infinite;
+  opacity: 0.3;
+}
+
+@keyframes currentlyPulse {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translate(10%, 10%) scale(1.1);
+    opacity: 0.4;
+  }
+}
+
+.currently-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+  position: relative;
+  z-index: 1;
+}
+
+.currently-header i {
+  font-size: 1.5rem;
+  animation: boltPulse 2s ease-in-out infinite;
+}
+
+@keyframes boltPulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 8px var(--primary));
+  }
+  50% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 16px var(--primary));
+  }
+}
+
+.currently-box p {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  position: relative;
+  z-index: 1;
+  margin: 0;
+}
+
 /* ===== EXPERIENCE TIMELINE ===== */
 .experience-section {
   position: relative;
@@ -2785,6 +2901,22 @@ html.splash-dismissed .main-content {
 
   .timeline-company {
     font-size: 1rem;
+  }
+
+  .live-stats {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 2rem 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+  }
+
+  .currently-box {
+    margin-top: 2rem;
+    padding: 1.5rem;
   }
 }
 
