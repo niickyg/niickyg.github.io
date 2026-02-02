@@ -1,285 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nicholas Guerriero - Builder</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nicholas Guerriero</title>
   <link rel="icon" type="image/svg+xml" href="logo.svg">
-  <!-- Early theme and splash detection to prevent flash -->
-  <script>
-    (function() {
-      // Apply saved theme immediately
-      var theme = localStorage.getItem('theme') ||
-        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      document.documentElement.setAttribute('data-theme', theme);
-
-      // Hide splash if already dismissed this session
-      if (sessionStorage.getItem('splashDismissed')) {
-        document.documentElement.classList.add('splash-dismissed');
-      }
-    })();
-  </script>
-  <link rel="stylesheet" href="style_updated.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Bold Typography: Space Grotesk + Outfit -->
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <!-- GSAP with ScrollTrigger -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="style_updated.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- ===== SPLASH SCREEN ===== -->
-  <div id="splash-screen" class="splash-screen">
-    <div class="splash-content">
-      <img src="logo.svg" alt="Nicholas Guerriero" class="splash-logo">
-      <button class="splash-enter-btn" id="splash-enter-btn">
-        <span>Enter</span>
-        <i class="fas fa-arrow-right"></i>
-      </button>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="hero-name">Nicholas Guerriero</h1>
+      <p class="hero-tagline">I build businesses that make money.</p>
+      <div class="hero-location">Park City, Utah</div>
     </div>
-  </div>
+  </section>
 
-  <!-- ===== SCROLL PROGRESS INDICATOR (Outside main-content so always visible) ===== -->
-  <div id="scroll-progress" class="scroll-progress"></div>
+  <!-- BUSINESSES -->
+  <section class="businesses">
+    <div class="container">
+      <h2 class="section-title">What I Run</h2>
+      <div class="grid-2">
 
-  <!-- Debug indicator - remove after confirming it works -->
-  <div id="interactive-loaded" style="position: fixed; bottom: 20px; right: 20px; background: #3D7A68; color: white; padding: 10px 20px; border-radius: 20px; z-index: 99999; font-size: 12px; opacity: 0; transition: opacity 0.3s;">
-    ✨ Interactive Mode Active
-  </div>
-
-  <!-- ===== MAIN CONTENT (Hidden until splash dismissed) ===== -->
-  <div id="main-content" class="main-content hidden">
-
-    <!-- ===== NAVIGATION ===== -->
-    <nav class="navbar">
-      <div class="nav-container">
-        <a href="#" class="nav-logo">
-          <img src="logo.svg" alt="NG" class="logo-image">
-        </a>
-        <ul class="nav-menu">
-          <li><a href="#work" class="nav-link">The Work</a></li>
-          <li><a href="#numbers" class="nav-link">Numbers</a></li>
-          <li><a href="#projects" class="nav-link">Projects</a></li>
-          <li><a href="#connect" class="nav-link">Connect</a></li>
-          <li>
-            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-              <i class="fas fa-sun" id="theme-icon"></i>
-            </button>
-          </li>
-        </ul>
-        <button class="hamburger" aria-label="Toggle menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </div>
-    </nav>
-
-    <!-- ===== HERO: THE STATEMENT ===== -->
-    <section class="hero-bold" data-scroll-section="hero">
-      <div class="hero-bold-content">
-        <h1 class="hero-mega-statement" data-parallax="hero-text">
-          I build things<br>that make money
-        </h1>
-        <p class="hero-subtitle">Park City entrepreneur. Building Mountain West Surface and exploring what's next.</p>
-        <div class="hero-scroll-hint">
-          <span>See what I mean</span>
-          <i class="fas fa-arrow-down"></i>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== THE BUSINESS: MOUNTAIN WEST SURFACE ===== -->
-    <section id="work" class="section-the-business" data-scroll-section="business">
-      <div class="business-container">
-        <div class="business-header">
-          <span class="business-label">The Main Focus</span>
-          <h2 class="business-title">Mountain West Surface</h2>
-          <p class="business-tagline">Concrete sealing company serving Park City, Utah</p>
-        </div>
-
-        <div class="business-showcase">
-          <div class="business-visual">
-            <div class="business-image-placeholder">
-              <i class="fas fa-building"></i>
-              <span>Protecting driveways, patios, and concrete surfaces</span>
-            </div>
+        <div class="business-card">
+          <div class="card-header">
+            <span class="card-label">Main Business</span>
+            <span class="card-year">Est. 2023</span>
           </div>
-
-          <div class="business-story">
-            <h3>Started in 2023. Growing every month.</h3>
-            <p>
-              I saw an opportunity in Park City and went for it. Utah winters destroy concrete,
-              and people needed someone reliable to protect their investment. So I learned everything
-              about concrete sealing and started knocking on doors.
-            </p>
-            <p>
-              Two years later, we're known for quality work and showing up when we say we will.
-              That's it. No gimmicks, just solid service and results that last.
-            </p>
-
-            <div class="business-highlights">
-              <div class="highlight-item">
-                <i class="fas fa-check-circle"></i>
-                <span>Residential & commercial clients</span>
-              </div>
-              <div class="highlight-item">
-                <i class="fas fa-check-circle"></i>
-                <span>Decorative & protective sealing</span>
-              </div>
-              <div class="highlight-item">
-                <i class="fas fa-check-circle"></i>
-                <span>Built on referrals & reputation</span>
-              </div>
+          <h3 class="card-title">Mountain West Surface</h3>
+          <p class="card-desc">Concrete sealing company. Residential & commercial clients across Park City. Built on referrals and reputation.</p>
+          <div class="card-stats">
+            <div class="stat">
+              <div class="stat-value">730+</div>
+              <div class="stat-label">Days Running</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">100%</div>
+              <div class="stat-label">Referral Based</div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- ===== THE NUMBERS: DATA WALL ===== -->
-    <section id="numbers" class="section-the-numbers" data-scroll-section="numbers">
-      <div class="numbers-container">
-        <h2 class="numbers-title">By the Numbers</h2>
-        <div class="numbers-grid">
-          <div class="number-block">
-            <div class="number-value" data-target="730">0</div>
-            <div class="number-label">Days Running</div>
-            <div class="number-context">Since founding MWS</div>
+        <div class="business-card">
+          <div class="card-header">
+            <span class="card-label">Seasonal</span>
+            <span class="card-year">Since 2021</span>
           </div>
-
-          <div class="number-block">
-            <div class="number-value" data-target="2">0</div>
-            <div class="number-label">Active Businesses</div>
-            <div class="number-context">MWS + Ski Butlers</div>
-          </div>
-
-          <div class="number-block">
-            <div class="number-value" data-target="4">0</div>
-            <div class="number-label">Years Experience</div>
-            <div class="number-context">Building & leading</div>
-          </div>
-
-          <div class="number-block">
-            <div class="number-value" data-target="3">0</div>
-            <div class="number-label">Side Projects</div>
-            <div class="number-context">Crypto, trading, homelab</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== SIDE HUSTLES: COMPACT ===== -->
-    <section id="projects" class="section-side-hustles" data-scroll-section="projects">
-      <div class="hustles-container">
-        <h2 class="hustles-title">Always Building Something</h2>
-        <p class="hustles-intro">When I'm not running Mountain West Surface, I'm usually tinkering with one of these.</p>
-
-        <div class="hustles-grid">
-          <div class="hustle-card hustle-crypto">
-            <div class="hustle-icon">
-              <i class="fab fa-bitcoin"></i>
+          <h3 class="card-title">Ski Butlers</h3>
+          <p class="card-desc">Team Lead managing ski equipment rentals and client relationships during winter season. Perfect Park City gig.</p>
+          <div class="card-stats">
+            <div class="stat">
+              <div class="stat-value">3</div>
+              <div class="stat-label">Seasons</div>
             </div>
-            <h3>Cryptocurrency Mining</h3>
-            <p>Personal mining operation. Learning blockchain, managing hardware, exploring passive income in digital assets.</p>
-          </div>
-
-          <div class="hustle-card hustle-trading">
-            <div class="hustle-icon">
-              <i class="fas fa-chart-line"></i>
+            <div class="stat">
+              <div class="stat-value">Lead</div>
+              <div class="stat-label">Role</div>
             </div>
-            <h3>Automated Trading</h3>
-            <p>Building systems to automate trading strategies. Markets are unpredictable, but the process of building is worth it.</p>
-          </div>
-
-          <div class="hustle-card hustle-homelab">
-            <div class="hustle-icon">
-              <i class="fas fa-server"></i>
-            </div>
-            <h3>Homelab Setup</h3>
-            <p>Running my own server for media streaming, storage, and random projects. Always a work in progress.</p>
-          </div>
-
-          <div class="hustle-card hustle-ski">
-            <div class="hustle-icon">
-              <i class="fas fa-skiing"></i>
-            </div>
-            <h3>Ski Butlers</h3>
-            <p>Team Lead since 2021. Managing equipment rentals and client relationships during ski season.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== THE PERSON: WHO I AM ===== -->
-    <section class="section-the-person" data-scroll-section="person">
-      <div class="person-container">
-        <div class="person-image">
-          <div class="person-image-placeholder">
-            <i class="fas fa-user-circle"></i>
           </div>
         </div>
 
-        <div class="person-content">
-          <h2>Work Hard, Play Harder</h2>
-          <p>
-            Based in Park City, Utah. When I'm not sealing concrete or building businesses,
-            you'll find me skiing, mountain biking, golfing, or just hanging out with friends.
-          </p>
-          <p>
-            I love the process of building things, solving problems, and making stuff work.
-            Whether it's growing a business, automating a system, or just tinkering in my homelab,
-            I'm always exploring new opportunities.
-          </p>
-          <p class="person-current">
-            <i class="fas fa-bolt"></i>
-            <strong>Currently:</strong> Scaling Mountain West Surface and looking for the next challenge.
-          </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIDE PROJECTS -->
+  <section class="projects">
+    <div class="container">
+      <h2 class="section-title">Side Projects</h2>
+      <div class="grid-3">
+
+        <div class="project-card">
+          <h3 class="project-title">Crypto Mining</h3>
+          <p class="project-desc">Personal mining operation. Learning blockchain, managing hardware, exploring passive income.</p>
+        </div>
+
+        <div class="project-card">
+          <h3 class="project-title">Automated Trading</h3>
+          <p class="project-desc">Building systems to automate trading strategies. Process over profits.</p>
+        </div>
+
+        <div class="project-card">
+          <h3 class="project-title">Homelab</h3>
+          <p class="project-desc">Running servers for media, storage, and experiments. Always a work in progress.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-content">
+          <h2 class="section-title">Work Hard, Play Harder</h2>
+          <p>Based in Park City. When I'm not sealing concrete or building businesses, you'll find me skiing, mountain biking, golfing, or hanging out with friends.</p>
+          <p>I love the process of building things, solving problems, and making stuff work. Whether it's growing a business, automating a system, or just tinkering in my homelab.</p>
+        </div>
+        <div class="about-stats">
+          <div class="stat-block">
+            <div class="stat-big">4</div>
+            <div class="stat-text">Years Experience</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-big">2</div>
+            <div class="stat-text">Active Businesses</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-big">3</div>
+            <div class="stat-text">Side Projects</div>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ===== WHAT'S NEXT: CTA ===== -->
-    <section id="connect" class="section-whats-next" data-scroll-section="connect">
-      <div class="whats-next-container">
-        <h2>What's Next?</h2>
-        <p>Always looking for interesting opportunities. Got something in mind? Let's talk.</p>
-        <div class="connect-options">
-          <a href="mailto:nick@mountainwestsurface.com" class="connect-btn connect-primary">
-            <i class="fas fa-envelope"></i>
-            <span>Email Me</span>
-          </a>
-          <a href="https://linkedin.com/in/nicholas-guerriero" target="_blank" class="connect-btn connect-secondary">
-            <i class="fab fa-linkedin-in"></i>
-            <span>LinkedIn</span>
-          </a>
-          <a href="https://github.com/niickyg" target="_blank" class="connect-btn connect-secondary">
-            <i class="fab fa-github"></i>
-            <span>GitHub</span>
-          </a>
-        </div>
+  <!-- CONTACT -->
+  <section class="contact">
+    <div class="container">
+      <h2 class="contact-title">Let's Talk</h2>
+      <p class="contact-subtitle">Always looking for interesting opportunities.</p>
+      <div class="contact-links">
+        <a href="mailto:nick@mountainwestsurface.com" class="contact-btn">Email</a>
+        <a href="https://linkedin.com/in/nicholas-guerriero" target="_blank" class="contact-btn">LinkedIn</a>
+        <a href="https://github.com/niickyg" target="_blank" class="contact-btn">GitHub</a>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ===== FOOTER ===== -->
-    <footer class="footer-tesoro">
-      <div class="footer-tesoro-content">
-        <p class="footer-copyright">&copy; <span id="year"></span> Nicholas Guerriero.</p>
-        <div class="footer-social-links">
-          <a href="https://github.com/niickyg" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-            <i class="fab fa-github"></i>
-          </a>
-          <a href="https://linkedin.com/in/nicholas-guerriero" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-          <a href="mailto:nick@mountainwestsurface.com" aria-label="Email">
-            <i class="fas fa-envelope"></i>
-          </a>
-        </div>
-      </div>
-    </footer>
-
-  </div><!-- End main-content -->
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Nicholas Guerriero</p>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
 </body>
