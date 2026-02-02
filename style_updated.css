@@ -3654,6 +3654,7 @@ button:focus-visible {
   top: 0;
   left: 0;
   width: 0%;
+  min-width: 50px; /* Always show at least 50px so it's visible */
   height: 4px;
   background: linear-gradient(90deg, var(--primary), var(--secondary), var(--tertiary));
   z-index: 100000;

@@ -2973,4 +2973,15 @@ document.addEventListener('DOMContentLoaded', () => {
   new MagneticButtons();
   new EasterEggs();
   console.log('%c✅ Interactive Experience Ready!', 'color: #3D7A68; font-size: 14px; font-weight: bold;');
+
+  // Show visible indicator that interactive features loaded
+  const indicator = document.getElementById('interactive-loaded');
+  if (indicator) {
+    setTimeout(() => {
+      indicator.style.opacity = '1';
+      setTimeout(() => {
+        indicator.style.opacity = '0';
+      }, 3000);
+    }, 500);
+  }
 });
