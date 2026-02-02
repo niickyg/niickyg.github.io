@@ -3656,9 +3656,10 @@ button:focus-visible {
   width: 0%;
   height: 4px;
   background: linear-gradient(90deg, var(--primary), var(--secondary), var(--tertiary));
-  z-index: 10000;
+  z-index: 100000;
   transition: width 0.1s ease-out;
   box-shadow: 0 0 10px var(--primary-glow);
+  pointer-events: none;
 }
 
 .scroll-progress.in-hero {

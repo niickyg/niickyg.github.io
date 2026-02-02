@@ -2266,7 +2266,10 @@ class SmoothSectionReveals {
 class ScrollProgressIndicator {
   constructor() {
     this.progressBar = document.getElementById('scroll-progress');
-    if (!this.progressBar) return;
+    if (!this.progressBar) {
+      console.warn('Scroll progress bar element not found');
+      return;
+    }
 
     this.sections = {
       hero: document.querySelector('.hero-bold'),
@@ -2961,6 +2964,7 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('%c ✨ 2026 WOW Factor: LOADED ✨', 'color: #D4A03A; font-size: 16px; font-weight: bold; text-shadow: 0 0 10px rgba(212, 160, 58, 0.8);');
 
   // Initialize 2026 Interactive Experience
+  console.log('%c🚀 Initializing Interactive Experience...', 'color: #3D7A68; font-size: 14px;');
   new ScrollProgressIndicator();
   new InteractiveNumbers();
   new ScrollRevealManager();
@@ -2968,4 +2972,5 @@ document.addEventListener('DOMContentLoaded', () => {
   new MouseParallax();
   new MagneticButtons();
   new EasterEggs();
+  console.log('%c✅ Interactive Experience Ready!', 'color: #3D7A68; font-size: 14px; font-weight: bold;');
 });
