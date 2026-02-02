@@ -2260,6 +2260,697 @@ class SmoothSectionReveals {
   }
 }
 
+// ===== INTERACTIVE SCROLL EXPERIENCE (2026) =====
+
+// 1. SCROLL PROGRESS INDICATOR
+class ScrollProgressIndicator {
+  constructor() {
+    this.progressBar = document.getElementById('scroll-progress');
+    if (!this.progressBar) return;
+
+    this.sections = {
+      hero: document.querySelector('.hero-bold'),
+      business: document.querySelector('.section-the-business'),
+      numbers: document.querySelector('.section-the-numbers'),
+      projects: document.querySelector('.section-side-hustles'),
+      person: document.querySelector('.section-the-person'),
+      connect: document.querySelector('.section-whats-next')
+    };
+
+    this.init();
+  }
+
+  init() {
+    window.addEventListener('scroll', () => this.updateProgress(), { passive: true });
+    this.updateProgress();
+  }
+
+  updateProgress() {
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight - windowHeight;
+    const scrolled = window.scrollY;
+    const progress = (scrolled / documentHeight) * 100;
+
+    this.progressBar.style.width = progress + '%';
+
+    // Change color based on section
+    const currentSection = this.getCurrentSection();
+    this.progressBar.className = 'scroll-progress';
+    if (currentSection) {
+      this.progressBar.classList.add(`in-${currentSection}`);
+    }
+  }
+
+  getCurrentSection() {
+    const scrollPos = window.scrollY + window.innerHeight / 2;
+
+    for (const [name, section] of Object.entries(this.sections)) {
+      if (!section) continue;
+      const rect = section.getBoundingClientRect();
+      const top = rect.top + window.scrollY;
+      const bottom = top + rect.height;
+
+      if (scrollPos >= top && scrollPos <= bottom) {
+        return name;
+      }
+    }
+    return null;
+  }
+}
+
+// 2. INTERACTIVE NUMBERS - Enhanced with progress bars and tooltips
+class InteractiveNumbers {
+  constructor() {
+    this.numberBlocks = document.querySelectorAll('.number-block');
+    if (this.numberBlocks.length === 0) return;
+
+    this.tooltipData = {
+      0: {
+        title: 'Days Running',
+        details: 'Founded in early 2023, Mountain West Surface has been protecting concrete through harsh Utah winters for over 2 years.'
+      },
+      1: {
+        title: 'Active Businesses',
+        details: 'Mountain West Surface (concrete sealing) and Ski Butlers (ski equipment rentals) - two distinct revenue streams.'
+      },
+      2: {
+        title: 'Years Experience',
+        details: 'Building and leading teams across multiple industries, from service businesses to tech projects.'
+      },
+      3: {
+        title: 'Side Projects',
+        details: 'Cryptocurrency mining, automated trading systems, and homelab infrastructure - always exploring new technologies.'
+      }
+    };
+
+    this.init();
+  }
+
+  init() {
+    this.numberBlocks.forEach((block, index) => {
+      // Add progress bar
+      this.addProgressBar(block, index);
+
+      // Add tooltip
+      this.addTooltip(block, index);
+
+      // Add observer for animation trigger
+      this.observeBlock(block);
+    });
+  }
+
+  addProgressBar(block, index) {
+    const container = document.createElement('div');
+    container.className = 'number-progress-container';
+
+    const progress = document.createElement('div');
+    progress.className = 'number-progress';
+    progress.dataset.index = index;
+
+    container.appendChild(progress);
+    block.appendChild(container);
+  }
+
+  addTooltip(block, index) {
+    if (!this.tooltipData[index]) return;
+
+    const tooltip = document.createElement('div');
+    tooltip.className = 'number-tooltip';
+    tooltip.innerHTML = `
+      <h4>${this.tooltipData[index].title}</h4>
+      <p>${this.tooltipData[index].details}</p>
+    `;
+
+    block.appendChild(tooltip);
+  }
+
+  observeBlock(block) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.classList.contains('in-view')) {
+          entry.target.classList.add('in-view');
+
+          // Fill progress bar
+          const progress = entry.target.querySelector('.number-progress');
+          if (progress) {
+            setTimeout(() => {
+              progress.classList.add('filled');
+            }, 200);
+          }
+        }
+      });
+    }, {
+      threshold: 0.5
+    });
+
+    observer.observe(block);
+  }
+}
+
+// 3. SCROLL REVEAL MANAGER - GSAP ScrollTrigger animations
+class ScrollRevealManager {
+  constructor() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+      console.warn('GSAP or ScrollTrigger not loaded');
+      return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+    this.init();
+  }
+
+  init() {
+    if (prefersReducedMotion) return;
+
+    this.heroSplitEffect();
+    this.businessReveal();
+    this.cardsSeparate();
+    this.personParallax();
+  }
+
+  heroSplitEffect() {
+    const heroStatement = document.querySelector('.hero-mega-statement');
+    if (!heroStatement) return;
+
+    gsap.to(heroStatement, {
+      scrollTrigger: {
+        trigger: '.hero-bold',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1
+      },
+      scale: 0.8,
+      y: -100,
+      opacity: 0.5,
+      ease: 'none'
+    });
+  }
+
+  businessReveal() {
+    const highlights = document.querySelectorAll('.highlight-item');
+    if (highlights.length === 0) return;
+
+    gsap.from(highlights, {
+      scrollTrigger: {
+        trigger: '.business-story',
+        start: 'top 70%',
+        end: 'top 30%',
+        toggleActions: 'play none none reverse'
+      },
+      opacity: 0,
+      x: -30,
+      stagger: 0.2,
+      duration: 0.8,
+      ease: 'power2.out'
+    });
+  }
+
+  cardsSeparate() {
+    const cards = document.querySelectorAll('.hustle-card');
+    if (cards.length === 0) return;
+
+    // Initial stacked position
+    gsap.set(cards, {
+      x: (index) => -index * 20,
+      y: (index) => index * 20,
+      rotation: (index) => -5 + index * 2
+    });
+
+    // Separate on scroll
+    gsap.to(cards, {
+      scrollTrigger: {
+        trigger: '.section-side-hustles',
+        start: 'top 60%',
+        end: 'top 30%',
+        scrub: 1
+      },
+      x: 0,
+      y: 0,
+      rotation: 0,
+      stagger: 0.1,
+      ease: 'power2.out'
+    });
+  }
+
+  personParallax() {
+    const personImage = document.querySelector('.person-image');
+    const personContent = document.querySelector('.person-content');
+
+    if (!personImage || !personContent) return;
+
+    // Image moves slower (background layer)
+    gsap.to(personImage, {
+      scrollTrigger: {
+        trigger: '.section-the-person',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1
+      },
+      y: -50,
+      ease: 'none'
+    });
+
+    // Content stays more fixed (foreground layer)
+    gsap.to(personContent, {
+      scrollTrigger: {
+        trigger: '.section-the-person',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1
+      },
+      y: -20,
+      ease: 'none'
+    });
+  }
+}
+
+// 4. CARD FLIP HANDLER - Click to flip cards
+class CardFlipHandler {
+  constructor() {
+    this.cards = document.querySelectorAll('.hustle-card');
+    if (this.cards.length === 0) return;
+
+    this.cardData = {
+      'hustle-crypto': {
+        title: 'Mining Details',
+        items: [
+          'Custom built mining rigs with optimized cooling',
+          'Focus on energy efficiency and ROI tracking',
+          'Learning blockchain technology hands-on',
+          'Exploring proof-of-stake opportunities'
+        ]
+      },
+      'hustle-trading': {
+        title: 'Trading Strategy',
+        items: [
+          'Automated systems for crypto and stock markets',
+          'Backtesting strategies with historical data',
+          'Risk management and position sizing',
+          'Continuous learning from market patterns'
+        ]
+      },
+      'hustle-homelab': {
+        title: 'Homelab Stack',
+        items: [
+          'Docker containers for service isolation',
+          'Plex media server and network storage',
+          'VPN and network security tools',
+          'Testing ground for new technologies'
+        ]
+      },
+      'hustle-ski': {
+        title: 'Ski Season Stats',
+        items: [
+          'Team Lead since 2021 winter season',
+          'Managing equipment delivery and customer service',
+          'Building relationships with resort guests',
+          'Perfect winter gig in Park City'
+        ]
+      }
+    };
+
+    this.init();
+  }
+
+  init() {
+    this.cards.forEach(card => {
+      // Add card structure for flipping
+      this.setupCardStructure(card);
+
+      // Make cards keyboard accessible
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-label', 'Click to flip card');
+
+      // Add click handler
+      card.addEventListener('click', (e) => {
+        if (e.target.tagName === 'A') return;
+        this.flipCard(card);
+      });
+
+      // Add keyboard handler
+      card.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          this.flipCard(card);
+        }
+      });
+    });
+  }
+
+  setupCardStructure(card) {
+    // Get card type
+    let cardType = null;
+    for (const className of card.classList) {
+      if (className.startsWith('hustle-')) {
+        cardType = className;
+        break;
+      }
+    }
+
+    if (!cardType || !this.cardData[cardType]) return;
+
+    // Wrap existing content in front
+    const existingContent = card.innerHTML;
+    card.innerHTML = '';
+
+    const front = document.createElement('div');
+    front.className = 'hustle-card-front';
+    front.innerHTML = existingContent;
+
+    // Create back
+    const back = document.createElement('div');
+    back.className = 'hustle-card-back';
+
+    const data = this.cardData[cardType];
+    back.innerHTML = `
+      <h4>${data.title}</h4>
+      <ul>
+        ${data.items.map(item => `<li>${item}</li>`).join('')}
+      </ul>
+      <p class="flip-back-hint">Click to flip back</p>
+    `;
+
+    card.appendChild(front);
+    card.appendChild(back);
+  }
+
+  flipCard(card) {
+    const isFlipped = card.classList.toggle('flipped');
+    card.setAttribute('aria-label', isFlipped ? 'Click to flip back' : 'Click to flip card');
+  }
+}
+
+// 5. MOUSE PARALLAX - Elements move based on mouse position
+class MouseParallax {
+  constructor() {
+    if (prefersReducedMotion || window.innerWidth < 768) return;
+
+    this.elements = document.querySelectorAll('.hero-mega-statement, .business-image-placeholder, .person-image-placeholder');
+    if (this.elements.length === 0) return;
+
+    this.init();
+  }
+
+  init() {
+    document.addEventListener('mousemove', (e) => this.handleMouseMove(e), { passive: true });
+  }
+
+  handleMouseMove(e) {
+    const mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    const mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+
+    this.elements.forEach((element, index) => {
+      const speed = 10 + index * 5;
+      const x = mouseX * speed;
+      const y = mouseY * speed;
+
+      element.style.transform = `translate(${x}px, ${y}px)`;
+    });
+  }
+}
+
+// 6. MAGNETIC BUTTONS - Buttons attracted to cursor
+class MagneticButtons {
+  constructor() {
+    if (prefersReducedMotion || window.innerWidth < 768) return;
+
+    this.buttons = document.querySelectorAll('.connect-btn');
+    if (this.buttons.length === 0) return;
+
+    this.init();
+  }
+
+  init() {
+    this.buttons.forEach(button => {
+      button.addEventListener('mousemove', (e) => this.handleMouseMove(e, button));
+      button.addEventListener('mouseleave', () => this.handleMouseLeave(button));
+      button.addEventListener('click', (e) => this.handleClick(e, button));
+    });
+  }
+
+  handleMouseMove(e, button) {
+    const rect = button.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+
+    const moveX = x * 0.3;
+    const moveY = y * 0.3;
+
+    button.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    button.classList.add('magnetic');
+  }
+
+  handleMouseLeave(button) {
+    button.style.transform = '';
+    button.classList.remove('magnetic');
+  }
+
+  handleClick(e, button) {
+    // Create ripple effect
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+
+    const rect = button.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    ripple.style.left = x + 'px';
+    ripple.style.top = y + 'px';
+
+    button.appendChild(ripple);
+
+    setTimeout(() => ripple.remove(), 600);
+
+    // Confetti for email button
+    if (button.href && button.href.includes('mailto:')) {
+      this.createConfetti();
+    }
+  }
+
+  createConfetti() {
+    const colors = ['#3D7A68', '#D4A03A', '#C4705A'];
+    const particleCount = 30;
+
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'confetti-particle';
+      particle.style.left = Math.random() * window.innerWidth + 'px';
+      particle.style.top = '0px';
+      particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+      particle.style.animationDelay = Math.random() * 0.3 + 's';
+
+      document.body.appendChild(particle);
+
+      setTimeout(() => particle.remove(), 3000);
+    }
+  }
+}
+
+// 7. EASTER EGGS - Hidden features and surprises
+class EasterEggs {
+  constructor() {
+    this.konamiCode = [];
+    this.konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    this.clickCount = 0;
+    this.achievementShown = false;
+
+    this.init();
+  }
+
+  init() {
+    this.addConsoleMessages();
+    this.setupKonamiCode();
+    this.setupClickCounter();
+    this.setupHoverSecrets();
+  }
+
+  addConsoleMessages() {
+    console.log('%c👋 Hey there, curious developer!', 'font-size: 20px; color: #3D7A68; font-weight: bold;');
+    console.log('%cIf you\'re reading this, we should talk.', 'font-size: 14px; color: #D4A03A;');
+    console.log('%cnick@mountainwestsurface.com', 'font-size: 12px; color: #C4705A;');
+    console.log('%c\nTry the Konami code: ↑↑↓↓←→←→BA', 'font-size: 11px; color: #918E86; font-style: italic;');
+  }
+
+  setupKonamiCode() {
+    document.addEventListener('keydown', (e) => {
+      this.konamiCode.push(e.key);
+      this.konamiCode = this.konamiCode.slice(-10);
+
+      if (this.konamiCode.join('').toLowerCase() === this.konamiSequence.join('').toLowerCase()) {
+        this.showTerminal();
+      }
+    });
+  }
+
+  showTerminal() {
+    // Remove existing terminal if present
+    const existing = document.querySelector('.terminal-overlay');
+    if (existing) existing.remove();
+
+    const terminal = document.createElement('div');
+    terminal.className = 'terminal-overlay active';
+    terminal.innerHTML = `
+      <div class="terminal-window">
+        <div class="terminal-header">
+          <span class="terminal-title">nicholas@guerriero:~$</span>
+          <button class="terminal-close">&times;</button>
+        </div>
+        <div class="terminal-content">
+          <pre class="terminal-ascii">
+   _   _ _      _           _
+  | \\ | (_)    | |         | |
+  |  \\| |_  ___| | __   ___| | __ _ ___
+  | . \` | |/ __| |/ /  / __| |/ _\` / __|
+  | |\\  | | (__|   <  | (__| | (_| \\__ \\
+  |_| \\_|_|\\___|_|\\_\\  \\___|_|\\__,_|___/
+          </pre>
+          <div class="terminal-output">
+            <div><span class="terminal-prompt">$</span> <span class="terminal-command">whoami</span></div>
+            <div class="terminal-response">Nicholas Guerriero - Builder, Entrepreneur, Tinkerer</div>
+          </div>
+          <div class="terminal-output">
+            <div><span class="terminal-prompt">$</span> <span class="terminal-command">ls -la skills/</span></div>
+            <div class="terminal-response">
+              Business Development | Customer Acquisition<br>
+              Concrete Sealing | Service Operations<br>
+              Python | JavaScript | Docker<br>
+              Cryptocurrency | Trading Systems<br>
+              Problem Solving | Fast Learning
+            </div>
+          </div>
+          <div class="terminal-output">
+            <div><span class="terminal-prompt">$</span> <span class="terminal-command">cat contact.txt</span></div>
+            <div class="terminal-response">
+              Email: nick@mountainwestsurface.com<br>
+              LinkedIn: /in/nicholas-guerriero<br>
+              GitHub: /niickyg
+            </div>
+          </div>
+          <div class="terminal-output">
+            <div><span class="terminal-prompt">$</span> <span class="terminal-command">echo $MOTIVATION</span></div>
+            <div class="terminal-response">
+              "Build things that make money. Have fun doing it."
+            </div>
+          </div>
+          <div class="terminal-input-line">
+            <span class="terminal-prompt">$</span>
+            <span class="terminal-cursor"></span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(terminal);
+
+    // Close terminal
+    const closeBtn = terminal.querySelector('.terminal-close');
+    closeBtn.addEventListener('click', () => terminal.remove());
+
+    terminal.addEventListener('click', (e) => {
+      if (e.target === terminal) terminal.remove();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && terminal.parentElement) {
+        terminal.remove();
+      }
+    }, { once: true });
+  }
+
+  setupClickCounter() {
+    document.addEventListener('click', () => {
+      this.clickCount++;
+
+      if (this.clickCount === 100 && !this.achievementShown) {
+        this.showAchievement();
+        this.achievementShown = true;
+      }
+    });
+  }
+
+  showAchievement() {
+    const badge = document.createElement('div');
+    badge.className = 'achievement-badge';
+    badge.innerHTML = `
+      <h3>🏆 Achievement Unlocked! 🏆</h3>
+      <p>You really like clicking, huh?</p>
+      <p style="margin-top: 0.5rem; font-size: 0.9rem;">100 clicks reached!</p>
+    `;
+
+    document.body.appendChild(badge);
+
+    setTimeout(() => {
+      badge.style.opacity = '0';
+      badge.style.transform = 'translate(-50%, -50%) scale(0)';
+      setTimeout(() => badge.remove(), 300);
+    }, 3000);
+  }
+
+  setupHoverSecrets() {
+    const navLogo = document.querySelector('.nav-logo');
+    if (!navLogo) return;
+
+    let hoverTimer;
+    let messageShown = false;
+
+    navLogo.addEventListener('mouseenter', () => {
+      if (messageShown) return;
+
+      hoverTimer = setTimeout(() => {
+        this.showSecretMessage('Still here? 👀');
+        messageShown = true;
+      }, 3000);
+    });
+
+    navLogo.addEventListener('mouseleave', () => {
+      clearTimeout(hoverTimer);
+    });
+
+    // Footer secret
+    const copyright = document.querySelector('.footer-copyright');
+    if (copyright) {
+      copyright.addEventListener('click', () => {
+        const buildTime = new Date().toISOString();
+        this.showSecretMessage(`Built: ${buildTime}`);
+      });
+    }
+  }
+
+  showSecretMessage(text) {
+    const message = document.createElement('div');
+    message.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: var(--bg-secondary);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 2rem 3rem;
+      z-index: 99999;
+      font-size: 1.5rem;
+      color: var(--primary);
+      font-weight: bold;
+      box-shadow: 0 0 40px var(--primary-glow);
+      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    `;
+    message.textContent = text;
+
+    document.body.appendChild(message);
+
+    setTimeout(() => {
+      message.style.transform = 'translate(-50%, -50%) scale(1)';
+    }, 10);
+
+    setTimeout(() => {
+      message.style.opacity = '0';
+      message.style.transform = 'translate(-50%, -50%) scale(0)';
+      setTimeout(() => message.remove(), 300);
+    }, 2500);
+  }
+}
+
 // Initialize 2026 enhancements
 document.addEventListener('DOMContentLoaded', () => {
   new CountingNumbers();
@@ -2268,4 +2959,13 @@ document.addEventListener('DOMContentLoaded', () => {
   new SmoothSectionReveals();
 
   console.log('%c ✨ 2026 WOW Factor: LOADED ✨', 'color: #D4A03A; font-size: 16px; font-weight: bold; text-shadow: 0 0 10px rgba(212, 160, 58, 0.8);');
+
+  // Initialize 2026 Interactive Experience
+  new ScrollProgressIndicator();
+  new InteractiveNumbers();
+  new ScrollRevealManager();
+  new CardFlipHandler();
+  new MouseParallax();
+  new MagneticButtons();
+  new EasterEggs();
 });

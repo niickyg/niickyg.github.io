@@ -42,6 +42,9 @@
   <!-- ===== MAIN CONTENT (Hidden until splash dismissed) ===== -->
   <div id="main-content" class="main-content hidden">
 
+    <!-- ===== SCROLL PROGRESS INDICATOR ===== -->
+    <div id="scroll-progress" class="scroll-progress"></div>
+
     <!-- ===== NAVIGATION ===== -->
     <nav class="navbar">
       <div class="nav-container">
@@ -68,9 +71,9 @@
     </nav>
 
     <!-- ===== HERO: THE STATEMENT ===== -->
-    <section class="hero-bold">
+    <section class="hero-bold" data-scroll-section="hero">
       <div class="hero-bold-content">
-        <h1 class="hero-mega-statement">
+        <h1 class="hero-mega-statement" data-parallax="hero-text">
           I build things<br>that make money
         </h1>
         <p class="hero-subtitle">Park City entrepreneur. Building Mountain West Surface and exploring what's next.</p>
@@ -82,7 +85,7 @@
     </section>
 
     <!-- ===== THE BUSINESS: MOUNTAIN WEST SURFACE ===== -->
-    <section id="work" class="section-the-business">
+    <section id="work" class="section-the-business" data-scroll-section="business">
       <div class="business-container">
         <div class="business-header">
           <span class="business-label">The Main Focus</span>
@@ -130,7 +133,7 @@
     </section>
 
     <!-- ===== THE NUMBERS: DATA WALL ===== -->
-    <section id="numbers" class="section-the-numbers">
+    <section id="numbers" class="section-the-numbers" data-scroll-section="numbers">
       <div class="numbers-container">
         <h2 class="numbers-title">By the Numbers</h2>
         <div class="numbers-grid">
@@ -162,7 +165,7 @@
     </section>
 
     <!-- ===== SIDE HUSTLES: COMPACT ===== -->
-    <section id="projects" class="section-side-hustles">
+    <section id="projects" class="section-side-hustles" data-scroll-section="projects">
       <div class="hustles-container">
         <h2 class="hustles-title">Always Building Something</h2>
         <p class="hustles-intro">When I'm not running Mountain West Surface, I'm usually tinkering with one of these.</p>
@@ -204,7 +207,7 @@
     </section>
 
     <!-- ===== THE PERSON: WHO I AM ===== -->
-    <section class="section-the-person">
+    <section class="section-the-person" data-scroll-section="person">
       <div class="person-container">
         <div class="person-image">
           <div class="person-image-placeholder">
@@ -232,7 +235,7 @@
     </section>
 
     <!-- ===== WHAT'S NEXT: CTA ===== -->
-    <section id="connect" class="section-whats-next">
+    <section id="connect" class="section-whats-next" data-scroll-section="connect">
       <div class="whats-next-container">
         <h2>What's Next?</h2>
         <p>Always looking for interesting opportunities. Got something in mind? Let's talk.</p>
