@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-27T06:00:00",
+  "updated_at": "2026-02-27T06:15:00",
   "market_status": "closed",
   "account": {
     "total_trades": 4,
@@ -109,6 +109,11 @@
       "date": "2026-02-26",
       "equity": 25033.6,
       "drawdown": 0.1342
+    },
+    {
+      "date": "2026-02-27",
+      "equity": 25024.97,
+      "drawdown": 0.0345
     }
   ],
   "signals_today": 0
