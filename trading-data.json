@@ -1,0 +1,160 @@
+{
+  "updated_at": "2026-02-27T00:52:35",
+  "market_status": "closed",
+  "account": {
+    "total_trades": 4,
+    "closed_trades": 0,
+    "win_rate": 0,
+    "total_pnl": 0.0,
+    "profit_factor": 0
+  },
+  "open_positions": [
+    {
+      "symbol": "BF-B",
+      "direction": "SHORT",
+      "entry_price": 27.68,
+      "current_price": 28.34,
+      "shares": 90,
+      "unrealized_pnl": -58.95,
+      "pnl_pct": -2.37,
+      "stop_loss": 29.62,
+      "take_profit": 26.23
+    },
+    {
+      "symbol": "VLTO",
+      "direction": "LONG",
+      "entry_price": 98.01,
+      "current_price": null,
+      "shares": 25,
+      "unrealized_pnl": null,
+      "pnl_pct": null,
+      "stop_loss": 91.86,
+      "take_profit": 101.7
+    },
+    {
+      "symbol": "AXON",
+      "direction": "LONG",
+      "entry_price": 529.85,
+      "current_price": 550.83,
+      "shares": 4,
+      "unrealized_pnl": 83.92,
+      "pnl_pct": 3.96,
+      "stop_loss": 473.24,
+      "take_profit": 572.31
+    }
+  ],
+  "options_positions": [
+    {
+      "symbol": "NDAQ",
+      "strategy": "iron_condor",
+      "direction": "neutral",
+      "contracts": 2,
+      "entry_premium": 0.72,
+      "total_premium": 144.0,
+      "legs": [
+        "SELL 80.0 Put 20260320",
+        "BUY 77.5 Put 20260320",
+        "SELL 100.0 Call 20260320",
+        "BUY 102.5 Call 20260320"
+      ],
+      "entry_date": "2026-02-26"
+    },
+    {
+      "symbol": "HOLX",
+      "strategy": "long_call",
+      "direction": "long",
+      "contracts": 3,
+      "entry_premium": 1.05,
+      "total_premium": -315.0,
+      "legs": [
+        "BUY 75.0 Call 20260320"
+      ],
+      "entry_date": "2026-02-26"
+    }
+  ],
+  "recent_trades": [
+    {
+      "symbol": "AXON",
+      "direction": "LONG",
+      "entry_price": 527.23,
+      "exit_price": 527.23,
+      "shares": 4,
+      "pnl": 0,
+      "pnl_pct": 0,
+      "exit_reason": "CLEANUP: duplicate from bot restart",
+      "date": "2026-02-27"
+    },
+    {
+      "symbol": "AXON",
+      "direction": "LONG",
+      "entry_price": 522.75,
+      "exit_price": 522.75,
+      "shares": 4,
+      "pnl": 0,
+      "pnl_pct": 0,
+      "exit_reason": "CLEANUP: duplicate from bot restart",
+      "date": "2026-02-27"
+    },
+    {
+      "symbol": "BF-B",
+      "direction": "SHORT",
+      "entry_price": 27.68,
+      "exit_price": 27.68,
+      "shares": 90,
+      "pnl": 0,
+      "pnl_pct": 0,
+      "exit_reason": "CLEANUP: duplicate from bot restart",
+      "date": "2026-02-27"
+    },
+    {
+      "symbol": "AXON",
+      "direction": "LONG",
+      "entry_price": 522.99,
+      "exit_price": 522.99,
+      "shares": 4,
+      "pnl": 0,
+      "pnl_pct": 0,
+      "exit_reason": "CLEANUP: duplicate from bot restart",
+      "date": "2026-02-27"
+    }
+  ],
+  "daily_stats": [
+    {
+      "date": "2026-02-19",
+      "trades": 0,
+      "pnl": 0,
+      "win_rate": 0,
+      "balance": 25000.0
+    },
+    {
+      "date": "2026-02-26",
+      "trades": 0,
+      "pnl": 0,
+      "win_rate": 0,
+      "balance": 25000.0
+    }
+  ],
+  "equity_curve": [
+    {
+      "date": "2026-02-23",
+      "equity": 25000.0,
+      "drawdown": 0
+    },
+    {
+      "date": "2026-02-24",
+      "equity": 25000.0,
+      "drawdown": 0
+    },
+    {
+      "date": "2026-02-25",
+      "equity": 25000.0,
+      "drawdown": 0
+    },
+    {
+      "date": "2026-02-26",
+      "equity": 25033.6,
+      "drawdown": 0.1342
+    }
+  ],
+  "signals_today": 0
+}
