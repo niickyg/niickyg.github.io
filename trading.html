@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automated Trading - Nicholas Guerriero</title>
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black: #000000;
+      --white: #FFFFFF;
+      --gray: #666666;
+      --light-gray: #E5E5E5;
+      --accent: #00FF00;
+      --red: #FF3333;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.6;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    h1, h2, h3 {
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    p { font-size: 18px; line-height: 1.7; color: var(--gray); }
+
+    ::selection { background: var(--accent); color: var(--black); }
+    a, button { cursor: pointer; }
+
+    /* HEADER */
+    .page-header {
+      background: var(--black);
+      color: var(--white);
+      padding: 80px 0 60px;
+      border-bottom: 2px solid var(--black);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .page-title {
+      font-size: clamp(36px, 6vw, 72px);
+      text-transform: uppercase;
+    }
+
+    .back-link {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: 2px solid var(--white);
+      padding: 12px 24px;
+      transition: all 0.2s;
+    }
+
+    .back-link:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--black);
+    }
+
+    .header-meta {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .updated-text {
+      font-size: 14px;
+      color: var(--gray);
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: 2px solid;
+    }
+
+    .status-open {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .status-closed {
+      border-color: var(--gray);
+      color: var(--gray);
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 80px 0;
+      border-bottom: 2px solid var(--black);
+    }
+
+    .section-title {
+      font-size: clamp(24px, 4vw, 36px);
+      margin-bottom: 32px;
+      text-transform: uppercase;
+    }
+
+    /* STATS GRID */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .stat-card {
+      border: 2px solid var(--black);
+      padding: 32px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .stat-card:hover {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .stat-card:hover .stat-card-label {
+      color: var(--light-gray);
+    }
+
+    .stat-card-value {
+      font-size: 48px;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-card-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      color: var(--gray);
+    }
+
+    .pnl-positive { color: var(--accent); }
+    .pnl-negative { color: var(--red); }
+
+    /* TABLES */
+    .table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th {
+      text-align: left;
+      padding: 16px 12px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      border-bottom: 2px solid var(--black);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 14px 12px;
+      border-bottom: 1px solid var(--light-gray);
+      white-space: nowrap;
+    }
+
+    tr:hover td {
+      background: #f5f5f5;
+    }
+
+    .direction-long {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .direction-short {
+      color: var(--red);
+      font-weight: 700;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: 1px solid;
+    }
+
+    /* EQUITY CHART */
+    .chart-container {
+      border: 2px solid var(--black);
+      padding: 24px;
+      background: var(--white);
+    }
+
+    .chart-svg {
+      width: 100%;
+      height: 200px;
+    }
+
+    /* EMPTY STATE */
+    .empty-state {
+      padding: 48px;
+      text-align: center;
+      border: 2px solid var(--light-gray);
+      color: var(--gray);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* FOOTER */
+    .page-footer {
+      padding: 40px 0;
+      text-align: center;
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .page-footer p { color: var(--gray); font-size: 14px; }
+
+    .disclaimer {
+      font-size: 11px;
+      color: var(--gray);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .container { padding: 0 16px; }
+      section { padding: 60px 0; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-card-value { font-size: 32px; }
+      .stat-card { padding: 20px; }
+      .header-top { flex-direction: column; gap: 16px; }
+      .back-link { align-self: flex-start; }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+
+    /* LOADING */
+    .loading {
+      text-align: center;
+      padding: 120px 0;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      color: var(--gray);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="page-header">
+    <div class="container">
+      <div class="header-top">
+        <h1 class="page-title">Automated Trading</h1>
+        <a href="index.html" class="back-link">&larr; Back</a>
+      </div>
+      <div class="header-meta">
+        <span class="updated-text" id="updated-text">Loading...</span>
+        <span class="status-badge status-closed" id="market-badge">--</span>
+      </div>
+    </div>
+  </header>
+
+  <div id="content">
+    <div class="loading">Loading trading data...</div>
+  </div>
+
+  <footer class="page-footer">
+    <div class="container">
+      <p>&copy; 2026 Nicholas Guerriero</p>
+      <p class="disclaimer">Not financial advice. Past performance does not guarantee future results.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const $ = s => document.querySelector(s);
+      const fmt = n => n == null ? '--' : n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      const fmtPct = n => n == null ? '--' : n.toFixed(2) + '%';
+      const pnlClass = n => n > 0 ? 'pnl-positive' : n < 0 ? 'pnl-negative' : '';
+
+      function timeAgo(isoStr) {
+        const diff = (Date.now() - new Date(isoStr).getTime()) / 60000;
+        if (diff < 1) return 'Just now';
+        if (diff < 60) return Math.floor(diff) + ' min ago';
+        if (diff < 1440) return Math.floor(diff / 60) + 'h ago';
+        return Math.floor(diff / 1440) + 'd ago';
+      }
+
+      function renderStats(d) {
+        const a = d.account;
+        return `
+          <section>
+            <div class="container">
+              <h2 class="section-title">Performance</h2>
+              <div class="stats-grid">
+                <div class="stat-card">
+                  <div class="stat-card-value">${a.total_trades}</div>
+                  <div class="stat-card-label">Total Trades</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-card-value">${(a.win_rate * 100).toFixed(0)}%</div>
+                  <div class="stat-card-label">Win Rate</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-card-value ${pnlClass(a.total_pnl)}">$${fmt(a.total_pnl)}</div>
+                  <div class="stat-card-label">Total P&L</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-card-value">${a.profit_factor || '--'}</div>
+                  <div class="stat-card-label">Profit Factor</div>
+                </div>
+              </div>
+            </div>
+          </section>`;
+      }
+
+      function renderPositions(positions) {
+        if (!positions.length) return '';
+        const rows = positions.map(p => `
+          <tr>
+            <td><strong>${p.symbol}</strong></td>
+            <td class="${p.direction === 'LONG' ? 'direction-long' : 'direction-short'}">${p.direction}</td>
+            <td>${p.shares}</td>
+            <td>$${fmt(p.entry_price)}</td>
+            <td>$${fmt(p.current_price)}</td>
+            <td class="${pnlClass(p.unrealized_pnl)}">$${fmt(p.unrealized_pnl)}</td>
+            <td class="${pnlClass(p.pnl_pct)}">${fmtPct(p.pnl_pct)}</td>
+          </tr>`).join('');
+
+        return `
+          <section>
+            <div class="container">
+              <h2 class="section-title">Open Positions</h2>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr><th>Symbol</th><th>Side</th><th>Shares</th><th>Entry</th><th>Current</th><th>P&L</th><th>P&L %</th></tr>
+                  </thead>
+                  <tbody>${rows}</tbody>
+                </table>
+              </div>
+            </div>
+          </section>`;
+      }
+
+      function renderOptions(options) {
+        if (!options.length) return '';
+        const rows = options.map(o => {
+          const stratLabel = o.strategy.replace(/_/g, ' ');
+          const legsText = o.legs.length ? o.legs.join(' / ') : '--';
+          return `
+            <tr>
+              <td><strong>${o.symbol}</strong></td>
+              <td style="text-transform:capitalize">${stratLabel}</td>
+              <td class="${o.direction === 'bullish' ? 'direction-long' : o.direction === 'bearish' ? 'direction-short' : ''}" style="text-transform:capitalize">${o.direction}</td>
+              <td>${o.contracts}</td>
+              <td>$${fmt(o.entry_premium)}</td>
+              <td>$${fmt(o.total_premium)}</td>
+              <td style="font-size:12px;white-space:normal;max-width:300px">${legsText}</td>
+            </tr>`;
+        }).join('');
+
+        return `
+          <section>
+            <div class="container">
+              <h2 class="section-title">Options Positions</h2>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr><th>Symbol</th><th>Strategy</th><th>Direction</th><th>Contracts</th><th>Premium</th><th>Total</th><th>Legs</th></tr>
+                  </thead>
+                  <tbody>${rows}</tbody>
+                </table>
+              </div>
+            </div>
+          </section>`;
+      }
+
+      function renderRecentTrades(trades) {
+        if (!trades.length) return '';
+        const rows = trades.slice(0, 10).map(t => `
+          <tr>
+            <td><strong>${t.symbol}</strong></td>
+            <td class="${t.direction === 'LONG' ? 'direction-long' : 'direction-short'}">${t.direction}</td>
+            <td>$${fmt(t.entry_price)}</td>
+            <td>$${fmt(t.exit_price)}</td>
+            <td class="${pnlClass(t.pnl)}">$${fmt(t.pnl)}</td>
+            <td class="${pnlClass(t.pnl_pct)}">${fmtPct(t.pnl_pct)}</td>
+            <td><span class="tag">${(t.exit_reason || '--').replace(/_/g, ' ')}</span></td>
+            <td>${t.date || '--'}</td>
+          </tr>`).join('');
+
+        return `
+          <section>
+            <div class="container">
+              <h2 class="section-title">Recent Trades</h2>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr><th>Symbol</th><th>Side</th><th>Entry</th><th>Exit</th><th>P&L</th><th>P&L %</th><th>Reason</th><th>Date</th></tr>
+                  </thead>
+                  <tbody>${rows}</tbody>
+                </table>
+              </div>
+            </div>
+          </section>`;
+      }
+
+      function renderEquityCurve(curve) {
+        if (!curve || curve.length < 2) return '';
+
+        const values = curve.map(c => c.equity);
+        const minVal = Math.min(...values);
+        const maxVal = Math.max(...values);
+        const range = maxVal - minVal || 1;
+        const w = 1000;
+        const h = 200;
+        const pad = 4;
+
+        const points = curve.map((c, i) => {
+          const x = pad + (i / (curve.length - 1)) * (w - pad * 2);
+          const y = h - pad - ((c.equity - minVal) / range) * (h - pad * 2);
+          return `${x},${y}`;
+        });
+
+        const polyline = points.join(' ');
+        const areaPoints = `${pad},${h - pad} ${polyline} ${w - pad},${h - pad}`;
+
+        const firstDate = curve[0].date;
+        const lastDate = curve[curve.length - 1].date;
+
+        return `
+          <section>
+            <div class="container">
+              <h2 class="section-title">Equity Curve</h2>
+              <div class="chart-container">
+                <svg class="chart-svg" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+                  <polygon points="${areaPoints}" fill="rgba(0,255,0,0.08)" />
+                  <polyline points="${polyline}" fill="none" stroke="#00FF00" stroke-width="3" vector-effect="non-scaling-stroke" />
+                </svg>
+                <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--gray);font-weight:600">
+                  <span>${firstDate}</span>
+                  <span>$${fmt(minVal)} &mdash; $${fmt(maxVal)}</span>
+                  <span>${lastDate}</span>
+                </div>
+              </div>
+            </div>
+          </section>`;
+      }
+
+      function renderSignals(count) {
+        if (!count) return '';
+        return `
+          <section style="padding:40px 0">
+            <div class="container" style="display:flex;align-items:center;gap:16px">
+              <span style="font-weight:900;font-size:24px;text-transform:uppercase">Signals Today</span>
+              <span style="font-size:48px;font-weight:900;color:var(--accent)">${count}</span>
+            </div>
+          </section>`;
+      }
+
+      function render(d) {
+        // Update header
+        $('#updated-text').textContent = 'Last updated: ' + timeAgo(d.updated_at);
+        const badge = $('#market-badge');
+        badge.textContent = 'Market ' + d.market_status;
+        badge.className = 'status-badge ' + (d.market_status === 'open' ? 'status-open' : 'status-closed');
+
+        // Build page
+        let html = '';
+        html += renderStats(d);
+        html += renderPositions(d.open_positions || []);
+        html += renderOptions(d.options_positions || []);
+        html += renderEquityCurve(d.equity_curve || []);
+        html += renderRecentTrades(d.recent_trades || []);
+        html += renderSignals(d.signals_today);
+
+        if (!html) {
+          html = '<div class="empty-state">No trading data available yet.</div>';
+        }
+
+        $('#content').innerHTML = html;
+      }
+
+      fetch('trading-data.json')
+        .then(r => {
+          if (!r.ok) throw new Error('Failed to load');
+          return r.json();
+        })
+        .then(render)
+        .catch(() => {
+          $('#content').innerHTML = '<div class="empty-state">Could not load trading data. Check back later.</div>';
+        });
+    })();
+  </script>
+</body>
+</html>
