@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-27T00:52:35",
+  "updated_at": "2026-02-27T00:53:11",
   "market_status": "closed",
   "account": {
     "total_trades": 4,
@@ -72,52 +72,7 @@
       "entry_date": "2026-02-26"
     }
   ],
-  "recent_trades": [
-    {
-      "symbol": "AXON",
-      "direction": "LONG",
-      "entry_price": 527.23,
-      "exit_price": 527.23,
-      "shares": 4,
-      "pnl": 0,
-      "pnl_pct": 0,
-      "exit_reason": "CLEANUP: duplicate from bot restart",
-      "date": "2026-02-27"
-    },
-    {
-      "symbol": "AXON",
-      "direction": "LONG",
-      "entry_price": 522.75,
-      "exit_price": 522.75,
-      "shares": 4,
-      "pnl": 0,
-      "pnl_pct": 0,
-      "exit_reason": "CLEANUP: duplicate from bot restart",
-      "date": "2026-02-27"
-    },
-    {
-      "symbol": "BF-B",
-      "direction": "SHORT",
-      "entry_price": 27.68,
-      "exit_price": 27.68,
-      "shares": 90,
-      "pnl": 0,
-      "pnl_pct": 0,
-      "exit_reason": "CLEANUP: duplicate from bot restart",
-      "date": "2026-02-27"
-    },
-    {
-      "symbol": "AXON",
-      "direction": "LONG",
-      "entry_price": 522.99,
-      "exit_price": 522.99,
-      "shares": 4,
-      "pnl": 0,
-      "pnl_pct": 0,
-      "exit_reason": "CLEANUP: duplicate from bot restart",
-      "date": "2026-02-27"
-    }
-  ],
+  "recent_trades": [],
   "daily_stats": [
     {
       "date": "2026-02-19",
