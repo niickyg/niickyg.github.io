@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-27T14:00:00",
+  "updated_at": "2026-02-27T14:15:00",
   "market_status": "closed",
   "account": {
     "total_trades": 4,
@@ -87,6 +87,13 @@
       "pnl": 0,
       "win_rate": 0,
       "balance": 25000.0
+    },
+    {
+      "date": "2026-02-27",
+      "trades": 0,
+      "pnl": 0,
+      "win_rate": 0,
+      "balance": 25000.0
     }
   ],
   "equity_curve": [
@@ -113,7 +120,7 @@
     {
       "date": "2026-02-27",
       "equity": 25024.97,
-      "drawdown": 0.0345
+      "drawdown": 0.1342
     }
   ],
   "signals_today": 0
