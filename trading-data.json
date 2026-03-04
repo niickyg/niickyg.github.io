@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-04T12:00:00",
+  "updated_at": "2026-03-04T12:15:00",
   "market_status": "open",
   "account": {
     "total_trades": 3,
@@ -21,35 +21,7 @@
       "take_profit": 236.03
     }
   ],
-  "options_positions": [
-    {
-      "symbol": "NDAQ",
-      "strategy": "iron_condor",
-      "direction": "neutral",
-      "contracts": 2,
-      "entry_premium": 0.72,
-      "total_premium": 144.0,
-      "legs": [
-        "SELL 80.0 Put 20260320",
-        "BUY 77.5 Put 20260320",
-        "SELL 100.0 Call 20260320",
-        "BUY 102.5 Call 20260320"
-      ],
-      "entry_date": "2026-02-26"
-    },
-    {
-      "symbol": "HOLX",
-      "strategy": "long_call",
-      "direction": "long",
-      "contracts": 3,
-      "entry_premium": 1.05,
-      "total_premium": -315.0,
-      "legs": [
-        "BUY 75.0 Call 20260320"
-      ],
-      "entry_date": "2026-02-26"
-    }
-  ],
+  "options_positions": [],
   "recent_trades": [
     {
       "symbol": "ABT",
